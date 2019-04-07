@@ -1,0 +1,32 @@
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews
+    </IfModule>
+
+    RewriteEngine On
+
+    # Redirect Trailing Slashes If Not A Folder...
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^(.*)/$ /$1 [L,R=301]
+
+  RewriteCond %{REQUEST_URI} !(\.css|\.js|\.png|\.jpg|\.jpeg|\.ttf|\.woff|\.gif|robots\.txt|\.txt|\.ico|\.xml|\.json|\.php)$ [NC]
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteRule ^ index.php [L]
+
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_URI} !^/public/
+  RewriteRule ^(css|js|images|img|argon|storage|fonts|/)/(.*)$ public/$1/$2 [L,NC]
+  RewriteRule ^sitemap\.xml$ /index.php?eID=dd_googlesitemap [L]
+    # Handle Authorization Header
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+</IfModule>
+
+<FilesMatch "\.(flv|gif|jpg|jpeg|png|ico)$">
+   Header set Cache-Control "max-age=2592000"
+</FilesMatch>
+<FilesMatch "\.(js|css|pdf|swf)$">
+   Header set Cache-Control "max-age=604800"
+</FilesMatch>

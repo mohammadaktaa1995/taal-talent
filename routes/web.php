@@ -11,6 +11,21 @@
 |
 */
 
+
+Route::get('/add-questions', 'QuestionsController@showAddForm');
+
+Route::get('/exams', 'ExamsController@showAll')->name('exams');
+Route::get('/exam/{exam}', 'ExamsController@showAddExamQuestion')->name('exams.show');
+Route::post('/exams', 'ExamsController@add')->name('add-exam');
+
+Route::post('/', 'ExamsController@addQuestion')->name('add-question');
+
+
 Route::get('/', function () {
-    return view('welcome');
+    return view('layouts.app');
 });
+Route::get('/{view?}', function () {
+    return view('layouts.app');
+})->where('view', '(.*)');
+Auth::routes();
+

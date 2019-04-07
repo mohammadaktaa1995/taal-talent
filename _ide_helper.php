@@ -1,9 +1,7 @@
 <?php
-// @formatter:off
-
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.7.19 on 2019-03-07 10:55:41.
+ * Generated for Laravel 5.6.17 on 2018-08-01 21:22:09.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -13,11 +11,6 @@
 
 namespace Illuminate\Support\Facades { 
 
-    /**
-     * 
-     *
-     * @see \Illuminate\Foundation\Application
-     */ 
     class App {
         
         /**
@@ -361,13 +354,14 @@ namespace Illuminate\Support\Facades {
          * Register a service provider with the application.
          *
          * @param \Illuminate\Support\ServiceProvider|string $provider
+         * @param array $options
          * @param bool $force
          * @return \Illuminate\Support\ServiceProvider 
          * @static 
          */ 
-        public static function register($provider, $force = false)
+        public static function register($provider, $options = array(), $force = false)
         {
-            return \Illuminate\Foundation\Application::register($provider, $force);
+            return \Illuminate\Foundation\Application::register($provider, $options, $force);
         }
         
         /**
@@ -795,7 +789,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Define a contextual binding.
          *
-         * @param array|string $concrete
+         * @param string $concrete
          * @return \Illuminate\Contracts\Container\ContextualBindingBuilder 
          * @static 
          */ 
@@ -1254,7 +1248,7 @@ namespace Illuminate\Support\Facades {
          * Set the shared instance of the container.
          *
          * @param \Illuminate\Contracts\Container\Container|null $container
-         * @return \Illuminate\Contracts\Container\Container|static 
+         * @return static 
          * @static 
          */ 
         public static function setInstance($container = null)
@@ -1318,11 +1312,6 @@ namespace Illuminate\Support\Facades {
          
     }
 
-    /**
-     * 
-     *
-     * @see \Illuminate\Contracts\Console\Kernel
-     */ 
     class Artisan {
         
         /**
@@ -1460,14 +1449,6 @@ namespace Illuminate\Support\Facades {
          
     }
 
-    /**
-     * 
-     *
-     * @see \Illuminate\Auth\AuthManager
-     * @see \Illuminate\Contracts\Auth\Factory
-     * @see \Illuminate\Contracts\Auth\Guard
-     * @see \Illuminate\Contracts\Auth\StatefulGuard
-     */ 
     class Auth {
         
         /**
@@ -1764,13 +1745,13 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
-         * Invalidate other sessions for the current user.
+         * Invalid other sessions for the current user.
          * 
          * The application must be using the AuthenticateSession middleware.
          *
          * @param string $password
          * @param string $attribute
-         * @return bool|null 
+         * @return $this 
          * @static 
          */ 
         public static function logoutOtherDevices($password, $attribute = 'password')
@@ -1939,7 +1920,7 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
-         * Determine if current user is authenticated. If not, throw an exception.
+         * Determine if the current user is authenticated.
          *
          * @return \App\User 
          * @throws \Illuminate\Auth\AuthenticationException
@@ -1948,17 +1929,6 @@ namespace Illuminate\Support\Facades {
         public static function authenticate()
         {
             return \Illuminate\Auth\SessionGuard::authenticate();
-        }
-        
-        /**
-         * Determine if the guard has a user instance.
-         *
-         * @return bool 
-         * @static 
-         */ 
-        public static function hasUser()
-        {
-            return \Illuminate\Auth\SessionGuard::hasUser();
         }
         
         /**
@@ -2046,11 +2016,6 @@ namespace Illuminate\Support\Facades {
          
     }
 
-    /**
-     * 
-     *
-     * @see \Illuminate\View\Compilers\BladeCompiler
-     */ 
     class Blade {
         
         /**
@@ -2270,16 +2235,21 @@ namespace Illuminate\Support\Facades {
             //Method inherited from \Illuminate\View\Compilers\Compiler            
             return \Illuminate\View\Compilers\BladeCompiler::isExpired($path);
         }
+        
+        /**
+         * Compile the default values for the echo statement.
+         *
+         * @param string $value
+         * @return string 
+         * @static 
+         */ 
+        public static function compileEchoDefaults($value)
+        {
+            return \Illuminate\View\Compilers\BladeCompiler::compileEchoDefaults($value);
+        }
          
     }
 
-    /**
-     * 
-     *
-     * @method static \Illuminate\Broadcasting\Broadcasters\Broadcaster channel(string $channel, callable|string  $callback)
-     * @method static mixed auth(\Illuminate\Http\Request $request)
-     * @see \Illuminate\Contracts\Broadcasting\Factory
-     */ 
     class Broadcast {
         
         /**
@@ -2392,11 +2362,6 @@ namespace Illuminate\Support\Facades {
          
     }
 
-    /**
-     * 
-     *
-     * @see \Illuminate\Contracts\Bus\Dispatcher
-     */ 
     class Bus {
         
         /**
@@ -2484,66 +2449,9 @@ namespace Illuminate\Support\Facades {
         {
             return \Illuminate\Bus\Dispatcher::map($map);
         }
-        
-        /**
-         * Assert if a job was dispatched based on a truth-test callback.
-         *
-         * @param string $command
-         * @param callable|int|null $callback
-         * @return void 
-         * @static 
-         */ 
-        public static function assertDispatched($command, $callback = null)
-        {
-            \Illuminate\Support\Testing\Fakes\BusFake::assertDispatched($command, $callback);
-        }
-        
-        /**
-         * Determine if a job was dispatched based on a truth-test callback.
-         *
-         * @param string $command
-         * @param callable|null $callback
-         * @return void 
-         * @static 
-         */ 
-        public static function assertNotDispatched($command, $callback = null)
-        {
-            \Illuminate\Support\Testing\Fakes\BusFake::assertNotDispatched($command, $callback);
-        }
-        
-        /**
-         * Get all of the jobs matching a truth-test callback.
-         *
-         * @param string $command
-         * @param callable|null $callback
-         * @return \Illuminate\Support\Collection 
-         * @static 
-         */ 
-        public static function dispatched($command, $callback = null)
-        {
-            return \Illuminate\Support\Testing\Fakes\BusFake::dispatched($command, $callback);
-        }
-        
-        /**
-         * Determine if there are any stored commands for a given class.
-         *
-         * @param string $command
-         * @return bool 
-         * @static 
-         */ 
-        public static function hasDispatched($command)
-        {
-            return \Illuminate\Support\Testing\Fakes\BusFake::hasDispatched($command);
-        }
          
     }
 
-    /**
-     * 
-     *
-     * @see \Illuminate\Cache\CacheManager
-     * @see \Illuminate\Cache\Repository
-     */ 
     class Cache {
         
         /**
@@ -2562,7 +2470,7 @@ namespace Illuminate\Support\Facades {
          * Get a cache driver instance.
          *
          * @param string|null $driver
-         * @return \Illuminate\Contracts\Cache\Repository 
+         * @return mixed 
          * @static 
          */ 
         public static function driver($driver = null)
@@ -2606,18 +2514,6 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
-         * Unset the given driver instances.
-         *
-         * @param array|string|null $name
-         * @return $this 
-         * @static 
-         */ 
-        public static function forgetDriver($name = null)
-        {
-            return \Illuminate\Cache\CacheManager::forgetDriver($name);
-        }
-        
-        /**
          * Register a custom driver creator Closure.
          *
          * @param string $driver
@@ -2640,18 +2536,6 @@ namespace Illuminate\Support\Facades {
         public static function has($key)
         {
             return \Illuminate\Cache\Repository::has($key);
-        }
-        
-        /**
-         * Determine if an item doesn't exist in the cache.
-         *
-         * @param string $key
-         * @return bool 
-         * @static 
-         */ 
-        public static function missing($key)
-        {
-            return \Illuminate\Cache\Repository::missing($key);
         }
         
         /**
@@ -2827,7 +2711,7 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
-         * Get an item from the cache, or execute the given Closure and store the result.
+         * Get an item from the cache, or store the default value.
          *
          * @param string $key
          * @param \DateTimeInterface|\DateInterval|float|int $minutes
@@ -2841,7 +2725,7 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
-         * Get an item from the cache, or execute the given Closure and store the result forever.
+         * Get an item from the cache, or store the default value forever.
          *
          * @param string $key
          * @param \Closure $callback
@@ -2854,7 +2738,7 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
-         * Get an item from the cache, or execute the given Closure and store the result forever.
+         * Get an item from the cache, or store the default value forever.
          *
          * @param string $key
          * @param \Closure $callback
@@ -3124,11 +3008,6 @@ namespace Illuminate\Support\Facades {
          
     }
 
-    /**
-     * 
-     *
-     * @see \Illuminate\Config\Repository
-     */ 
     class Config {
         
         /**
@@ -3269,11 +3148,6 @@ namespace Illuminate\Support\Facades {
          
     }
 
-    /**
-     * 
-     *
-     * @see \Illuminate\Cookie\CookieJar
-     */ 
     class Cookie {
         
         /**
@@ -3403,52 +3277,9 @@ namespace Illuminate\Support\Facades {
         {
             return \Illuminate\Cookie\CookieJar::getQueuedCookies();
         }
-        
-        /**
-         * Register a custom macro.
-         *
-         * @param string $name
-         * @param object|callable $macro
-         * @return void 
-         * @static 
-         */ 
-        public static function macro($name, $macro)
-        {
-            \Illuminate\Cookie\CookieJar::macro($name, $macro);
-        }
-        
-        /**
-         * Mix another object into the class.
-         *
-         * @param object $mixin
-         * @return void 
-         * @throws \ReflectionException
-         * @static 
-         */ 
-        public static function mixin($mixin)
-        {
-            \Illuminate\Cookie\CookieJar::mixin($mixin);
-        }
-        
-        /**
-         * Checks if macro is registered.
-         *
-         * @param string $name
-         * @return bool 
-         * @static 
-         */ 
-        public static function hasMacro($name)
-        {
-            return \Illuminate\Cookie\CookieJar::hasMacro($name);
-        }
          
     }
 
-    /**
-     * 
-     *
-     * @see \Illuminate\Encryption\Encrypter
-     */ 
     class Crypt {
         
         /**
@@ -3507,7 +3338,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param mixed $payload
          * @param bool $unserialize
-         * @return mixed 
+         * @return string 
          * @throws \Illuminate\Contracts\Encryption\DecryptException
          * @static 
          */ 
@@ -3541,12 +3372,6 @@ namespace Illuminate\Support\Facades {
          
     }
 
-    /**
-     * 
-     *
-     * @see \Illuminate\Database\DatabaseManager
-     * @see \Illuminate\Database\Connection
-     */ 
     class DB {
         
         /**
@@ -4139,13 +3964,13 @@ namespace Illuminate\Support\Facades {
          * Set the query grammar used by the connection.
          *
          * @param \Illuminate\Database\Query\Grammars\Grammar $grammar
-         * @return $this 
+         * @return void 
          * @static 
          */ 
         public static function setQueryGrammar($grammar)
         {
             //Method inherited from \Illuminate\Database\Connection            
-            return \Illuminate\Database\MySqlConnection::setQueryGrammar($grammar);
+            \Illuminate\Database\MySqlConnection::setQueryGrammar($grammar);
         }
         
         /**
@@ -4164,13 +3989,13 @@ namespace Illuminate\Support\Facades {
          * Set the schema grammar used by the connection.
          *
          * @param \Illuminate\Database\Schema\Grammars\Grammar $grammar
-         * @return $this 
+         * @return void 
          * @static 
          */ 
         public static function setSchemaGrammar($grammar)
         {
             //Method inherited from \Illuminate\Database\Connection            
-            return \Illuminate\Database\MySqlConnection::setSchemaGrammar($grammar);
+            \Illuminate\Database\MySqlConnection::setSchemaGrammar($grammar);
         }
         
         /**
@@ -4189,13 +4014,13 @@ namespace Illuminate\Support\Facades {
          * Set the query post processor used by the connection.
          *
          * @param \Illuminate\Database\Query\Processors\Processor $processor
-         * @return $this 
+         * @return void 
          * @static 
          */ 
         public static function setPostProcessor($processor)
         {
             //Method inherited from \Illuminate\Database\Connection            
-            return \Illuminate\Database\MySqlConnection::setPostProcessor($processor);
+            \Illuminate\Database\MySqlConnection::setPostProcessor($processor);
         }
         
         /**
@@ -4214,13 +4039,13 @@ namespace Illuminate\Support\Facades {
          * Set the event dispatcher instance on the connection.
          *
          * @param \Illuminate\Contracts\Events\Dispatcher $events
-         * @return $this 
+         * @return void 
          * @static 
          */ 
         public static function setEventDispatcher($events)
         {
             //Method inherited from \Illuminate\Database\Connection            
-            return \Illuminate\Database\MySqlConnection::setEventDispatcher($events);
+            \Illuminate\Database\MySqlConnection::setEventDispatcher($events);
         }
         
         /**
@@ -4323,7 +4148,7 @@ namespace Illuminate\Support\Facades {
          * Set the name of the connected database.
          *
          * @param string $database
-         * @return $this 
+         * @return string 
          * @static 
          */ 
         public static function setDatabaseName($database)
@@ -4348,13 +4173,13 @@ namespace Illuminate\Support\Facades {
          * Set the table prefix in use by the connection.
          *
          * @param string $prefix
-         * @return $this 
+         * @return void 
          * @static 
          */ 
         public static function setTablePrefix($prefix)
         {
             //Method inherited from \Illuminate\Database\Connection            
-            return \Illuminate\Database\MySqlConnection::setTablePrefix($prefix);
+            \Illuminate\Database\MySqlConnection::setTablePrefix($prefix);
         }
         
         /**
@@ -4442,7 +4267,6 @@ namespace Illuminate\Support\Facades {
          *
          * @param int|null $toLevel
          * @return void 
-         * @throws \Exception
          * @static 
          */ 
         public static function rollBack($toLevel = null)
@@ -4465,11 +4289,6 @@ namespace Illuminate\Support\Facades {
          
     }
 
-    /**
-     * 
-     *
-     * @see \Illuminate\Events\Dispatcher
-     */ 
     class Event {
         
         /**
@@ -4647,78 +4466,9 @@ namespace Illuminate\Support\Facades {
         {
             return \Illuminate\Events\Dispatcher::setQueueResolver($resolver);
         }
-        
-        /**
-         * Assert if an event was dispatched based on a truth-test callback.
-         *
-         * @param string $event
-         * @param callable|int|null $callback
-         * @return void 
-         * @static 
-         */ 
-        public static function assertDispatched($event, $callback = null)
-        {
-            \Illuminate\Support\Testing\Fakes\EventFake::assertDispatched($event, $callback);
-        }
-        
-        /**
-         * Assert if a event was dispatched a number of times.
-         *
-         * @param string $event
-         * @param int $times
-         * @return void 
-         * @static 
-         */ 
-        public static function assertDispatchedTimes($event, $times = 1)
-        {
-            \Illuminate\Support\Testing\Fakes\EventFake::assertDispatchedTimes($event, $times);
-        }
-        
-        /**
-         * Determine if an event was dispatched based on a truth-test callback.
-         *
-         * @param string $event
-         * @param callable|null $callback
-         * @return void 
-         * @static 
-         */ 
-        public static function assertNotDispatched($event, $callback = null)
-        {
-            \Illuminate\Support\Testing\Fakes\EventFake::assertNotDispatched($event, $callback);
-        }
-        
-        /**
-         * Get all of the events matching a truth-test callback.
-         *
-         * @param string $event
-         * @param callable|null $callback
-         * @return \Illuminate\Support\Collection 
-         * @static 
-         */ 
-        public static function dispatched($event, $callback = null)
-        {
-            return \Illuminate\Support\Testing\Fakes\EventFake::dispatched($event, $callback);
-        }
-        
-        /**
-         * Determine if the given event has been dispatched.
-         *
-         * @param string $event
-         * @return bool 
-         * @static 
-         */ 
-        public static function hasDispatched($event)
-        {
-            return \Illuminate\Support\Testing\Fakes\EventFake::hasDispatched($event);
-        }
          
     }
 
-    /**
-     * 
-     *
-     * @see \Illuminate\Filesystem\Filesystem
-     */ 
     class File {
         
         /**
@@ -4808,19 +4558,6 @@ namespace Illuminate\Support\Facades {
         public static function put($path, $contents, $lock = false)
         {
             return \Illuminate\Filesystem\Filesystem::put($path, $contents, $lock);
-        }
-        
-        /**
-         * Write the contents of a file, replacing it atomically if it already exists.
-         *
-         * @param string $path
-         * @param string $content
-         * @return void 
-         * @static 
-         */ 
-        public static function replace($path, $content)
-        {
-            \Illuminate\Filesystem\Filesystem::replace($path, $content);
         }
         
         /**
@@ -5167,18 +4904,6 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
-         * Remove all of the directories within a given directory.
-         *
-         * @param string $directory
-         * @return bool 
-         * @static 
-         */ 
-        public static function deleteDirectories($directory)
-        {
-            return \Illuminate\Filesystem\Filesystem::deleteDirectories($directory);
-        }
-        
-        /**
          * Empty the specified directory of all files and folders.
          *
          * @param string $directory
@@ -5230,11 +4955,6 @@ namespace Illuminate\Support\Facades {
          
     }
 
-    /**
-     * 
-     *
-     * @see \Illuminate\Contracts\Auth\Access\Gate
-     */ 
     class Gate {
         
         /**
@@ -5381,19 +5101,6 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
-         * Get the raw result from the authorization callback.
-         *
-         * @param string $ability
-         * @param array|mixed $arguments
-         * @return mixed 
-         * @static 
-         */ 
-        public static function raw($ability, $arguments = array())
-        {
-            return \Illuminate\Auth\Access\Gate::raw($ability, $arguments);
-        }
-        
-        /**
          * Get a policy instance for a given class.
          *
          * @param object|string $class
@@ -5453,11 +5160,6 @@ namespace Illuminate\Support\Facades {
          
     }
 
-    /**
-     * 
-     *
-     * @see \Illuminate\Hashing\HashManager
-     */ 
     class Hash {
         
         /**
@@ -5472,7 +5174,7 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
-         * Create an instance of the Argon2i hash Driver.
+         * Create an instance of the Argon2 hash Driver.
          *
          * @return \Illuminate\Hashing\ArgonHasher 
          * @static 
@@ -5480,17 +5182,6 @@ namespace Illuminate\Support\Facades {
         public static function createArgonDriver()
         {
             return \Illuminate\Hashing\HashManager::createArgonDriver();
-        }
-        
-        /**
-         * Create an instance of the Argon2id hash Driver.
-         *
-         * @return \Illuminate\Hashing\Argon2IdHasher 
-         * @static 
-         */ 
-        public static function createArgon2idDriver()
-        {
-            return \Illuminate\Hashing\HashManager::createArgon2idDriver();
         }
         
         /**
@@ -5561,7 +5252,6 @@ namespace Illuminate\Support\Facades {
          *
          * @param string $driver
          * @return mixed 
-         * @throws \InvalidArgumentException
          * @static 
          */ 
         public static function driver($driver = null)
@@ -5598,11 +5288,6 @@ namespace Illuminate\Support\Facades {
          
     }
 
-    /**
-     * 
-     *
-     * @see \Illuminate\Translation\Translator
-     */ 
     class Lang {
         
         /**
@@ -5638,7 +5323,7 @@ namespace Illuminate\Support\Facades {
          * @param string $key
          * @param array $replace
          * @param string $locale
-         * @return string|array 
+         * @return string|array|null 
          * @static 
          */ 
         public static function trans($key, $replace = array(), $locale = null)
@@ -5653,7 +5338,7 @@ namespace Illuminate\Support\Facades {
          * @param array $replace
          * @param string|null $locale
          * @param bool $fallback
-         * @return string|array 
+         * @return string|array|null 
          * @static 
          */ 
         public static function get($key, $replace = array(), $locale = null, $fallback = true)
@@ -5667,7 +5352,7 @@ namespace Illuminate\Support\Facades {
          * @param string $key
          * @param array $replace
          * @param string $locale
-         * @return string|array 
+         * @return string|array|null 
          * @static 
          */ 
         public static function getFromJson($key, $replace = array(), $locale = null)
@@ -5927,11 +5612,6 @@ namespace Illuminate\Support\Facades {
          
     }
 
-    /**
-     * 
-     *
-     * @see \Illuminate\Log\Logger
-     */ 
     class Log {
         
         /**
@@ -5939,12 +5619,12 @@ namespace Illuminate\Support\Facades {
          *
          * @param string $message The log message
          * @param array $context The log context
-         * @return bool Whether the record has been processed
+         * @return Boolean Whether the record has been processed
          * @static 
          */ 
         public static function debug($message, $context = array())
         {
-            return \Monolog\Logger::addDebug($message, $context);
+            return \Monolog\Logger::debug($message, $context);
         }
         
         /**
@@ -5952,12 +5632,12 @@ namespace Illuminate\Support\Facades {
          *
          * @param string $message The log message
          * @param array $context The log context
-         * @return bool Whether the record has been processed
+         * @return Boolean Whether the record has been processed
          * @static 
          */ 
         public static function info($message, $context = array())
         {
-            return \Monolog\Logger::addInfo($message, $context);
+            return \Monolog\Logger::info($message, $context);
         }
         
         /**
@@ -5965,12 +5645,12 @@ namespace Illuminate\Support\Facades {
          *
          * @param string $message The log message
          * @param array $context The log context
-         * @return bool Whether the record has been processed
+         * @return Boolean Whether the record has been processed
          * @static 
          */ 
         public static function notice($message, $context = array())
         {
-            return \Monolog\Logger::addNotice($message, $context);
+            return \Monolog\Logger::notice($message, $context);
         }
         
         /**
@@ -5978,12 +5658,12 @@ namespace Illuminate\Support\Facades {
          *
          * @param string $message The log message
          * @param array $context The log context
-         * @return bool Whether the record has been processed
+         * @return Boolean Whether the record has been processed
          * @static 
          */ 
         public static function warning($message, $context = array())
         {
-            return \Monolog\Logger::addWarning($message, $context);
+            return \Monolog\Logger::warning($message, $context);
         }
         
         /**
@@ -5991,12 +5671,12 @@ namespace Illuminate\Support\Facades {
          *
          * @param string $message The log message
          * @param array $context The log context
-         * @return bool Whether the record has been processed
+         * @return Boolean Whether the record has been processed
          * @static 
          */ 
         public static function error($message, $context = array())
         {
-            return \Monolog\Logger::addError($message, $context);
+            return \Monolog\Logger::error($message, $context);
         }
         
         /**
@@ -6004,12 +5684,12 @@ namespace Illuminate\Support\Facades {
          *
          * @param string $message The log message
          * @param array $context The log context
-         * @return bool Whether the record has been processed
+         * @return Boolean Whether the record has been processed
          * @static 
          */ 
         public static function critical($message, $context = array())
         {
-            return \Monolog\Logger::addCritical($message, $context);
+            return \Monolog\Logger::critical($message, $context);
         }
         
         /**
@@ -6017,12 +5697,12 @@ namespace Illuminate\Support\Facades {
          *
          * @param string $message The log message
          * @param array $context The log context
-         * @return bool Whether the record has been processed
+         * @return Boolean Whether the record has been processed
          * @static 
          */ 
         public static function alert($message, $context = array())
         {
-            return \Monolog\Logger::addAlert($message, $context);
+            return \Monolog\Logger::alert($message, $context);
         }
         
         /**
@@ -6030,12 +5710,12 @@ namespace Illuminate\Support\Facades {
          *
          * @param string $message The log message
          * @param array $context The log context
-         * @return bool Whether the record has been processed
+         * @return Boolean Whether the record has been processed
          * @static 
          */ 
         public static function emergency($message, $context = array())
         {
-            return \Monolog\Logger::addEmergency($message, $context);
+            return \Monolog\Logger::emergency($message, $context);
         }
         
         /**
@@ -6127,12 +5807,6 @@ namespace Illuminate\Support\Facades {
          
     }
 
-    /**
-     * 
-     *
-     * @see \Illuminate\Mail\Mailer
-     * @see \Illuminate\Support\Testing\Fakes\MailFake
-     */ 
     class Mail {
         
         /**
@@ -6184,18 +5858,6 @@ namespace Illuminate\Support\Facades {
         public static function to($users)
         {
             return \Illuminate\Mail\Mailer::to($users);
-        }
-        
-        /**
-         * Begin the process of mailing a mailable class instance.
-         *
-         * @param mixed $users
-         * @return \Illuminate\Mail\PendingMail 
-         * @static 
-         */ 
-        public static function cc($users)
-        {
-            return \Illuminate\Mail\Mailer::cc($users);
         }
         
         /**
@@ -6266,7 +5928,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Send a new message using a view.
          *
-         * @param string|array|\Illuminate\Contracts\Mail\Mailable $view
+         * @param string|array|\Illuminate\Mail\MailableContract $view
          * @param array $data
          * @param \Closure|string $callback
          * @return void 
@@ -6280,10 +5942,9 @@ namespace Illuminate\Support\Facades {
         /**
          * Queue a new e-mail message for sending.
          *
-         * @param string|array|\Illuminate\Contracts\Mail\Mailable $view
+         * @param string|array|\Illuminate\Mail\MailableContract $view
          * @param string|null $queue
          * @return mixed 
-         * @throws \InvalidArgumentException
          * @static 
          */ 
         public static function queue($view, $queue = null)
@@ -6323,10 +5984,9 @@ namespace Illuminate\Support\Facades {
          * Queue a new e-mail message for sending after (n) seconds.
          *
          * @param \DateTimeInterface|\DateInterval|int $delay
-         * @param string|array|\Illuminate\Contracts\Mail\Mailable $view
+         * @param string|array|\Illuminate\Mail\MailableContract $view
          * @param string|null $queue
          * @return mixed 
-         * @throws \InvalidArgumentException
          * @static 
          */ 
         public static function later($delay, $view, $queue = null)
@@ -6442,138 +6102,9 @@ namespace Illuminate\Support\Facades {
         {
             return \Illuminate\Mail\Mailer::hasMacro($name);
         }
-        
-        /**
-         * Assert if a mailable was sent based on a truth-test callback.
-         *
-         * @param string $mailable
-         * @param callable|int|null $callback
-         * @return void 
-         * @static 
-         */ 
-        public static function assertSent($mailable, $callback = null)
-        {
-            \Illuminate\Support\Testing\Fakes\MailFake::assertSent($mailable, $callback);
-        }
-        
-        /**
-         * Determine if a mailable was not sent based on a truth-test callback.
-         *
-         * @param string $mailable
-         * @param callable|null $callback
-         * @return void 
-         * @static 
-         */ 
-        public static function assertNotSent($mailable, $callback = null)
-        {
-            \Illuminate\Support\Testing\Fakes\MailFake::assertNotSent($mailable, $callback);
-        }
-        
-        /**
-         * Assert that no mailables were sent.
-         *
-         * @return void 
-         * @static 
-         */ 
-        public static function assertNothingSent()
-        {
-            \Illuminate\Support\Testing\Fakes\MailFake::assertNothingSent();
-        }
-        
-        /**
-         * Assert if a mailable was queued based on a truth-test callback.
-         *
-         * @param string $mailable
-         * @param callable|int|null $callback
-         * @return void 
-         * @static 
-         */ 
-        public static function assertQueued($mailable, $callback = null)
-        {
-            \Illuminate\Support\Testing\Fakes\MailFake::assertQueued($mailable, $callback);
-        }
-        
-        /**
-         * Determine if a mailable was not queued based on a truth-test callback.
-         *
-         * @param string $mailable
-         * @param callable|null $callback
-         * @return void 
-         * @static 
-         */ 
-        public static function assertNotQueued($mailable, $callback = null)
-        {
-            \Illuminate\Support\Testing\Fakes\MailFake::assertNotQueued($mailable, $callback);
-        }
-        
-        /**
-         * Assert that no mailables were queued.
-         *
-         * @return void 
-         * @static 
-         */ 
-        public static function assertNothingQueued()
-        {
-            \Illuminate\Support\Testing\Fakes\MailFake::assertNothingQueued();
-        }
-        
-        /**
-         * Get all of the mailables matching a truth-test callback.
-         *
-         * @param string $mailable
-         * @param callable|null $callback
-         * @return \Illuminate\Support\Collection 
-         * @static 
-         */ 
-        public static function sent($mailable, $callback = null)
-        {
-            return \Illuminate\Support\Testing\Fakes\MailFake::sent($mailable, $callback);
-        }
-        
-        /**
-         * Determine if the given mailable has been sent.
-         *
-         * @param string $mailable
-         * @return bool 
-         * @static 
-         */ 
-        public static function hasSent($mailable)
-        {
-            return \Illuminate\Support\Testing\Fakes\MailFake::hasSent($mailable);
-        }
-        
-        /**
-         * Get all of the queued mailables matching a truth-test callback.
-         *
-         * @param string $mailable
-         * @param callable|null $callback
-         * @return \Illuminate\Support\Collection 
-         * @static 
-         */ 
-        public static function queued($mailable, $callback = null)
-        {
-            return \Illuminate\Support\Testing\Fakes\MailFake::queued($mailable, $callback);
-        }
-        
-        /**
-         * Determine if the given mailable has been queued.
-         *
-         * @param string $mailable
-         * @return bool 
-         * @static 
-         */ 
-        public static function hasQueued($mailable)
-        {
-            return \Illuminate\Support\Testing\Fakes\MailFake::hasQueued($mailable);
-        }
          
     }
 
-    /**
-     * 
-     *
-     * @see \Illuminate\Notifications\ChannelManager
-     */ 
     class Notification {
         
         /**
@@ -6650,23 +6181,10 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
-         * Set the locale of notifications.
-         *
-         * @param string $locale
-         * @return $this 
-         * @static 
-         */ 
-        public static function locale($locale)
-        {
-            return \Illuminate\Notifications\ChannelManager::locale($locale);
-        }
-        
-        /**
          * Get a driver instance.
          *
          * @param string $driver
          * @return mixed 
-         * @throws \InvalidArgumentException
          * @static 
          */ 
         public static function driver($driver = null)
@@ -6700,111 +6218,9 @@ namespace Illuminate\Support\Facades {
             //Method inherited from \Illuminate\Support\Manager            
             return \Illuminate\Notifications\ChannelManager::getDrivers();
         }
-        
-        /**
-         * Assert if a notification was sent based on a truth-test callback.
-         *
-         * @param mixed $notifiable
-         * @param string $notification
-         * @param callable|null $callback
-         * @return void 
-         * @static 
-         */ 
-        public static function assertSentTo($notifiable, $notification, $callback = null)
-        {
-            \Illuminate\Support\Testing\Fakes\NotificationFake::assertSentTo($notifiable, $notification, $callback);
-        }
-        
-        /**
-         * Assert if a notification was sent a number of times.
-         *
-         * @param mixed $notifiable
-         * @param string $notification
-         * @param int $times
-         * @return void 
-         * @static 
-         */ 
-        public static function assertSentToTimes($notifiable, $notification, $times = 1)
-        {
-            \Illuminate\Support\Testing\Fakes\NotificationFake::assertSentToTimes($notifiable, $notification, $times);
-        }
-        
-        /**
-         * Determine if a notification was sent based on a truth-test callback.
-         *
-         * @param mixed $notifiable
-         * @param string $notification
-         * @param callable|null $callback
-         * @return void 
-         * @static 
-         */ 
-        public static function assertNotSentTo($notifiable, $notification, $callback = null)
-        {
-            \Illuminate\Support\Testing\Fakes\NotificationFake::assertNotSentTo($notifiable, $notification, $callback);
-        }
-        
-        /**
-         * Assert that no notifications were sent.
-         *
-         * @return void 
-         * @static 
-         */ 
-        public static function assertNothingSent()
-        {
-            \Illuminate\Support\Testing\Fakes\NotificationFake::assertNothingSent();
-        }
-        
-        /**
-         * Assert the total amount of times a notification was sent.
-         *
-         * @param int $expectedCount
-         * @param string $notification
-         * @return void 
-         * @static 
-         */ 
-        public static function assertTimesSent($expectedCount, $notification)
-        {
-            \Illuminate\Support\Testing\Fakes\NotificationFake::assertTimesSent($expectedCount, $notification);
-        }
-        
-        /**
-         * Get all of the notifications matching a truth-test callback.
-         *
-         * @param mixed $notifiable
-         * @param string $notification
-         * @param callable|null $callback
-         * @return \Illuminate\Support\Collection 
-         * @static 
-         */ 
-        public static function sent($notifiable, $notification, $callback = null)
-        {
-            return \Illuminate\Support\Testing\Fakes\NotificationFake::sent($notifiable, $notification, $callback);
-        }
-        
-        /**
-         * Determine if there are more notifications left to inspect.
-         *
-         * @param mixed $notifiable
-         * @param string $notification
-         * @return bool 
-         * @static 
-         */ 
-        public static function hasSent($notifiable, $notification)
-        {
-            return \Illuminate\Support\Testing\Fakes\NotificationFake::hasSent($notifiable, $notification);
-        }
          
     }
 
-    /**
-     * 
-     *
-     * @method static string sendResetLink(array $credentials)
-     * @method static mixed reset(array $credentials, \Closure $callback)
-     * @method static void validator(\Closure $callback)
-     * @method static bool validateNewPassword(array $credentials)
-     * @see \Illuminate\Auth\Passwords\PasswordBroker
-     */ 
     class Password {
         
         /**
@@ -6844,12 +6260,6 @@ namespace Illuminate\Support\Facades {
          
     }
 
-    /**
-     * 
-     *
-     * @see \Illuminate\Queue\QueueManager
-     * @see \Illuminate\Queue\Queue
-     */ 
     class Queue {
         
         /**
@@ -7021,96 +6431,6 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
-         * Assert if a job was pushed based on a truth-test callback.
-         *
-         * @param string $job
-         * @param callable|int|null $callback
-         * @return void 
-         * @static 
-         */ 
-        public static function assertPushed($job, $callback = null)
-        {
-            \Illuminate\Support\Testing\Fakes\QueueFake::assertPushed($job, $callback);
-        }
-        
-        /**
-         * Assert if a job was pushed based on a truth-test callback.
-         *
-         * @param string $queue
-         * @param string $job
-         * @param callable|null $callback
-         * @return void 
-         * @static 
-         */ 
-        public static function assertPushedOn($queue, $job, $callback = null)
-        {
-            \Illuminate\Support\Testing\Fakes\QueueFake::assertPushedOn($queue, $job, $callback);
-        }
-        
-        /**
-         * Assert if a job was pushed with chained jobs based on a truth-test callback.
-         *
-         * @param string $job
-         * @param array $expectedChain
-         * @param callable|null $callback
-         * @return void 
-         * @static 
-         */ 
-        public static function assertPushedWithChain($job, $expectedChain = array(), $callback = null)
-        {
-            \Illuminate\Support\Testing\Fakes\QueueFake::assertPushedWithChain($job, $expectedChain, $callback);
-        }
-        
-        /**
-         * Determine if a job was pushed based on a truth-test callback.
-         *
-         * @param string $job
-         * @param callable|null $callback
-         * @return void 
-         * @static 
-         */ 
-        public static function assertNotPushed($job, $callback = null)
-        {
-            \Illuminate\Support\Testing\Fakes\QueueFake::assertNotPushed($job, $callback);
-        }
-        
-        /**
-         * Assert that no jobs were pushed.
-         *
-         * @return void 
-         * @static 
-         */ 
-        public static function assertNothingPushed()
-        {
-            \Illuminate\Support\Testing\Fakes\QueueFake::assertNothingPushed();
-        }
-        
-        /**
-         * Get all of the jobs matching a truth-test callback.
-         *
-         * @param string $job
-         * @param callable|null $callback
-         * @return \Illuminate\Support\Collection 
-         * @static 
-         */ 
-        public static function pushed($job, $callback = null)
-        {
-            return \Illuminate\Support\Testing\Fakes\QueueFake::pushed($job, $callback);
-        }
-        
-        /**
-         * Determine if there are any stored jobs for a given class.
-         *
-         * @param string $job
-         * @return bool 
-         * @static 
-         */ 
-        public static function hasPushed($job)
-        {
-            return \Illuminate\Support\Testing\Fakes\QueueFake::hasPushed($job);
-        }
-        
-        /**
          * Get the size of the queue.
          *
          * @param string $queue
@@ -7119,7 +6439,7 @@ namespace Illuminate\Support\Facades {
          */ 
         public static function size($queue = null)
         {
-            return \Illuminate\Support\Testing\Fakes\QueueFake::size($queue);
+            return \Illuminate\Queue\SyncQueue::size($queue);
         }
         
         /**
@@ -7129,11 +6449,12 @@ namespace Illuminate\Support\Facades {
          * @param mixed $data
          * @param string $queue
          * @return mixed 
+         * @throws \Exception|\Throwable
          * @static 
          */ 
         public static function push($job, $data = '', $queue = null)
         {
-            return \Illuminate\Support\Testing\Fakes\QueueFake::push($job, $data, $queue);
+            return \Illuminate\Queue\SyncQueue::push($job, $data, $queue);
         }
         
         /**
@@ -7147,13 +6468,13 @@ namespace Illuminate\Support\Facades {
          */ 
         public static function pushRaw($payload, $queue = null, $options = array())
         {
-            return \Illuminate\Support\Testing\Fakes\QueueFake::pushRaw($payload, $queue, $options);
+            return \Illuminate\Queue\SyncQueue::pushRaw($payload, $queue, $options);
         }
         
         /**
          * Push a new job onto the queue after a delay.
          *
-         * @param \DateTime|int $delay
+         * @param \DateTimeInterface|\DateInterval|int $delay
          * @param string $job
          * @param mixed $data
          * @param string $queue
@@ -7162,7 +6483,19 @@ namespace Illuminate\Support\Facades {
          */ 
         public static function later($delay, $job, $data = '', $queue = null)
         {
-            return \Illuminate\Support\Testing\Fakes\QueueFake::later($delay, $job, $data, $queue);
+            return \Illuminate\Queue\SyncQueue::later($delay, $job, $data, $queue);
+        }
+        
+        /**
+         * Pop the next job off of the queue.
+         *
+         * @param string $queue
+         * @return \Illuminate\Contracts\Queue\Job|null 
+         * @static 
+         */ 
+        public static function pop($queue = null)
+        {
+            return \Illuminate\Queue\SyncQueue::pop($queue);
         }
         
         /**
@@ -7176,14 +6509,15 @@ namespace Illuminate\Support\Facades {
          */ 
         public static function pushOn($queue, $job, $data = '')
         {
-            return \Illuminate\Support\Testing\Fakes\QueueFake::pushOn($queue, $job, $data);
+            //Method inherited from \Illuminate\Queue\Queue            
+            return \Illuminate\Queue\SyncQueue::pushOn($queue, $job, $data);
         }
         
         /**
          * Push a new job onto the queue after a delay.
          *
          * @param string $queue
-         * @param \DateTime|int $delay
+         * @param \DateTimeInterface|\DateInterval|int $delay
          * @param string $job
          * @param mixed $data
          * @return mixed 
@@ -7191,19 +6525,8 @@ namespace Illuminate\Support\Facades {
          */ 
         public static function laterOn($queue, $delay, $job, $data = '')
         {
-            return \Illuminate\Support\Testing\Fakes\QueueFake::laterOn($queue, $delay, $job, $data);
-        }
-        
-        /**
-         * Pop the next job off of the queue.
-         *
-         * @param string $queue
-         * @return \Illuminate\Contracts\Queue\Job|null 
-         * @static 
-         */ 
-        public static function pop($queue = null)
-        {
-            return \Illuminate\Support\Testing\Fakes\QueueFake::pop($queue);
+            //Method inherited from \Illuminate\Queue\Queue            
+            return \Illuminate\Queue\SyncQueue::laterOn($queue, $delay, $job, $data);
         }
         
         /**
@@ -7217,30 +6540,8 @@ namespace Illuminate\Support\Facades {
          */ 
         public static function bulk($jobs, $data = '', $queue = null)
         {
-            return \Illuminate\Support\Testing\Fakes\QueueFake::bulk($jobs, $data, $queue);
-        }
-        
-        /**
-         * Get the connection name for the queue.
-         *
-         * @return string 
-         * @static 
-         */ 
-        public static function getConnectionName()
-        {
-            return \Illuminate\Support\Testing\Fakes\QueueFake::getConnectionName();
-        }
-        
-        /**
-         * Set the connection name for the queue.
-         *
-         * @param string $name
-         * @return $this 
-         * @static 
-         */ 
-        public static function setConnectionName($name)
-        {
-            return \Illuminate\Support\Testing\Fakes\QueueFake::setConnectionName($name);
+            //Method inherited from \Illuminate\Queue\Queue            
+            return \Illuminate\Queue\SyncQueue::bulk($jobs, $data, $queue);
         }
         
         /**
@@ -7257,16 +6558,28 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
-         * Register a callback to be executed when creating job payloads.
+         * Get the connection name for the queue.
          *
-         * @param callable $callback
-         * @return void 
+         * @return string 
          * @static 
          */ 
-        public static function createPayloadUsing($callback)
+        public static function getConnectionName()
         {
             //Method inherited from \Illuminate\Queue\Queue            
-            \Illuminate\Queue\SyncQueue::createPayloadUsing($callback);
+            return \Illuminate\Queue\SyncQueue::getConnectionName();
+        }
+        
+        /**
+         * Set the connection name for the queue.
+         *
+         * @param string $name
+         * @return $this 
+         * @static 
+         */ 
+        public static function setConnectionName($name)
+        {
+            //Method inherited from \Illuminate\Queue\Queue            
+            return \Illuminate\Queue\SyncQueue::setConnectionName($name);
         }
         
         /**
@@ -7284,11 +6597,6 @@ namespace Illuminate\Support\Facades {
          
     }
 
-    /**
-     * 
-     *
-     * @see \Illuminate\Routing\Redirector
-     */ 
     class Redirect {
         
         /**
@@ -7361,18 +6669,6 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
-         * Set the intended url.
-         *
-         * @param string $url
-         * @return void 
-         * @static 
-         */ 
-        public static function setIntendedUrl($url)
-        {
-            \Illuminate\Routing\Redirector::setIntendedUrl($url);
-        }
-        
-        /**
          * Create a new redirect response to the given path.
          *
          * @param string $path
@@ -7419,7 +6715,7 @@ namespace Illuminate\Support\Facades {
          * Create a new redirect response to a named route.
          *
          * @param string $route
-         * @param mixed $parameters
+         * @param array $parameters
          * @param int $status
          * @param array $headers
          * @return \Illuminate\Http\RedirectResponse 
@@ -7433,8 +6729,8 @@ namespace Illuminate\Support\Facades {
         /**
          * Create a new redirect response to a controller action.
          *
-         * @param string|array $action
-         * @param mixed $parameters
+         * @param string $action
+         * @param array $parameters
          * @param int $status
          * @param array $headers
          * @return \Illuminate\Http\RedirectResponse 
@@ -7508,11 +6804,6 @@ namespace Illuminate\Support\Facades {
          
     }
 
-    /**
-     * 
-     *
-     * @see \Illuminate\Http\Request
-     */ 
     class Request {
         
         /**
@@ -7766,21 +7057,6 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
-         * This method belongs to Symfony HttpFoundation and is not usually needed when using Laravel.
-         * 
-         * Instead, you may use the "input" method.
-         *
-         * @param string $key
-         * @param mixed $default
-         * @return mixed 
-         * @static 
-         */ 
-        public static function get($key, $default = null)
-        {
-            return \Illuminate\Http\Request::get($key, $default);
-        }
-        
-        /**
          * Get the JSON payload for the request.
          *
          * @param string $key
@@ -7886,13 +7162,12 @@ namespace Illuminate\Support\Facades {
          * Get the route handling the request.
          *
          * @param string|null $param
-         * @param mixed $default
          * @return \Illuminate\Routing\Route|object|string 
          * @static 
          */ 
-        public static function route($param = null, $default = null)
+        public static function route($param = null)
         {
-            return \Illuminate\Http\Request::route($param, $default);
+            return \Illuminate\Http\Request::route($param);
         }
         
         /**
@@ -8223,6 +7498,26 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
+         * Gets a "parameter" value from any bag.
+         * 
+         * This method is mainly useful for libraries that want to provide some flexibility. If you don't need the
+         * flexibility in controllers, it is better to explicitly get request parameters from the appropriate
+         * public property instead (attributes, query, request).
+         * 
+         * Order of precedence: PATH (routing placeholders or custom attributes), GET, BODY
+         *
+         * @param string $key The key
+         * @param mixed $default The default value if the parameter key does not exist
+         * @return mixed 
+         * @static 
+         */ 
+        public static function get($key, $default = null)
+        {
+            //Method inherited from \Symfony\Component\HttpFoundation\Request            
+            return \Illuminate\Http\Request::get($key, $default);
+        }
+        
+        /**
          * Whether the request contains a Session which was started in one of the
          * previous requests.
          *
@@ -8261,18 +7556,6 @@ namespace Illuminate\Support\Facades {
         {
             //Method inherited from \Symfony\Component\HttpFoundation\Request            
             return \Illuminate\Http\Request::setSession($session);
-        }
-        
-        /**
-         * 
-         *
-         * @internal 
-         * @static 
-         */ 
-        public static function setSessionFactory($factory)
-        {
-            //Method inherited from \Symfony\Component\HttpFoundation\Request            
-            return \Illuminate\Http\Request::setSessionFactory($factory);
         }
         
         /**
@@ -8640,7 +7923,7 @@ namespace Illuminate\Support\Facades {
          * Gets the mime type associated with the format.
          *
          * @param string $format The format
-         * @return string|null The associated mime type (null if not found)
+         * @return string The associated mime type (null if not found)
          * @static 
          */ 
         public static function getMimeType($format)
@@ -8697,7 +7980,7 @@ namespace Illuminate\Support\Facades {
          *  * _format request attribute
          *  * $default
          *
-         * @param string|null $default The default format
+         * @param string $default The default format
          * @return string The request format
          * @static 
          */ 
@@ -8822,7 +8105,7 @@ namespace Illuminate\Support\Facades {
          * Checks whether the method is cacheable or not.
          *
          * @see https://tools.ietf.org/html/rfc7231#section-4.2.3
-         * @return bool True for GET and HEAD, false otherwise
+         * @return bool 
          * @static 
          */ 
         public static function isMethodCacheable()
@@ -9158,7 +8441,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param string $key
          * @param string|array|null $default
-         * @return string|array|null 
+         * @return string|array 
          * @static 
          */ 
         public static function server($key = null, $default = null)
@@ -9183,7 +8466,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param string $key
          * @param string|array|null $default
-         * @return string|array|null 
+         * @return string|array 
          * @static 
          */ 
         public static function header($key = null, $default = null)
@@ -9229,7 +8512,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Determine if the request contains any of the given inputs.
          *
-         * @param string|array $keys
+         * @param string|array $key
          * @return bool 
          * @static 
          */ 
@@ -9327,7 +8610,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param string $key
          * @param string|array|null $default
-         * @return string|array|null 
+         * @return string|array 
          * @static 
          */ 
         public static function query($key = null, $default = null)
@@ -9340,7 +8623,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param string $key
          * @param string|array|null $default
-         * @return string|array|null 
+         * @return string|array 
          * @static 
          */ 
         public static function post($key = null, $default = null)
@@ -9365,7 +8648,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param string $key
          * @param string|array|null $default
-         * @return string|array|null 
+         * @return string|array 
          * @static 
          */ 
         public static function cookie($key = null, $default = null)
@@ -9462,22 +8745,17 @@ namespace Illuminate\Support\Facades {
          *
          * @static 
          */ 
-        public static function hasValidSignature($absolute = true)
+        public static function hasValidSignature()
         {
-            return \Illuminate\Http\Request::hasValidSignature($absolute);
+            return \Illuminate\Http\Request::hasValidSignature();
         }
          
     }
 
-    /**
-     * 
-     *
-     * @see \Illuminate\Contracts\Routing\ResponseFactory
-     */ 
     class Response {
         
         /**
-         * Create a new response instance.
+         * Return a new response from the application.
          *
          * @param string $content
          * @param int $status
@@ -9491,20 +8769,7 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
-         * Create a new "no content" response.
-         *
-         * @param int $status
-         * @param array $headers
-         * @return \Illuminate\Http\Response 
-         * @static 
-         */ 
-        public static function noContent($status = 204, $headers = array())
-        {
-            return \Illuminate\Routing\ResponseFactory::noContent($status, $headers);
-        }
-        
-        /**
-         * Create a new response for a given view.
+         * Return a new view response from the application.
          *
          * @param string $view
          * @param array $data
@@ -9519,7 +8784,7 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
-         * Create a new JSON response instance.
+         * Return a new JSON response from the application.
          *
          * @param mixed $data
          * @param int $status
@@ -9534,7 +8799,7 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
-         * Create a new JSONP response instance.
+         * Return a new JSONP response from the application.
          *
          * @param string $callback
          * @param mixed $data
@@ -9550,7 +8815,7 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
-         * Create a new streamed response instance.
+         * Return a new streamed response from the application.
          *
          * @param \Closure $callback
          * @param int $status
@@ -9564,7 +8829,7 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
-         * Create a new streamed response instance as a file download.
+         * Return a new streamed response as a file download from the application.
          *
          * @param \Closure $callback
          * @param string|null $name
@@ -9721,25 +8986,13 @@ namespace Illuminate\Support\Facades {
          
     }
 
-    /**
-     * 
-     *
-     * @method static \Illuminate\Routing\RouteRegistrar prefix(string  $prefix)
-     * @method static \Illuminate\Routing\RouteRegistrar where(array  $where)
-     * @method static \Illuminate\Routing\RouteRegistrar middleware(array|string|null $middleware)
-     * @method static \Illuminate\Routing\RouteRegistrar as(string $value)
-     * @method static \Illuminate\Routing\RouteRegistrar domain(string $value)
-     * @method static \Illuminate\Routing\RouteRegistrar name(string $value)
-     * @method static \Illuminate\Routing\RouteRegistrar namespace(string $value)
-     * @see \Illuminate\Routing\Router
-     */ 
     class Route {
         
         /**
          * Register a new GET route with the router.
          *
          * @param string $uri
-         * @param \Closure|array|string|callable|null $action
+         * @param \Closure|array|string|null $action
          * @return \Illuminate\Routing\Route 
          * @static 
          */ 
@@ -9752,7 +9005,7 @@ namespace Illuminate\Support\Facades {
          * Register a new POST route with the router.
          *
          * @param string $uri
-         * @param \Closure|array|string|callable|null $action
+         * @param \Closure|array|string|null $action
          * @return \Illuminate\Routing\Route 
          * @static 
          */ 
@@ -9765,7 +9018,7 @@ namespace Illuminate\Support\Facades {
          * Register a new PUT route with the router.
          *
          * @param string $uri
-         * @param \Closure|array|string|callable|null $action
+         * @param \Closure|array|string|null $action
          * @return \Illuminate\Routing\Route 
          * @static 
          */ 
@@ -9778,7 +9031,7 @@ namespace Illuminate\Support\Facades {
          * Register a new PATCH route with the router.
          *
          * @param string $uri
-         * @param \Closure|array|string|callable|null $action
+         * @param \Closure|array|string|null $action
          * @return \Illuminate\Routing\Route 
          * @static 
          */ 
@@ -9791,7 +9044,7 @@ namespace Illuminate\Support\Facades {
          * Register a new DELETE route with the router.
          *
          * @param string $uri
-         * @param \Closure|array|string|callable|null $action
+         * @param \Closure|array|string|null $action
          * @return \Illuminate\Routing\Route 
          * @static 
          */ 
@@ -9804,7 +9057,7 @@ namespace Illuminate\Support\Facades {
          * Register a new OPTIONS route with the router.
          *
          * @param string $uri
-         * @param \Closure|array|string|callable|null $action
+         * @param \Closure|array|string|null $action
          * @return \Illuminate\Routing\Route 
          * @static 
          */ 
@@ -9817,7 +9070,7 @@ namespace Illuminate\Support\Facades {
          * Register a new route responding to all verbs.
          *
          * @param string $uri
-         * @param \Closure|array|string|callable|null $action
+         * @param \Closure|array|string|null $action
          * @return \Illuminate\Routing\Route 
          * @static 
          */ 
@@ -9829,7 +9082,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Register a new Fallback route with the router.
          *
-         * @param \Closure|array|string|callable|null $action
+         * @param \Closure|array|string|null $action
          * @return \Illuminate\Routing\Route 
          * @static 
          */ 
@@ -9847,22 +9100,9 @@ namespace Illuminate\Support\Facades {
          * @return \Illuminate\Routing\Route 
          * @static 
          */ 
-        public static function redirect($uri, $destination, $status = 302)
+        public static function redirect($uri, $destination, $status = 301)
         {
             return \Illuminate\Routing\Router::redirect($uri, $destination, $status);
-        }
-        
-        /**
-         * Create a permanent redirect from one URI to another.
-         *
-         * @param string $uri
-         * @param string $destination
-         * @return \Illuminate\Routing\Route 
-         * @static 
-         */ 
-        public static function permanentRedirect($uri, $destination)
-        {
-            return \Illuminate\Routing\Router::permanentRedirect($uri, $destination);
         }
         
         /**
@@ -9884,7 +9124,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param array|string $methods
          * @param string $uri
-         * @param \Closure|array|string|callable|null $action
+         * @param \Closure|array|string|null $action
          * @return \Illuminate\Routing\Route 
          * @static 
          */ 
@@ -9897,13 +9137,12 @@ namespace Illuminate\Support\Facades {
          * Register an array of resource controllers.
          *
          * @param array $resources
-         * @param array $options
          * @return void 
          * @static 
          */ 
-        public static function resources($resources, $options = array())
+        public static function resources($resources)
         {
-            \Illuminate\Routing\Router::resources($resources, $options);
+            \Illuminate\Routing\Router::resources($resources);
         }
         
         /**
@@ -9924,13 +9163,12 @@ namespace Illuminate\Support\Facades {
          * Register an array of API resource controllers.
          *
          * @param array $resources
-         * @param array $options
          * @return void 
          * @static 
          */ 
-        public static function apiResources($resources, $options = array())
+        public static function apiResources($resources)
         {
-            \Illuminate\Routing\Router::apiResources($resources, $options);
+            \Illuminate\Routing\Router::apiResources($resources);
         }
         
         /**
@@ -9981,20 +9219,6 @@ namespace Illuminate\Support\Facades {
         public static function getLastGroupPrefix()
         {
             return \Illuminate\Routing\Router::getLastGroupPrefix();
-        }
-        
-        /**
-         * Add a route to the underlying route collection.
-         *
-         * @param array|string $methods
-         * @param string $uri
-         * @param \Closure|array|string|callable|null $action
-         * @return \Illuminate\Routing\Route 
-         * @static 
-         */ 
-        public static function addRoute($methods, $uri, $action)
-        {
-            return \Illuminate\Routing\Router::addRoute($methods, $uri, $action);
         }
         
         /**
@@ -10333,7 +9557,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Get the currently dispatched route instance.
          *
-         * @return \Illuminate\Routing\Route|null 
+         * @return \Illuminate\Routing\Route 
          * @static 
          */ 
         public static function current()
@@ -10426,35 +9650,12 @@ namespace Illuminate\Support\Facades {
         /**
          * Register the typical authentication routes for an application.
          *
-         * @param array $options
          * @return void 
          * @static 
          */ 
-        public static function auth($options = array())
+        public static function auth()
         {
-            \Illuminate\Routing\Router::auth($options);
-        }
-        
-        /**
-         * Register the typical reset password routes for an application.
-         *
-         * @return void 
-         * @static 
-         */ 
-        public static function resetPassword()
-        {
-            \Illuminate\Routing\Router::resetPassword();
-        }
-        
-        /**
-         * Register the typical email verification routes for an application.
-         *
-         * @return void 
-         * @static 
-         */ 
-        public static function emailVerification()
-        {
-            \Illuminate\Routing\Router::emailVerification();
+            \Illuminate\Routing\Router::auth();
         }
         
         /**
@@ -10570,11 +9771,6 @@ namespace Illuminate\Support\Facades {
          
     }
 
-    /**
-     * 
-     *
-     * @see \Illuminate\Database\Schema\Builder
-     */ 
     class Schema {
         
         /**
@@ -10610,17 +9806,6 @@ namespace Illuminate\Support\Facades {
         public static function dropAllTables()
         {
             \Illuminate\Database\Schema\MySqlBuilder::dropAllTables();
-        }
-        
-        /**
-         * Drop all views from the database.
-         *
-         * @return void 
-         * @static 
-         */ 
-        public static function dropAllViews()
-        {
-            \Illuminate\Database\Schema\MySqlBuilder::dropAllViews();
         }
         
         /**
@@ -10810,12 +9995,6 @@ namespace Illuminate\Support\Facades {
          
     }
 
-    /**
-     * 
-     *
-     * @see \Illuminate\Session\SessionManager
-     * @see \Illuminate\Session\Store
-     */ 
     class Session {
         
         /**
@@ -10857,7 +10036,6 @@ namespace Illuminate\Support\Facades {
          *
          * @param string $driver
          * @return mixed 
-         * @throws \InvalidArgumentException
          * @static 
          */ 
         public static function driver($driver = null)
@@ -11381,11 +10559,6 @@ namespace Illuminate\Support\Facades {
          
     }
 
-    /**
-     * 
-     *
-     * @see \Illuminate\Filesystem\FilesystemManager
-     */ 
     class Storage {
         
         /**
@@ -11488,12 +10661,12 @@ namespace Illuminate\Support\Facades {
          *
          * @param string $name
          * @param mixed $disk
-         * @return $this 
+         * @return void 
          * @static 
          */ 
         public static function set($name, $disk)
         {
-            return \Illuminate\Filesystem\FilesystemManager::set($name, $disk);
+            \Illuminate\Filesystem\FilesystemManager::set($name, $disk);
         }
         
         /**
@@ -11516,18 +10689,6 @@ namespace Illuminate\Support\Facades {
         public static function getDefaultCloudDriver()
         {
             return \Illuminate\Filesystem\FilesystemManager::getDefaultCloudDriver();
-        }
-        
-        /**
-         * Unset the given disk instances.
-         *
-         * @param array|string $disk
-         * @return $this 
-         * @static 
-         */ 
-        public static function forgetDisk($disk)
-        {
-            return \Illuminate\Filesystem\FilesystemManager::forgetDisk($disk);
         }
         
         /**
@@ -11693,12 +10854,12 @@ namespace Illuminate\Support\Facades {
          *
          * @param string $path
          * @param string $visibility
-         * @return bool 
+         * @return void 
          * @static 
          */ 
         public static function setVisibility($path, $visibility)
         {
-            return \Illuminate\Filesystem\FilesystemAdapter::setVisibility($path, $visibility);
+            \Illuminate\Filesystem\FilesystemAdapter::setVisibility($path, $visibility);
         }
         
         /**
@@ -11707,7 +10868,7 @@ namespace Illuminate\Support\Facades {
          * @param string $path
          * @param string $data
          * @param string $separator
-         * @return bool 
+         * @return int 
          * @static 
          */ 
         public static function prepend($path, $data, $separator = '')
@@ -11721,7 +10882,7 @@ namespace Illuminate\Support\Facades {
          * @param string $path
          * @param string $data
          * @param string $separator
-         * @return bool 
+         * @return int 
          * @static 
          */ 
         public static function append($path, $data, $separator = '')
@@ -11808,41 +10969,11 @@ namespace Illuminate\Support\Facades {
          *
          * @param string $path
          * @return string 
-         * @throws \RuntimeException
          * @static 
          */ 
         public static function url($path)
         {
             return \Illuminate\Filesystem\FilesystemAdapter::url($path);
-        }
-        
-        /**
-         * Get a resource to read the file.
-         *
-         * @param string $path
-         * @return resource|null The path resource or null on failure.
-         * @throws FileNotFoundException
-         * @static 
-         */ 
-        public static function readStream($path)
-        {
-            return \Illuminate\Filesystem\FilesystemAdapter::readStream($path);
-        }
-        
-        /**
-         * Write a new file using a stream.
-         *
-         * @param string $path
-         * @param resource $resource
-         * @param array $options
-         * @return bool 
-         * @throws \InvalidArgumentException If $resource is not a file handle.
-         * @throws FileExistsException
-         * @static 
-         */ 
-        public static function writeStream($path, $resource, $options = array())
-        {
-            return \Illuminate\Filesystem\FilesystemAdapter::writeStream($path, $resource, $options);
         }
         
         /**
@@ -11852,7 +10983,6 @@ namespace Illuminate\Support\Facades {
          * @param \DateTimeInterface $expiration
          * @param array $options
          * @return string 
-         * @throws \RuntimeException
          * @static 
          */ 
         public static function temporaryUrl($path, $expiration, $options = array())
@@ -11988,11 +11118,6 @@ namespace Illuminate\Support\Facades {
          
     }
 
-    /**
-     * 
-     *
-     * @see \Illuminate\Routing\UrlGenerator
-     */ 
     class URL {
         
         /**
@@ -12102,7 +11227,7 @@ namespace Illuminate\Support\Facades {
          * @return string 
          * @static 
          */ 
-        public static function formatScheme($secure = null)
+        public static function formatScheme($secure)
         {
             return \Illuminate\Routing\UrlGenerator::formatScheme($secure);
         }
@@ -12113,13 +11238,12 @@ namespace Illuminate\Support\Facades {
          * @param string $name
          * @param array $parameters
          * @param \DateTimeInterface|int $expiration
-         * @param bool $absolute
          * @return string 
          * @static 
          */ 
-        public static function signedRoute($name, $parameters = array(), $expiration = null, $absolute = true)
+        public static function signedRoute($name, $parameters = array(), $expiration = null)
         {
-            return \Illuminate\Routing\UrlGenerator::signedRoute($name, $parameters, $expiration, $absolute);
+            return \Illuminate\Routing\UrlGenerator::signedRoute($name, $parameters, $expiration);
         }
         
         /**
@@ -12128,26 +11252,24 @@ namespace Illuminate\Support\Facades {
          * @param string $name
          * @param \DateTimeInterface|int $expiration
          * @param array $parameters
-         * @param bool $absolute
          * @return string 
          * @static 
          */ 
-        public static function temporarySignedRoute($name, $expiration, $parameters = array(), $absolute = true)
+        public static function temporarySignedRoute($name, $expiration, $parameters = array())
         {
-            return \Illuminate\Routing\UrlGenerator::temporarySignedRoute($name, $expiration, $parameters, $absolute);
+            return \Illuminate\Routing\UrlGenerator::temporarySignedRoute($name, $expiration, $parameters);
         }
         
         /**
          * Determine if the given request has a valid signature.
          *
          * @param \Illuminate\Http\Request $request
-         * @param bool $absolute
          * @return bool 
          * @static 
          */ 
-        public static function hasValidSignature($request, $absolute = true)
+        public static function hasValidSignature($request)
         {
-            return \Illuminate\Routing\UrlGenerator::hasValidSignature($request, $absolute);
+            return \Illuminate\Routing\UrlGenerator::hasValidSignature($request);
         }
         
         /**
@@ -12168,7 +11290,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Get the URL to a controller action.
          *
-         * @param string|array $action
+         * @param string $action
          * @param mixed $parameters
          * @param bool $absolute
          * @return string 
@@ -12210,13 +11332,12 @@ namespace Illuminate\Support\Facades {
          *
          * @param string $root
          * @param string $path
-         * @param \Illuminate\Routing\Route|null $route
          * @return string 
          * @static 
          */ 
-        public static function format($root, $path, $route = null)
+        public static function format($root, $path)
         {
-            return \Illuminate\Routing\UrlGenerator::format($root, $path, $route);
+            return \Illuminate\Routing\UrlGenerator::format($root, $path);
         }
         
         /**
@@ -12257,13 +11378,13 @@ namespace Illuminate\Support\Facades {
         /**
          * Force the scheme for URLs.
          *
-         * @param string $scheme
+         * @param string $schema
          * @return void 
          * @static 
          */ 
-        public static function forceScheme($scheme)
+        public static function forceScheme($schema)
         {
-            \Illuminate\Routing\UrlGenerator::forceScheme($scheme);
+            \Illuminate\Routing\UrlGenerator::forceScheme($schema);
         }
         
         /**
@@ -12424,11 +11545,6 @@ namespace Illuminate\Support\Facades {
          
     }
 
-    /**
-     * 
-     *
-     * @see \Illuminate\Validation\Factory
-     */ 
     class Validator {
         
         /**
@@ -12565,18 +11681,13 @@ namespace Illuminate\Support\Facades {
          
     }
 
-    /**
-     * 
-     *
-     * @see \Illuminate\View\Factory
-     */ 
     class View {
         
         /**
          * Get the evaluated view contents for the given view.
          *
          * @param string $path
-         * @param \Illuminate\Contracts\Support\Arrayable|array $data
+         * @param array $data
          * @param array $mergeData
          * @return \Illuminate\Contracts\View\View 
          * @static 
@@ -12590,7 +11701,7 @@ namespace Illuminate\Support\Facades {
          * Get the evaluated view contents for the given view.
          *
          * @param string $view
-         * @param \Illuminate\Contracts\Support\Arrayable|array $data
+         * @param array $data
          * @param array $mergeData
          * @return \Illuminate\Contracts\View\View 
          * @static 
@@ -12604,10 +11715,9 @@ namespace Illuminate\Support\Facades {
          * Get the first view that actually exists from the given list.
          *
          * @param array $views
-         * @param \Illuminate\Contracts\Support\Arrayable|array $data
+         * @param array $data
          * @param array $mergeData
          * @return \Illuminate\Contracts\View\View 
-         * @throws \InvalidArgumentException
          * @static 
          */ 
         public static function first($views, $data = array(), $mergeData = array())
@@ -12620,7 +11730,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param bool $condition
          * @param string $view
-         * @param \Illuminate\Contracts\Support\Arrayable|array $data
+         * @param array $data
          * @param array $mergeData
          * @return string 
          * @static 
@@ -12927,44 +12037,6 @@ namespace Illuminate\Support\Facades {
         public static function getShared()
         {
             return \Illuminate\View\Factory::getShared();
-        }
-        
-        /**
-         * Register a custom macro.
-         *
-         * @param string $name
-         * @param object|callable $macro
-         * @return void 
-         * @static 
-         */ 
-        public static function macro($name, $macro)
-        {
-            \Illuminate\View\Factory::macro($name, $macro);
-        }
-        
-        /**
-         * Mix another object into the class.
-         *
-         * @param object $mixin
-         * @return void 
-         * @throws \ReflectionException
-         * @static 
-         */ 
-        public static function mixin($mixin)
-        {
-            \Illuminate\View\Factory::mixin($mixin);
-        }
-        
-        /**
-         * Checks if macro is registered.
-         *
-         * @param string $name
-         * @return bool 
-         * @static 
-         */ 
-        public static function hasMacro($name)
-        {
-            return \Illuminate\View\Factory::hasMacro($name);
         }
         
         /**
@@ -13368,12 +12440,2452 @@ namespace Illuminate\Support\Facades {
  
 }
 
+namespace DataTable\DataTables { 
+
+    class DataTableFacade {
+        
+        /**
+         * 
+         *
+         * @param string $tableId
+         * @param string $caption
+         * @param array $option
+         * @return $this 
+         * @static 
+         */ 
+        public static function config($tableId = 'datatable', $caption = '', $option = array())
+        {
+            return \DataTable\DataTables\DataTableBuilder::config($tableId, $caption, $option);
+        }
+        
+        /**
+         * 
+         *
+         * @param bool $formHorizontal
+         * @return $this 
+         * @throws \Exception
+         * @static 
+         */ 
+        public static function gridSystemConfig($formHorizontal = false)
+        {
+            return \DataTable\DataTables\DataTableBuilder::gridSystemConfig($formHorizontal);
+        }
+        
+        /**
+         * 
+         *
+         * @param int $cols
+         * @param string $type
+         * @return $this 
+         * @throws \Exception
+         * @static 
+         */ 
+        public static function setGridNormalCol($cols = 6, $type = 'lg|md|sm|xs')
+        {
+            return \DataTable\DataTables\DataTableBuilder::setGridNormalCol($cols, $type);
+        }
+        
+        /**
+         * 
+         *
+         * @param int $cols
+         * @param string $type
+         * @return $this 
+         * @throws \Exception
+         * @static 
+         */ 
+        public static function setGridHorizontalTitle($cols = 3, $type = 'lg|md|sm|xs')
+        {
+            return \DataTable\DataTables\DataTableBuilder::setGridHorizontalTitle($cols, $type);
+        }
+        
+        /**
+         * 
+         *
+         * @param int $cols
+         * @param string $type
+         * @return $this 
+         * @throws \Exception
+         * @static 
+         */ 
+        public static function setGridHorizontalCol($cols = 9, $type = 'lg|md|sm|xs')
+        {
+            return \DataTable\DataTables\DataTableBuilder::setGridHorizontalCol($cols, $type);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $id
+         * @param string $html
+         * @param string $class
+         * @param string $attr
+         * @return $this 
+         * @static 
+         */ 
+        public static function addCont($id = '', $html = '', $class = '', $attr = '')
+        {
+            return \DataTable\DataTables\DataTableBuilder::addCont($id, $html, $class, $attr);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $id
+         * @param string $class
+         * @param string $attr
+         * @return $this 
+         * @static 
+         */ 
+        public static function startCont($id = '', $class = '', $attr = '')
+        {
+            return \DataTable\DataTables\DataTableBuilder::startCont($id, $class, $attr);
+        }
+        
+        /**
+         * 
+         *
+         * @return $this 
+         * @static 
+         */ 
+        public static function endCont()
+        {
+            return \DataTable\DataTables\DataTableBuilder::endCont();
+        }
+        
+        /**
+         * 
+         *
+         * @param $relation
+         * @return $this 
+         * @static 
+         */ 
+        public static function startRelation($relation)
+        {
+            return \DataTable\DataTables\DataTableBuilder::startRelation($relation);
+        }
+        
+        /**
+         * 
+         *
+         * @return $this 
+         * @static 
+         */ 
+        public static function endRelation()
+        {
+            return \DataTable\DataTables\DataTableBuilder::endRelation();
+        }
+        
+        /**
+         * 
+         *
+         * @param $title
+         * @param string $icon
+         * @return $this 
+         * @throws \Exception
+         * @static 
+         */ 
+        public static function startTab($title, $icon = '')
+        {
+            return \DataTable\DataTables\DataTableBuilder::startTab($title, $icon);
+        }
+        
+        /**
+         * 
+         *
+         * @return $this 
+         * @throws \Exception
+         * @static 
+         */ 
+        public static function endTab()
+        {
+            return \DataTable\DataTables\DataTableBuilder::endTab();
+        }
+        
+        /**
+         * 
+         *
+         * @param string $id
+         * @param string $class
+         * @param string $attr
+         * @return $this 
+         * @static 
+         */ 
+        public static function openFromGroup($id = '', $class = '', $attr = '')
+        {
+            return \DataTable\DataTables\DataTableBuilder::openFromGroup($id, $class, $attr);
+        }
+        
+        /**
+         * 
+         *
+         * @return $this 
+         * @static 
+         */ 
+        public static function closeFromGroup()
+        {
+            return \DataTable\DataTables\DataTableBuilder::closeFromGroup();
+        }
+        
+        /**
+         * 
+         *
+         * @return $this 
+         * @static 
+         */ 
+        public static function startHorizontalTab()
+        {
+            return \DataTable\DataTables\DataTableBuilder::startHorizontalTab();
+        }
+        
+        /**
+         * 
+         *
+         * @param $id
+         * @param $title
+         * @param string $class
+         * @param bool $active
+         * @return $this 
+         * @static 
+         */ 
+        public static function openHorizontalTab($id, $title, $class = '', $active = false)
+        {
+            return \DataTable\DataTables\DataTableBuilder::openHorizontalTab($id, $title, $class, $active);
+        }
+        
+        /**
+         * 
+         *
+         * @return $this 
+         * @static 
+         */ 
+        public static function closeHorizontalTab()
+        {
+            return \DataTable\DataTables\DataTableBuilder::closeHorizontalTab();
+        }
+        
+        /**
+         * 
+         *
+         * @return $this 
+         * @static 
+         */ 
+        public static function endHorizontalTab()
+        {
+            return \DataTable\DataTables\DataTableBuilder::endHorizontalTab();
+        }
+        
+        /**
+         * 
+         *
+         * @param string $data
+         * @param string $name
+         * @param string $value
+         * @param bool $permanent
+         * @return $this 
+         * @static 
+         */ 
+        public static function addPrimaryKey($data = '', $name = '', $value = '', $permanent = false)
+        {
+            return \DataTable\DataTables\DataTableBuilder::addPrimaryKey($data, $name, $value, $permanent);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $data
+         * @param string $name
+         * @param string $value
+         * @param bool $primaryKey
+         * @param bool $permanent
+         * @return $this 
+         * @static 
+         */ 
+        public static function addHiddenInput($data = '', $name = '', $value = '', $primaryKey = false, $permanent = false)
+        {
+            return \DataTable\DataTables\DataTableBuilder::addHiddenInput($data, $name, $value, $primaryKey, $permanent);
+        }
+        
+        /**
+         * 
+         *
+         * @return $this 
+         * @static 
+         */ 
+        public static function addIndex()
+        {
+            return \DataTable\DataTables\DataTableBuilder::addIndex();
+        }
+        
+        /**
+         * 
+         *
+         * @param string $title
+         * @param string $data
+         * @param string $name
+         * @param string $colClass
+         * @param string $dialogAttr
+         * @param string $colWidth
+         * @param bool $visible
+         * @param bool $orderable
+         * @param bool $searchable
+         * @param bool $choosen
+         * @param bool $printable
+         * @return $this 
+         * @static 
+         */ 
+        public static function addInputText($title = '', $data = '', $name = '', $colClass = '', $dialogAttr = '', $colWidth = '', $visible = true, $orderable = true, $searchable = true, $choosen = true, $printable = true)
+        {
+            return \DataTable\DataTables\DataTableBuilder::addInputText($title, $data, $name, $colClass, $dialogAttr, $colWidth, $visible, $orderable, $searchable, $choosen, $printable);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $title
+         * @param string $data
+         * @param string $name
+         * @param string $colClass
+         * @param string $dialogAttr
+         * @param string $colWidth
+         * @param bool $visible
+         * @param bool $orderable
+         * @param bool $searchable
+         * @param bool $choosen
+         * @param bool $printable
+         * @return $this 
+         * @static 
+         */ 
+        public static function addInputDate($title = '', $data = '', $name = '', $colClass = '', $dialogAttr = '', $colWidth = '', $visible = true, $orderable = true, $searchable = true, $choosen = true, $printable = true)
+        {
+            return \DataTable\DataTables\DataTableBuilder::addInputDate($title, $data, $name, $colClass, $dialogAttr, $colWidth, $visible, $orderable, $searchable, $choosen, $printable);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $title
+         * @param string $data
+         * @param string $name
+         * @param string $colClass
+         * @param string $dialogAttr
+         * @param string $colWidth
+         * @param bool $visible
+         * @param bool $orderable
+         * @param bool $searchable
+         * @param bool $choosen
+         * @param bool $printable
+         * @return $this 
+         * @static 
+         */ 
+        public static function addInputTime($title = '', $data = '', $name = '', $colClass = '', $dialogAttr = '', $colWidth = '', $visible = true, $orderable = true, $searchable = true, $choosen = true, $printable = true)
+        {
+            return \DataTable\DataTables\DataTableBuilder::addInputTime($title, $data, $name, $colClass, $dialogAttr, $colWidth, $visible, $orderable, $searchable, $choosen, $printable);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $title
+         * @param string $data
+         * @param string $name
+         * @param string $colClass
+         * @param string $dialogAttr
+         * @param string $colWidth
+         * @param bool $visible
+         * @param bool $orderable
+         * @param bool $searchable
+         * @param bool $choosen
+         * @param bool $printable
+         * @return $this 
+         * @static 
+         */ 
+        public static function addInputDateTimeLocal($title = '', $data = '', $name = '', $colClass = '', $dialogAttr = '', $colWidth = '', $visible = true, $orderable = true, $searchable = true, $choosen = true, $printable = true)
+        {
+            return \DataTable\DataTables\DataTableBuilder::addInputDateTimeLocal($title, $data, $name, $colClass, $dialogAttr, $colWidth, $visible, $orderable, $searchable, $choosen, $printable);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $title
+         * @param string $data
+         * @param string $name
+         * @param string $colClass
+         * @param string $dialogAttr
+         * @param string $colWidth
+         * @param bool $visible
+         * @param bool $orderable
+         * @param bool $searchable
+         * @param bool $choosen
+         * @param bool $printable
+         * @return $this 
+         * @static 
+         */ 
+        public static function addInputDateTime($title = '', $data = '', $name = '', $colClass = '', $dialogAttr = '', $colWidth = '', $visible = true, $orderable = true, $searchable = true, $choosen = true, $printable = true)
+        {
+            return \DataTable\DataTables\DataTableBuilder::addInputDateTime($title, $data, $name, $colClass, $dialogAttr, $colWidth, $visible, $orderable, $searchable, $choosen, $printable);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $title
+         * @param string $data
+         * @param string $name
+         * @param string $colClass
+         * @param string $dialogAttr
+         * @param string $colWidth
+         * @param bool $visible
+         * @param bool $orderable
+         * @param bool $searchable
+         * @param bool $choosen
+         * @param bool $printable
+         * @return $this 
+         * @static 
+         */ 
+        public static function addInputMonth($title = '', $data = '', $name = '', $colClass = '', $dialogAttr = '', $colWidth = '', $visible = true, $orderable = true, $searchable = true, $choosen = true, $printable = true)
+        {
+            return \DataTable\DataTables\DataTableBuilder::addInputMonth($title, $data, $name, $colClass, $dialogAttr, $colWidth, $visible, $orderable, $searchable, $choosen, $printable);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $title
+         * @param string $data
+         * @param string $name
+         * @param string $colClass
+         * @param string $dialogAttr
+         * @param string $colWidth
+         * @param bool $visible
+         * @param bool $orderable
+         * @param bool $searchable
+         * @param bool $choosen
+         * @param bool $printable
+         * @return $this 
+         * @static 
+         */ 
+        public static function addInputWeek($title = '', $data = '', $name = '', $colClass = '', $dialogAttr = '', $colWidth = '', $visible = true, $orderable = true, $searchable = true, $choosen = true, $printable = true)
+        {
+            return \DataTable\DataTables\DataTableBuilder::addInputWeek($title, $data, $name, $colClass, $dialogAttr, $colWidth, $visible, $orderable, $searchable, $choosen, $printable);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $title
+         * @param string $data
+         * @param string $name
+         * @param string $colClass
+         * @param string $dialogAttr
+         * @param string $colWidth
+         * @param bool $visible
+         * @param bool $orderable
+         * @param bool $searchable
+         * @param bool $choosen
+         * @param bool $printable
+         * @return $this 
+         * @static 
+         */ 
+        public static function addInputEmail($title = '', $data = '', $name = '', $colClass = '', $dialogAttr = '', $colWidth = '', $visible = true, $orderable = true, $searchable = true, $choosen = true, $printable = true)
+        {
+            return \DataTable\DataTables\DataTableBuilder::addInputEmail($title, $data, $name, $colClass, $dialogAttr, $colWidth, $visible, $orderable, $searchable, $choosen, $printable);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $title
+         * @param string $data
+         * @param string $name
+         * @param string $colClass
+         * @param string $dialogAttr
+         * @param string $colWidth
+         * @param bool $visible
+         * @param bool $orderable
+         * @param bool $searchable
+         * @param bool $choosen
+         * @param bool $printable
+         * @return $this 
+         * @static 
+         */ 
+        public static function addInputUrl($title = '', $data = '', $name = '', $colClass = '', $dialogAttr = '', $colWidth = '', $visible = true, $orderable = true, $searchable = true, $choosen = true, $printable = true)
+        {
+            return \DataTable\DataTables\DataTableBuilder::addInputUrl($title, $data, $name, $colClass, $dialogAttr, $colWidth, $visible, $orderable, $searchable, $choosen, $printable);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $title
+         * @param string $id
+         * @param string $name
+         * @param string $value
+         * @param string $class
+         * @param string $attr
+         * @return $this 
+         * @static 
+         */ 
+        public static function addInputTextDialog($title = '', $id = '', $name = '', $value = '', $class = '', $attr = '')
+        {
+            return \DataTable\DataTables\DataTableBuilder::addInputTextDialog($title, $id, $name, $value, $class, $attr);
+        }
+        
+        /**
+         * 
+         *
+         * @param array $cols
+         * @param string $colClass
+         * @param string $colWidth
+         * @param string $dialogAttr
+         * @param bool $visible
+         * @param bool $orderable
+         * @param bool $searchable
+         * @param bool $choosen
+         * @param bool $printable
+         * @return $this 
+         * @static 
+         */ 
+        public static function addMultiInputTextLangs($cols = array(), $colClass = '', $colWidth = '', $dialogAttr = '', $visible = true, $orderable = true, $searchable = true, $choosen = true, $printable = true)
+        {
+            return \DataTable\DataTables\DataTableBuilder::addMultiInputTextLangs($cols, $colClass, $colWidth, $dialogAttr, $visible, $orderable, $searchable, $choosen, $printable);
+        }
+        
+        /**
+         * 
+         *
+         * @param array $cols
+         * @param string $colClass
+         * @param string $colWidth
+         * @param string $dialogAttr
+         * @param bool $visible
+         * @param bool $orderable
+         * @param bool $searchable
+         * @param bool $choosen
+         * @param bool $printable
+         * @return $this 
+         * @static 
+         */ 
+        public static function addMultiTextareaLangs($cols = array(), $colClass = '', $colWidth = '', $dialogAttr = '', $visible = true, $orderable = true, $searchable = true, $choosen = true, $printable = true)
+        {
+            return \DataTable\DataTables\DataTableBuilder::addMultiTextareaLangs($cols, $colClass, $colWidth, $dialogAttr, $visible, $orderable, $searchable, $choosen, $printable);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $title
+         * @param string $data
+         * @param string $name
+         * @param string $colClass
+         * @param string $dialogAttr
+         * @param string $colWidth
+         * @param bool $visible
+         * @param bool $orderable
+         * @param bool $searchable
+         * @param bool $choosen
+         * @param bool $printable
+         * @return $this 
+         * @static 
+         */ 
+        public static function addInputPassword($title = '', $data = '', $name = '', $colClass = '', $dialogAttr = '', $colWidth = '', $visible = true, $orderable = true, $searchable = true, $choosen = true, $printable = false)
+        {
+            return \DataTable\DataTables\DataTableBuilder::addInputPassword($title, $data, $name, $colClass, $dialogAttr, $colWidth, $visible, $orderable, $searchable, $choosen, $printable);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $title
+         * @param string $data
+         * @param string $name
+         * @param string $colClass
+         * @param string $groupIcon
+         * @param string $groupClass
+         * @param string $dialogAttr
+         * @param string $colWidth
+         * @param bool $visible
+         * @param bool $orderable
+         * @param bool $searchable
+         * @param bool $choosen
+         * @param bool $printable
+         * @return $this 
+         * @static 
+         */ 
+        public static function addInputGroup($title = '', $data = '', $name = '', $colClass = '', $groupIcon = '', $groupClass = '', $dialogAttr = '', $colWidth = '', $visible = true, $orderable = true, $searchable = true, $choosen = true, $printable = true)
+        {
+            return \DataTable\DataTables\DataTableBuilder::addInputGroup($title, $data, $name, $colClass, $groupIcon, $groupClass, $dialogAttr, $colWidth, $visible, $orderable, $searchable, $choosen, $printable);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $title
+         * @param string $data
+         * @param string $name
+         * @param string $colClass
+         * @param string $dialogAttr
+         * @param string $colWidth
+         * @param bool $visible
+         * @param bool $orderable
+         * @param bool $searchable
+         * @param bool $choosen
+         * @param bool $printable
+         * @return $this 
+         * @static 
+         */ 
+        public static function addTextArea($title = '', $data = '', $name = '', $colClass = '', $dialogAttr = '', $colWidth = '', $visible = true, $orderable = true, $searchable = true, $choosen = true, $printable = true)
+        {
+            return \DataTable\DataTables\DataTableBuilder::addTextArea($title, $data, $name, $colClass, $dialogAttr, $colWidth, $visible, $orderable, $searchable, $choosen, $printable);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $title
+         * @param string $data
+         * @param string $name
+         * @param string $colClass
+         * @param string $dialogAttr
+         * @param string $colWidth
+         * @param bool $visible
+         * @param bool $orderable
+         * @param bool $searchable
+         * @param bool $choosen
+         * @param bool $printable
+         * @return $this 
+         * @static 
+         */ 
+        public static function addInputNumber($title = '', $data = '', $name = '', $colClass = '', $dialogAttr = '', $colWidth = '', $visible = true, $orderable = true, $searchable = true, $choosen = true, $printable = true)
+        {
+            return \DataTable\DataTables\DataTableBuilder::addInputNumber($title, $data, $name, $colClass, $dialogAttr, $colWidth, $visible, $orderable, $searchable, $choosen, $printable);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $url
+         * @param string $title
+         * @param string $data
+         * @param string $name
+         * @param string $colLabel
+         * @param string $colClass
+         * @param string $dialogAttr
+         * @param string $colWidth
+         * @param bool $visible
+         * @param bool $orderable
+         * @param bool $searchable
+         * @param bool $choosen
+         * @param bool $printable
+         * @return $this 
+         * @static 
+         */ 
+        public static function addAutocomplete($url = '', $title = '', $data = '', $name = '', $colLabel = '', $colClass = '', $dialogAttr = '', $colWidth = '', $visible = true, $orderable = true, $searchable = true, $choosen = true, $printable = true)
+        {
+            return \DataTable\DataTables\DataTableBuilder::addAutocomplete($url, $title, $data, $name, $colLabel, $colClass, $dialogAttr, $colWidth, $visible, $orderable, $searchable, $choosen, $printable);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $url
+         * @param string $templete
+         * @param string $title
+         * @param string $data
+         * @param string $name
+         * @param string $colLabel
+         * @param string $colClass
+         * @param string $dialogAttr
+         * @param string $colWidth
+         * @param bool $visible
+         * @param bool $orderable
+         * @param bool $searchable
+         * @param bool $choosen
+         * @param bool $printable
+         * @return $this 
+         * @static 
+         */ 
+        public static function addMultiAutocomplete($url = '', $templete = '', $title = '', $data = '', $name = '', $colLabel = '', $colClass = '', $dialogAttr = '', $colWidth = '', $visible = true, $orderable = false, $searchable = true, $choosen = true, $printable = true)
+        {
+            return \DataTable\DataTables\DataTableBuilder::addMultiAutocomplete($url, $templete, $title, $data, $name, $colLabel, $colClass, $dialogAttr, $colWidth, $visible, $orderable, $searchable, $choosen, $printable);
+        }
+        
+        /**
+         * 
+         *
+         * @param array $obj
+         * @param string $title
+         * @param string $data
+         * @param string $name
+         * @param string $colLabel
+         * @param string $colClass
+         * @param string $dialogAttr
+         * @param string $colWidth
+         * @param bool $visible
+         * @param bool $orderable
+         * @param bool $searchable
+         * @param bool $choosen
+         * @param bool $printable
+         * @return $this 
+         * @static 
+         */ 
+        public static function addSelect($obj = array(), $title = '', $data = '', $name = '', $colLabel = '', $colClass = '', $dialogAttr = '', $colWidth = '', $visible = true, $orderable = true, $searchable = true, $choosen = true, $printable = true)
+        {
+            return \DataTable\DataTables\DataTableBuilder::addSelect($obj, $title, $data, $name, $colLabel, $colClass, $dialogAttr, $colWidth, $visible, $orderable, $searchable, $choosen, $printable);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $title
+         * @param string $data
+         * @param string $name
+         * @param string $colLabel
+         * @param string $colClass
+         * @param string $dialogAttr
+         * @param string $colWidth
+         * @param bool $visible
+         * @param bool $orderable
+         * @param bool $searchable
+         * @param bool $choosen
+         * @param bool $printable
+         * @return $this 
+         * @static 
+         */ 
+        public static function addViewField($title = '', $data = '', $name = '', $colLabel = '', $colClass = '', $dialogAttr = '', $colWidth = '', $visible = true, $orderable = true, $searchable = true, $choosen = true, $printable = true)
+        {
+            return \DataTable\DataTables\DataTableBuilder::addViewField($title, $data, $name, $colLabel, $colClass, $dialogAttr, $colWidth, $visible, $orderable, $searchable, $choosen, $printable);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $title
+         * @param string $data
+         * @param string $name
+         * @param string $colClass
+         * @param string $colWidth
+         * @return $this 
+         * @static 
+         */ 
+        public static function addActionButton($title = '', $data = '', $name = '', $colClass = 'center all', $colWidth = '40px')
+        {
+            return \DataTable\DataTables\DataTableBuilder::addActionButton($title, $data, $name, $colClass, $colWidth);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $text
+         * @param string $id
+         * @param string $class
+         * @param string $attr
+         * @param string $placement
+         * @return $this 
+         * @static 
+         */ 
+        public static function addButton($text = '', $id = '', $class = '', $attr = '', $placement = 'footer')
+        {
+            return \DataTable\DataTables\DataTableBuilder::addButton($text, $id, $class, $attr, $placement);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $text
+         * @param string $id
+         * @param string $class
+         * @param string $attr
+         * @param string $placement
+         * @return $this 
+         * @static 
+         */ 
+        public static function addSubmit($text = '', $id = '', $class = '', $attr = '', $placement = 'footer')
+        {
+            return \DataTable\DataTables\DataTableBuilder::addSubmit($text, $id, $class, $attr, $placement);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $component
+         * @param string $class
+         * @return $this 
+         * @static 
+         */ 
+        public static function addChildRowDetail($component = '', $class = '')
+        {
+            return \DataTable\DataTables\DataTableBuilder::addChildRowDetail($component, $class);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $templete
+         * @return $this 
+         * @static 
+         */ 
+        public static function editResponsiveRowDetailTemplete($templete = '')
+        {
+            return \DataTable\DataTables\DataTableBuilder::editResponsiveRowDetailTemplete($templete);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $component
+         * @param array $options
+         * @return $this ---------
+         *   desc
+         * ---------
+         * 
+         * $options = [
+         *      ['selector' => '' , 'targetAttr' => '' ,'rowVal' => ''] ,[] , ...... ,[]
+         * ]
+         * @static 
+         */ 
+        public static function addComponent($component = '', $options = array())
+        {
+            return \DataTable\DataTables\DataTableBuilder::addComponent($component, $options);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $component
+         * @param string $appendTo
+         * @return $this 
+         * @static 
+         */ 
+        public static function addBlade($component = '', $append = 'body')
+        {
+            return \DataTable\DataTables\DataTableBuilder::addBlade($component, $append);
+        }
+        
+        /**
+         * you can use js parameter: (param)
+         *
+         * @param $script
+         * @return \DataTable\DataTables\$this* 
+         * @static 
+         */ 
+        public static function onAdd($script)
+        {
+            return \DataTable\DataTables\DataTableBuilder::onAdd($script);
+        }
+        
+        /**
+         * you can use js parameter: (param)
+         *
+         * @param $script
+         * @return $this 
+         * @static 
+         */ 
+        public static function onUpdate($script)
+        {
+            return \DataTable\DataTables\DataTableBuilder::onUpdate($script);
+        }
+        
+        /**
+         * you can use js parameter: (param)
+         *
+         * @param $script
+         * @return $this 
+         * @static 
+         */ 
+        public static function onDelete($script)
+        {
+            return \DataTable\DataTables\DataTableBuilder::onDelete($script);
+        }
+        
+        /**
+         * you can use js parameter: (modal ,param)
+         *
+         * @param $script
+         * @return $this 
+         * @static 
+         */ 
+        public static function onTableCreate($script)
+        {
+            return \DataTable\DataTables\DataTableBuilder::onTableCreate($script);
+        }
+        
+        /**
+         * you can use js parameter: (modal ,param)
+         *
+         * @param $script
+         * @return $this 
+         * @static 
+         */ 
+        public static function onLoad($script)
+        {
+            return \DataTable\DataTables\DataTableBuilder::onLoad($script);
+        }
+        
+        /**
+         * you can use js parameter: (modal ,param)
+         *
+         * @param $script
+         * @return $this 
+         * @static 
+         */ 
+        public static function onModalOpen($script)
+        {
+            return \DataTable\DataTables\DataTableBuilder::onModalOpen($script);
+        }
+        
+        /**
+         * you can use js parameter: (modal ,param)
+         *
+         * @param $script
+         * @return $this 
+         * @static 
+         */ 
+        public static function onModalClose($script)
+        {
+            return \DataTable\DataTables\DataTableBuilder::onModalClose($script);
+        }
+        
+        /**
+         * you can use js parameter: (param)
+         *
+         * @param $script
+         * @return $this 
+         * @static 
+         */ 
+        public static function onModalAdd($script)
+        {
+            return \DataTable\DataTables\DataTableBuilder::onModalAdd($script);
+        }
+        
+        /**
+         * you can use js parameter: (row ,param)
+         *
+         * @param $script
+         * @return $this 
+         * @static 
+         */ 
+        public static function onModalUpdate($script)
+        {
+            return \DataTable\DataTables\DataTableBuilder::onModalUpdate($script);
+        }
+        
+        /**
+         * you can use js parameter: (cont , row, param)
+         *
+         * @param $script
+         * @return $this 
+         * @static 
+         */ 
+        public static function onRowDetailClick($script)
+        {
+            return \DataTable\DataTables\DataTableBuilder::onRowDetailClick($script);
+        }
+        
+        /**
+         * you can use js parameter: (cont ,param)
+         *
+         * @param $script
+         * @return $this 
+         * @static 
+         */ 
+        public static function onTabClick($script)
+        {
+            return \DataTable\DataTables\DataTableBuilder::onTabClick($script);
+        }
+        
+        /**
+         * 
+         *
+         * @param $param
+         * @param $choosen
+         * @static 
+         */ 
+        public static function FillTable($param, $choosen)
+        {
+            return \DataTable\DataTables\DataTableBuilder::FillTable($param, $choosen);
+        }
+        
+        /**
+         * 
+         *
+         * @param $param
+         * @param $choosen
+         * @static 
+         */ 
+        public static function FillDialogDatatable($param, $choosen)
+        {
+            return \DataTable\DataTables\DataTableBuilder::FillDialogDatatable($param, $choosen);
+        }
+        
+        /**
+         * 
+         *
+         * @return \Illuminate\Support\Collection 
+         * @static 
+         */ 
+        public static function exceptColumn()
+        {
+            return \DataTable\DataTables\DataTableBuilder::exceptColumn();
+        }
+        
+        /**
+         * 
+         *
+         * @param array $buttons
+         * @param array $except
+         * @return $this 
+         * @static 
+         */ 
+        public static function addNavButton($buttons = array(), $except = array())
+        {
+            return \DataTable\DataTables\DataTableBuilder::addNavButton($buttons, $except);
+        }
+        
+        /**
+         * 
+         *
+         * @param $title
+         * @param $icon
+         * @param $class
+         * @param $attr
+         * @return $this 
+         * @static 
+         */ 
+        public static function addCustomNavButton($title, $icon, $class, $attr)
+        {
+            return \DataTable\DataTables\DataTableBuilder::addCustomNavButton($title, $icon, $class, $attr);
+        }
+        
+        /**
+         * 
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function render()
+        {
+            return \DataTable\DataTables\DataTableBuilder::render();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function checkReturnValue($html, $isCustom, $stringCont = 'dialogBody')
+        {
+            return \DataTable\DataTables\DataTableBuilder::checkReturnValue($html, $isCustom, $stringCont);
+        }
+        
+        /**
+         * 
+         *
+         * @param $query
+         * @return $this 
+         * @static 
+         */ 
+        public static function queryDatatable($query)
+        {
+            return \DataTable\DataTables\DataTableBuilder::queryDatatable($query);
+        }
+        
+        /**
+         * 
+         *
+         * @param $model
+         * @return $this 
+         * @static 
+         */ 
+        public static function queryDatatableEloquent($model)
+        {
+            return \DataTable\DataTables\DataTableBuilder::queryDatatableEloquent($model);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $tableId
+         * @return $this 
+         * @static 
+         */ 
+        public static function queryConfig($tableId = '')
+        {
+            return \DataTable\DataTables\DataTableBuilder::queryConfig($tableId);
+        }
+        
+        /**
+         * 
+         *
+         * @return $this 
+         * @static 
+         */ 
+        public static function queryIndexColumn()
+        {
+            return \DataTable\DataTables\DataTableBuilder::queryIndexColumn();
+        }
+        
+        /**
+         * 
+         *
+         * @param $colKey
+         * @param \Closure $func
+         * @return $this 
+         * @static 
+         */ 
+        public static function queryAddColumn($colKey, $func)
+        {
+            return \DataTable\DataTables\DataTableBuilder::queryAddColumn($colKey, $func);
+        }
+        
+        /**
+         * 
+         *
+         * @param $colKey
+         * @param string $relation
+         * @param string $target
+         * @return $this 
+         * @static 
+         */ 
+        public static function queryMultiAutocompleteTemplete($colKey, $relation = '', $target = '')
+        {
+            return \DataTable\DataTables\DataTableBuilder::queryMultiAutocompleteTemplete($colKey, $relation, $target);
+        }
+        
+        /**
+         * 
+         *
+         * @param $colKey
+         * @param \Closure $func
+         * @return $this 
+         * @static 
+         */ 
+        public static function queryEditColumn($colKey, $func)
+        {
+            return \DataTable\DataTables\DataTableBuilder::queryEditColumn($colKey, $func);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $id
+         * @param \Closure|null $func
+         * @return $this 
+         * @static 
+         */ 
+        public static function queryUpdateButton($id = 'id', $func = null)
+        {
+            return \DataTable\DataTables\DataTableBuilder::queryUpdateButton($id, $func);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $id
+         * @param array $parentKey
+         * @param \Closure|null $func
+         * @return $this 
+         * @static 
+         */ 
+        public static function queryDeleteButton($id = 'id', $parentKey = array(), $func = null)
+        {
+            return \DataTable\DataTables\DataTableBuilder::queryDeleteButton($id, $parentKey, $func);
+        }
+        
+        /**
+         * 
+         *
+         * @param $cols
+         * @param \Closure $func
+         * @return $this 
+         * @static 
+         */ 
+        public static function queryMultiColumn($cols, $func)
+        {
+            return \DataTable\DataTables\DataTableBuilder::queryMultiColumn($cols, $func);
+        }
+        
+        /**
+         * 
+         *
+         * @param array $cols
+         * @return $this 
+         * @static 
+         */ 
+        public static function queryMultiLang($cols = array())
+        {
+            return \DataTable\DataTables\DataTableBuilder::queryMultiLang($cols);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $colKey
+         * @param string $rowId
+         * @param string $icon
+         * @param string $class
+         * @param string $attr
+         * @return $this 
+         * @static 
+         */ 
+        public static function queryCustomButton($colKey = '', $rowId = '', $icon = '', $class = '', $attr = '')
+        {
+            return \DataTable\DataTables\DataTableBuilder::queryCustomButton($colKey, $rowId, $icon, $class, $attr);
+        }
+        
+        /**
+         * 
+         *
+         * @param $alias
+         * @param $cols
+         * @return $this 
+         * @static 
+         */ 
+        public static function queryCombineColumn($alias, $cols)
+        {
+            return \DataTable\DataTables\DataTableBuilder::queryCombineColumn($alias, $cols);
+        }
+        
+        /**
+         * 
+         *
+         * @param $alias
+         * @param $dbCol
+         * @return $this 
+         * @static 
+         */ 
+        public static function queryFilterColumn($alias, $dbCol)
+        {
+            return \DataTable\DataTables\DataTableBuilder::queryFilterColumn($alias, $dbCol);
+        }
+        
+        /**
+         * 
+         *
+         * @param $alias
+         * @param \Closure $func
+         * @return $this 
+         * @static 
+         */ 
+        public static function queryCustomFilterColumn($alias, $func)
+        {
+            return \DataTable\DataTables\DataTableBuilder::queryCustomFilterColumn($alias, $func);
+        }
+        
+        /**
+         * 
+         *
+         * @param array $columns
+         * @return $this 
+         * @static 
+         */ 
+        public static function queryEscapeColumns($columns = array())
+        {
+            return \DataTable\DataTables\DataTableBuilder::queryEscapeColumns($columns);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function dd()
+        {
+            return \DataTable\DataTables\DataTableBuilder::dd();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function ddQuery()
+        {
+            return \DataTable\DataTables\DataTableBuilder::ddQuery();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function ddQuerySql()
+        {
+            return \DataTable\DataTables\DataTableBuilder::ddQuerySql();
+        }
+        
+        /**
+         * 
+         *
+         * @param bool $bool
+         * @return mixed 
+         * @static 
+         */ 
+        public static function queryRender($bool = true)
+        {
+            return \DataTable\DataTables\DataTableBuilder::queryRender($bool);
+        }
+         
+    }
+ 
+}
+
+namespace Intervention\Image\Facades { 
+
+    class Image {
+        
+        /**
+         * Overrides configuration settings
+         *
+         * @param array $config
+         * @return self 
+         * @static 
+         */ 
+        public static function configure($config = array())
+        {
+            return \Intervention\Image\ImageManager::configure($config);
+        }
+        
+        /**
+         * Initiates an Image instance from different input types
+         *
+         * @param mixed $data
+         * @return \Intervention\Image\Image 
+         * @static 
+         */ 
+        public static function make($data)
+        {
+            return \Intervention\Image\ImageManager::make($data);
+        }
+        
+        /**
+         * Creates an empty image canvas
+         *
+         * @param int $width
+         * @param int $height
+         * @param mixed $background
+         * @return \Intervention\Image\Image 
+         * @static 
+         */ 
+        public static function canvas($width, $height, $background = null)
+        {
+            return \Intervention\Image\ImageManager::canvas($width, $height, $background);
+        }
+        
+        /**
+         * Create new cached image and run callback
+         * (requires additional package intervention/imagecache)
+         *
+         * @param \Closure $callback
+         * @param int $lifetime
+         * @param boolean $returnObj
+         * @return \Image 
+         * @static 
+         */ 
+        public static function cache($callback, $lifetime = null, $returnObj = false)
+        {
+            return \Intervention\Image\ImageManager::cache($callback, $lifetime, $returnObj);
+        }
+         
+    }
+ 
+}
+
+namespace Collective\Html { 
+
+    class FormFacade {
+        
+        /**
+         * Open up a new HTML form.
+         *
+         * @param array $options
+         * @return \Illuminate\Support\HtmlString 
+         * @static 
+         */ 
+        public static function open($options = array())
+        {
+            return \Collective\Html\FormBuilder::open($options);
+        }
+        
+        /**
+         * Create a new model based form builder.
+         *
+         * @param mixed $model
+         * @param array $options
+         * @return \Illuminate\Support\HtmlString 
+         * @static 
+         */ 
+        public static function model($model, $options = array())
+        {
+            return \Collective\Html\FormBuilder::model($model, $options);
+        }
+        
+        /**
+         * Set the model instance on the form builder.
+         *
+         * @param mixed $model
+         * @return void 
+         * @static 
+         */ 
+        public static function setModel($model)
+        {
+            \Collective\Html\FormBuilder::setModel($model);
+        }
+        
+        /**
+         * Get the current model instance on the form builder.
+         *
+         * @return mixed $model
+         * @static 
+         */ 
+        public static function getModel()
+        {
+            return \Collective\Html\FormBuilder::getModel();
+        }
+        
+        /**
+         * Close the current form.
+         *
+         * @return string 
+         * @static 
+         */ 
+        public static function close()
+        {
+            return \Collective\Html\FormBuilder::close();
+        }
+        
+        /**
+         * Generate a hidden field with the current CSRF token.
+         *
+         * @return string 
+         * @static 
+         */ 
+        public static function token()
+        {
+            return \Collective\Html\FormBuilder::token();
+        }
+        
+        /**
+         * Create a form label element.
+         *
+         * @param string $name
+         * @param string $value
+         * @param array $options
+         * @param bool $escape_html
+         * @return \Illuminate\Support\HtmlString 
+         * @static 
+         */ 
+        public static function label($name, $value = null, $options = array(), $escape_html = true)
+        {
+            return \Collective\Html\FormBuilder::label($name, $value, $options, $escape_html);
+        }
+        
+        /**
+         * Create a form input field.
+         *
+         * @param string $type
+         * @param string $name
+         * @param string $value
+         * @param array $options
+         * @return \Illuminate\Support\HtmlString 
+         * @static 
+         */ 
+        public static function input($type, $name, $value = null, $options = array())
+        {
+            return \Collective\Html\FormBuilder::input($type, $name, $value, $options);
+        }
+        
+        /**
+         * Create a text input field.
+         *
+         * @param string $name
+         * @param string $value
+         * @param array $options
+         * @return \Illuminate\Support\HtmlString 
+         * @static 
+         */ 
+        public static function text($name, $value = null, $options = array())
+        {
+            return \Collective\Html\FormBuilder::text($name, $value, $options);
+        }
+        
+        /**
+         * Create a password input field.
+         *
+         * @param string $name
+         * @param array $options
+         * @return \Illuminate\Support\HtmlString 
+         * @static 
+         */ 
+        public static function password($name, $options = array())
+        {
+            return \Collective\Html\FormBuilder::password($name, $options);
+        }
+        
+        /**
+         * Create a range input field.
+         *
+         * @param string $name
+         * @param string $value
+         * @param array $options
+         * @return \Illuminate\Support\HtmlString 
+         * @static 
+         */ 
+        public static function range($name, $value = null, $options = array())
+        {
+            return \Collective\Html\FormBuilder::range($name, $value, $options);
+        }
+        
+        /**
+         * Create a hidden input field.
+         *
+         * @param string $name
+         * @param string $value
+         * @param array $options
+         * @return \Illuminate\Support\HtmlString 
+         * @static 
+         */ 
+        public static function hidden($name, $value = null, $options = array())
+        {
+            return \Collective\Html\FormBuilder::hidden($name, $value, $options);
+        }
+        
+        /**
+         * Create a search input field.
+         *
+         * @param string $name
+         * @param string $value
+         * @param array $options
+         * @return \Illuminate\Support\HtmlString 
+         * @static 
+         */ 
+        public static function search($name, $value = null, $options = array())
+        {
+            return \Collective\Html\FormBuilder::search($name, $value, $options);
+        }
+        
+        /**
+         * Create an e-mail input field.
+         *
+         * @param string $name
+         * @param string $value
+         * @param array $options
+         * @return \Illuminate\Support\HtmlString 
+         * @static 
+         */ 
+        public static function email($name, $value = null, $options = array())
+        {
+            return \Collective\Html\FormBuilder::email($name, $value, $options);
+        }
+        
+        /**
+         * Create a tel input field.
+         *
+         * @param string $name
+         * @param string $value
+         * @param array $options
+         * @return \Illuminate\Support\HtmlString 
+         * @static 
+         */ 
+        public static function tel($name, $value = null, $options = array())
+        {
+            return \Collective\Html\FormBuilder::tel($name, $value, $options);
+        }
+        
+        /**
+         * Create a number input field.
+         *
+         * @param string $name
+         * @param string $value
+         * @param array $options
+         * @return \Illuminate\Support\HtmlString 
+         * @static 
+         */ 
+        public static function number($name, $value = null, $options = array())
+        {
+            return \Collective\Html\FormBuilder::number($name, $value, $options);
+        }
+        
+        /**
+         * Create a date input field.
+         *
+         * @param string $name
+         * @param string $value
+         * @param array $options
+         * @return \Illuminate\Support\HtmlString 
+         * @static 
+         */ 
+        public static function date($name, $value = null, $options = array())
+        {
+            return \Collective\Html\FormBuilder::date($name, $value, $options);
+        }
+        
+        /**
+         * Create a datetime input field.
+         *
+         * @param string $name
+         * @param string $value
+         * @param array $options
+         * @return \Illuminate\Support\HtmlString 
+         * @static 
+         */ 
+        public static function datetime($name, $value = null, $options = array())
+        {
+            return \Collective\Html\FormBuilder::datetime($name, $value, $options);
+        }
+        
+        /**
+         * Create a datetime-local input field.
+         *
+         * @param string $name
+         * @param string $value
+         * @param array $options
+         * @return \Illuminate\Support\HtmlString 
+         * @static 
+         */ 
+        public static function datetimeLocal($name, $value = null, $options = array())
+        {
+            return \Collective\Html\FormBuilder::datetimeLocal($name, $value, $options);
+        }
+        
+        /**
+         * Create a time input field.
+         *
+         * @param string $name
+         * @param string $value
+         * @param array $options
+         * @return \Illuminate\Support\HtmlString 
+         * @static 
+         */ 
+        public static function time($name, $value = null, $options = array())
+        {
+            return \Collective\Html\FormBuilder::time($name, $value, $options);
+        }
+        
+        /**
+         * Create a url input field.
+         *
+         * @param string $name
+         * @param string $value
+         * @param array $options
+         * @return \Illuminate\Support\HtmlString 
+         * @static 
+         */ 
+        public static function url($name, $value = null, $options = array())
+        {
+            return \Collective\Html\FormBuilder::url($name, $value, $options);
+        }
+        
+        /**
+         * Create a week input field.
+         *
+         * @param string $name
+         * @param string $value
+         * @param array $options
+         * @return \Illuminate\Support\HtmlString 
+         * @static 
+         */ 
+        public static function week($name, $value = null, $options = array())
+        {
+            return \Collective\Html\FormBuilder::week($name, $value, $options);
+        }
+        
+        /**
+         * Create a file input field.
+         *
+         * @param string $name
+         * @param array $options
+         * @return \Illuminate\Support\HtmlString 
+         * @static 
+         */ 
+        public static function file($name, $options = array())
+        {
+            return \Collective\Html\FormBuilder::file($name, $options);
+        }
+        
+        /**
+         * Create a textarea input field.
+         *
+         * @param string $name
+         * @param string $value
+         * @param array $options
+         * @return \Illuminate\Support\HtmlString 
+         * @static 
+         */ 
+        public static function textarea($name, $value = null, $options = array())
+        {
+            return \Collective\Html\FormBuilder::textarea($name, $value, $options);
+        }
+        
+        /**
+         * Create a select box field.
+         *
+         * @param string $name
+         * @param array $list
+         * @param string|bool $selected
+         * @param array $selectAttributes
+         * @param array $optionsAttributes
+         * @param array $optgroupsAttributes
+         * @return \Illuminate\Support\HtmlString 
+         * @static 
+         */ 
+        public static function select($name, $list = array(), $selected = null, $selectAttributes = array(), $optionsAttributes = array(), $optgroupsAttributes = array())
+        {
+            return \Collective\Html\FormBuilder::select($name, $list, $selected, $selectAttributes, $optionsAttributes, $optgroupsAttributes);
+        }
+        
+        /**
+         * Create a select range field.
+         *
+         * @param string $name
+         * @param string $begin
+         * @param string $end
+         * @param string $selected
+         * @param array $options
+         * @return \Illuminate\Support\HtmlString 
+         * @static 
+         */ 
+        public static function selectRange($name, $begin, $end, $selected = null, $options = array())
+        {
+            return \Collective\Html\FormBuilder::selectRange($name, $begin, $end, $selected, $options);
+        }
+        
+        /**
+         * Create a select year field.
+         *
+         * @param string $name
+         * @param string $begin
+         * @param string $end
+         * @param string $selected
+         * @param array $options
+         * @return mixed 
+         * @static 
+         */ 
+        public static function selectYear()
+        {
+            return \Collective\Html\FormBuilder::selectYear();
+        }
+        
+        /**
+         * Create a select month field.
+         *
+         * @param string $name
+         * @param string $selected
+         * @param array $options
+         * @param string $format
+         * @return \Illuminate\Support\HtmlString 
+         * @static 
+         */ 
+        public static function selectMonth($name, $selected = null, $options = array(), $format = '%B')
+        {
+            return \Collective\Html\FormBuilder::selectMonth($name, $selected, $options, $format);
+        }
+        
+        /**
+         * Get the select option for the given value.
+         *
+         * @param string $display
+         * @param string $value
+         * @param string $selected
+         * @param array $attributes
+         * @param array $optgroupAttributes
+         * @return \Illuminate\Support\HtmlString 
+         * @static 
+         */ 
+        public static function getSelectOption($display, $value, $selected, $attributes = array(), $optgroupAttributes = array())
+        {
+            return \Collective\Html\FormBuilder::getSelectOption($display, $value, $selected, $attributes, $optgroupAttributes);
+        }
+        
+        /**
+         * Create a checkbox input field.
+         *
+         * @param string $name
+         * @param mixed $value
+         * @param bool $checked
+         * @param array $options
+         * @return \Illuminate\Support\HtmlString 
+         * @static 
+         */ 
+        public static function checkbox($name, $value = 1, $checked = null, $options = array())
+        {
+            return \Collective\Html\FormBuilder::checkbox($name, $value, $checked, $options);
+        }
+        
+        /**
+         * Create a radio button input field.
+         *
+         * @param string $name
+         * @param mixed $value
+         * @param bool $checked
+         * @param array $options
+         * @return \Illuminate\Support\HtmlString 
+         * @static 
+         */ 
+        public static function radio($name, $value = null, $checked = null, $options = array())
+        {
+            return \Collective\Html\FormBuilder::radio($name, $value, $checked, $options);
+        }
+        
+        /**
+         * Create a HTML reset input element.
+         *
+         * @param string $value
+         * @param array $attributes
+         * @return \Illuminate\Support\HtmlString 
+         * @static 
+         */ 
+        public static function reset($value, $attributes = array())
+        {
+            return \Collective\Html\FormBuilder::reset($value, $attributes);
+        }
+        
+        /**
+         * Create a HTML image input element.
+         *
+         * @param string $url
+         * @param string $name
+         * @param array $attributes
+         * @return \Illuminate\Support\HtmlString 
+         * @static 
+         */ 
+        public static function image($url, $name = null, $attributes = array())
+        {
+            return \Collective\Html\FormBuilder::image($url, $name, $attributes);
+        }
+        
+        /**
+         * Create a month input field.
+         *
+         * @param string $name
+         * @param string $value
+         * @param array $options
+         * @return \Illuminate\Support\HtmlString 
+         * @static 
+         */ 
+        public static function month($name, $value = null, $options = array())
+        {
+            return \Collective\Html\FormBuilder::month($name, $value, $options);
+        }
+        
+        /**
+         * Create a color input field.
+         *
+         * @param string $name
+         * @param string $value
+         * @param array $options
+         * @return \Illuminate\Support\HtmlString 
+         * @static 
+         */ 
+        public static function color($name, $value = null, $options = array())
+        {
+            return \Collective\Html\FormBuilder::color($name, $value, $options);
+        }
+        
+        /**
+         * Create a submit button element.
+         *
+         * @param string $value
+         * @param array $options
+         * @return \Illuminate\Support\HtmlString 
+         * @static 
+         */ 
+        public static function submit($value = null, $options = array())
+        {
+            return \Collective\Html\FormBuilder::submit($value, $options);
+        }
+        
+        /**
+         * Create a button element.
+         *
+         * @param string $value
+         * @param array $options
+         * @return \Illuminate\Support\HtmlString 
+         * @static 
+         */ 
+        public static function button($value = null, $options = array())
+        {
+            return \Collective\Html\FormBuilder::button($value, $options);
+        }
+        
+        /**
+         * Get the ID attribute for a field name.
+         *
+         * @param string $name
+         * @param array $attributes
+         * @return string 
+         * @static 
+         */ 
+        public static function getIdAttribute($name, $attributes)
+        {
+            return \Collective\Html\FormBuilder::getIdAttribute($name, $attributes);
+        }
+        
+        /**
+         * Get the value that should be assigned to the field.
+         *
+         * @param string $name
+         * @param string $value
+         * @return mixed 
+         * @static 
+         */ 
+        public static function getValueAttribute($name, $value = null)
+        {
+            return \Collective\Html\FormBuilder::getValueAttribute($name, $value);
+        }
+        
+        /**
+         * Take Request in fill process
+         *
+         * @param bool $consider
+         * @static 
+         */ 
+        public static function considerRequest($consider = true)
+        {
+            return \Collective\Html\FormBuilder::considerRequest($consider);
+        }
+        
+        /**
+         * Get a value from the session's old input.
+         *
+         * @param string $name
+         * @return mixed 
+         * @static 
+         */ 
+        public static function old($name)
+        {
+            return \Collective\Html\FormBuilder::old($name);
+        }
+        
+        /**
+         * Determine if the old input is empty.
+         *
+         * @return bool 
+         * @static 
+         */ 
+        public static function oldInputIsEmpty()
+        {
+            return \Collective\Html\FormBuilder::oldInputIsEmpty();
+        }
+        
+        /**
+         * Get the session store implementation.
+         *
+         * @return \Illuminate\Contracts\Session\Session $session
+         * @static 
+         */ 
+        public static function getSessionStore()
+        {
+            return \Collective\Html\FormBuilder::getSessionStore();
+        }
+        
+        /**
+         * Set the session store implementation.
+         *
+         * @param \Illuminate\Contracts\Session\Session $session
+         * @return $this 
+         * @static 
+         */ 
+        public static function setSessionStore($session)
+        {
+            return \Collective\Html\FormBuilder::setSessionStore($session);
+        }
+        
+        /**
+         * Register a custom macro.
+         *
+         * @param string $name
+         * @param object|callable $macro
+         * @return void 
+         * @static 
+         */ 
+        public static function macro($name, $macro)
+        {
+            \Collective\Html\FormBuilder::macro($name, $macro);
+        }
+        
+        /**
+         * Mix another object into the class.
+         *
+         * @param object $mixin
+         * @return void 
+         * @throws \ReflectionException
+         * @static 
+         */ 
+        public static function mixin($mixin)
+        {
+            \Collective\Html\FormBuilder::mixin($mixin);
+        }
+        
+        /**
+         * Checks if macro is registered.
+         *
+         * @param string $name
+         * @return bool 
+         * @static 
+         */ 
+        public static function hasMacro($name)
+        {
+            return \Collective\Html\FormBuilder::hasMacro($name);
+        }
+        
+        /**
+         * Dynamically handle calls to the class.
+         *
+         * @param string $method
+         * @param array $parameters
+         * @return mixed 
+         * @throws \BadMethodCallException
+         * @static 
+         */ 
+        public static function macroCall($method, $parameters)
+        {
+            return \Collective\Html\FormBuilder::macroCall($method, $parameters);
+        }
+        
+        /**
+         * Register a custom component.
+         *
+         * @param $name
+         * @param $view
+         * @param array $signature
+         * @return void 
+         * @static 
+         */ 
+        public static function component($name, $view, $signature)
+        {
+            \Collective\Html\FormBuilder::component($name, $view, $signature);
+        }
+        
+        /**
+         * Check if a component is registered.
+         *
+         * @param $name
+         * @return bool 
+         * @static 
+         */ 
+        public static function hasComponent($name)
+        {
+            return \Collective\Html\FormBuilder::hasComponent($name);
+        }
+        
+        /**
+         * Dynamically handle calls to the class.
+         *
+         * @param string $method
+         * @param array $parameters
+         * @return \Illuminate\Contracts\View\View|mixed 
+         * @throws \BadMethodCallException
+         * @static 
+         */ 
+        public static function componentCall($method, $parameters)
+        {
+            return \Collective\Html\FormBuilder::componentCall($method, $parameters);
+        }
+         
+    }
+
+    class HtmlFacade {
+        
+        /**
+         * Convert an HTML string to entities.
+         *
+         * @param string $value
+         * @return string 
+         * @static 
+         */ 
+        public static function entities($value)
+        {
+            return \Collective\Html\HtmlBuilder::entities($value);
+        }
+        
+        /**
+         * Convert entities to HTML characters.
+         *
+         * @param string $value
+         * @return string 
+         * @static 
+         */ 
+        public static function decode($value)
+        {
+            return \Collective\Html\HtmlBuilder::decode($value);
+        }
+        
+        /**
+         * Generate a link to a JavaScript file.
+         *
+         * @param string $url
+         * @param array $attributes
+         * @param bool $secure
+         * @return \Illuminate\Support\HtmlString 
+         * @static 
+         */ 
+        public static function script($url, $attributes = array(), $secure = null)
+        {
+            return \Collective\Html\HtmlBuilder::script($url, $attributes, $secure);
+        }
+        
+        /**
+         * Generate a link to a CSS file.
+         *
+         * @param string $url
+         * @param array $attributes
+         * @param bool $secure
+         * @return \Illuminate\Support\HtmlString 
+         * @static 
+         */ 
+        public static function style($url, $attributes = array(), $secure = null)
+        {
+            return \Collective\Html\HtmlBuilder::style($url, $attributes, $secure);
+        }
+        
+        /**
+         * Generate an HTML image element.
+         *
+         * @param string $url
+         * @param string $alt
+         * @param array $attributes
+         * @param bool $secure
+         * @return \Illuminate\Support\HtmlString 
+         * @static 
+         */ 
+        public static function image($url, $alt = null, $attributes = array(), $secure = null)
+        {
+            return \Collective\Html\HtmlBuilder::image($url, $alt, $attributes, $secure);
+        }
+        
+        /**
+         * Generate a link to a Favicon file.
+         *
+         * @param string $url
+         * @param array $attributes
+         * @param bool $secure
+         * @return \Illuminate\Support\HtmlString 
+         * @static 
+         */ 
+        public static function favicon($url, $attributes = array(), $secure = null)
+        {
+            return \Collective\Html\HtmlBuilder::favicon($url, $attributes, $secure);
+        }
+        
+        /**
+         * Generate a HTML link.
+         *
+         * @param string $url
+         * @param string $title
+         * @param array $attributes
+         * @param bool $secure
+         * @param bool $escape
+         * @return \Illuminate\Support\HtmlString 
+         * @static 
+         */ 
+        public static function link($url, $title = null, $attributes = array(), $secure = null, $escape = true)
+        {
+            return \Collective\Html\HtmlBuilder::link($url, $title, $attributes, $secure, $escape);
+        }
+        
+        /**
+         * Generate a HTTPS HTML link.
+         *
+         * @param string $url
+         * @param string $title
+         * @param array $attributes
+         * @return \Illuminate\Support\HtmlString 
+         * @static 
+         */ 
+        public static function secureLink($url, $title = null, $attributes = array())
+        {
+            return \Collective\Html\HtmlBuilder::secureLink($url, $title, $attributes);
+        }
+        
+        /**
+         * Generate a HTML link to an asset.
+         *
+         * @param string $url
+         * @param string $title
+         * @param array $attributes
+         * @param bool $secure
+         * @return \Illuminate\Support\HtmlString 
+         * @static 
+         */ 
+        public static function linkAsset($url, $title = null, $attributes = array(), $secure = null)
+        {
+            return \Collective\Html\HtmlBuilder::linkAsset($url, $title, $attributes, $secure);
+        }
+        
+        /**
+         * Generate a HTTPS HTML link to an asset.
+         *
+         * @param string $url
+         * @param string $title
+         * @param array $attributes
+         * @return \Illuminate\Support\HtmlString 
+         * @static 
+         */ 
+        public static function linkSecureAsset($url, $title = null, $attributes = array())
+        {
+            return \Collective\Html\HtmlBuilder::linkSecureAsset($url, $title, $attributes);
+        }
+        
+        /**
+         * Generate a HTML link to a named route.
+         *
+         * @param string $name
+         * @param string $title
+         * @param array $parameters
+         * @param array $attributes
+         * @return \Illuminate\Support\HtmlString 
+         * @static 
+         */ 
+        public static function linkRoute($name, $title = null, $parameters = array(), $attributes = array())
+        {
+            return \Collective\Html\HtmlBuilder::linkRoute($name, $title, $parameters, $attributes);
+        }
+        
+        /**
+         * Generate a HTML link to a controller action.
+         *
+         * @param string $action
+         * @param string $title
+         * @param array $parameters
+         * @param array $attributes
+         * @return \Illuminate\Support\HtmlString 
+         * @static 
+         */ 
+        public static function linkAction($action, $title = null, $parameters = array(), $attributes = array())
+        {
+            return \Collective\Html\HtmlBuilder::linkAction($action, $title, $parameters, $attributes);
+        }
+        
+        /**
+         * Generate a HTML link to an email address.
+         *
+         * @param string $email
+         * @param string $title
+         * @param array $attributes
+         * @param bool $escape
+         * @return \Illuminate\Support\HtmlString 
+         * @static 
+         */ 
+        public static function mailto($email, $title = null, $attributes = array(), $escape = true)
+        {
+            return \Collective\Html\HtmlBuilder::mailto($email, $title, $attributes, $escape);
+        }
+        
+        /**
+         * Obfuscate an e-mail address to prevent spam-bots from sniffing it.
+         *
+         * @param string $email
+         * @return string 
+         * @static 
+         */ 
+        public static function email($email)
+        {
+            return \Collective\Html\HtmlBuilder::email($email);
+        }
+        
+        /**
+         * Generates non-breaking space entities based on number supplied.
+         *
+         * @param int $num
+         * @return string 
+         * @static 
+         */ 
+        public static function nbsp($num = 1)
+        {
+            return \Collective\Html\HtmlBuilder::nbsp($num);
+        }
+        
+        /**
+         * Generate an ordered list of items.
+         *
+         * @param array $list
+         * @param array $attributes
+         * @return \Illuminate\Support\HtmlString|string 
+         * @static 
+         */ 
+        public static function ol($list, $attributes = array())
+        {
+            return \Collective\Html\HtmlBuilder::ol($list, $attributes);
+        }
+        
+        /**
+         * Generate an un-ordered list of items.
+         *
+         * @param array $list
+         * @param array $attributes
+         * @return \Illuminate\Support\HtmlString|string 
+         * @static 
+         */ 
+        public static function ul($list, $attributes = array())
+        {
+            return \Collective\Html\HtmlBuilder::ul($list, $attributes);
+        }
+        
+        /**
+         * Generate a description list of items.
+         *
+         * @param array $list
+         * @param array $attributes
+         * @return \Illuminate\Support\HtmlString 
+         * @static 
+         */ 
+        public static function dl($list, $attributes = array())
+        {
+            return \Collective\Html\HtmlBuilder::dl($list, $attributes);
+        }
+        
+        /**
+         * Build an HTML attribute string from an array.
+         *
+         * @param array $attributes
+         * @return string 
+         * @static 
+         */ 
+        public static function attributes($attributes)
+        {
+            return \Collective\Html\HtmlBuilder::attributes($attributes);
+        }
+        
+        /**
+         * Obfuscate a string to prevent spam-bots from sniffing it.
+         *
+         * @param string $value
+         * @return string 
+         * @static 
+         */ 
+        public static function obfuscate($value)
+        {
+            return \Collective\Html\HtmlBuilder::obfuscate($value);
+        }
+        
+        /**
+         * Generate a meta tag.
+         *
+         * @param string $name
+         * @param string $content
+         * @param array $attributes
+         * @return \Illuminate\Support\HtmlString 
+         * @static 
+         */ 
+        public static function meta($name, $content, $attributes = array())
+        {
+            return \Collective\Html\HtmlBuilder::meta($name, $content, $attributes);
+        }
+        
+        /**
+         * Generate an html tag.
+         *
+         * @param string $tag
+         * @param mixed $content
+         * @param array $attributes
+         * @return \Illuminate\Support\HtmlString 
+         * @static 
+         */ 
+        public static function tag($tag, $content, $attributes = array())
+        {
+            return \Collective\Html\HtmlBuilder::tag($tag, $content, $attributes);
+        }
+        
+        /**
+         * Register a custom macro.
+         *
+         * @param string $name
+         * @param object|callable $macro
+         * @return void 
+         * @static 
+         */ 
+        public static function macro($name, $macro)
+        {
+            \Collective\Html\HtmlBuilder::macro($name, $macro);
+        }
+        
+        /**
+         * Mix another object into the class.
+         *
+         * @param object $mixin
+         * @return void 
+         * @throws \ReflectionException
+         * @static 
+         */ 
+        public static function mixin($mixin)
+        {
+            \Collective\Html\HtmlBuilder::mixin($mixin);
+        }
+        
+        /**
+         * Checks if macro is registered.
+         *
+         * @param string $name
+         * @return bool 
+         * @static 
+         */ 
+        public static function hasMacro($name)
+        {
+            return \Collective\Html\HtmlBuilder::hasMacro($name);
+        }
+        
+        /**
+         * Dynamically handle calls to the class.
+         *
+         * @param string $method
+         * @param array $parameters
+         * @return mixed 
+         * @throws \BadMethodCallException
+         * @static 
+         */ 
+        public static function macroCall($method, $parameters)
+        {
+            return \Collective\Html\HtmlBuilder::macroCall($method, $parameters);
+        }
+        
+        /**
+         * Register a custom component.
+         *
+         * @param $name
+         * @param $view
+         * @param array $signature
+         * @return void 
+         * @static 
+         */ 
+        public static function component($name, $view, $signature)
+        {
+            \Collective\Html\HtmlBuilder::component($name, $view, $signature);
+        }
+        
+        /**
+         * Check if a component is registered.
+         *
+         * @param $name
+         * @return bool 
+         * @static 
+         */ 
+        public static function hasComponent($name)
+        {
+            return \Collective\Html\HtmlBuilder::hasComponent($name);
+        }
+        
+        /**
+         * Dynamically handle calls to the class.
+         *
+         * @param string $method
+         * @param array $parameters
+         * @return \Illuminate\Contracts\View\View|mixed 
+         * @throws \BadMethodCallException
+         * @static 
+         */ 
+        public static function componentCall($method, $parameters)
+        {
+            return \Collective\Html\HtmlBuilder::componentCall($method, $parameters);
+        }
+         
+    }
+ 
+}
+
 namespace Mcamara\LaravelLocalization\Facades { 
 
-    /**
-     * 
-     *
-     */ 
     class LaravelLocalization {
         
         /**
@@ -13386,18 +14898,6 @@ namespace Mcamara\LaravelLocalization\Facades {
         public static function setLocale($locale = null)
         {
             return \Mcamara\LaravelLocalization\LaravelLocalization::setLocale($locale);
-        }
-        
-        /**
-         * Check if $locale is default locale and supposed to be hidden in url
-         *
-         * @param string $locale Locale to be checked
-         * @return boolean Returns true if above requirement are met, otherwise false
-         * @static 
-         */ 
-        public static function isHiddenDefault($locale)
-        {
-            return \Mcamara\LaravelLocalization\LaravelLocalization::isHiddenDefault($locale);
         }
         
         /**
@@ -13655,16 +15155,6 @@ namespace Mcamara\LaravelLocalization\Facades {
         }
         
         /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function hideUrlAndAcceptHeader()
-        {
-            return \Mcamara\LaravelLocalization\LaravelLocalization::hideUrlAndAcceptHeader();
-        }
-        
-        /**
          * Returns the translation key for a given path.
          *
          * @return bool Returns value of hideDefaultLocaleInURL in config.
@@ -13697,30 +15187,6 @@ namespace Mcamara\LaravelLocalization\Facades {
         {
             return \Mcamara\LaravelLocalization\LaravelLocalization::setBaseUrl($url);
         }
-        
-        /**
-         * Returns serialized translated routes for caching purposes.
-         *
-         * @return string 
-         * @static 
-         */ 
-        public static function getSerializedTranslatedRoutes()
-        {
-            return \Mcamara\LaravelLocalization\LaravelLocalization::getSerializedTranslatedRoutes();
-        }
-        
-        /**
-         * Sets the translated routes list.
-         * 
-         * Only useful from a cached routes context.
-         *
-         * @param string $serializedRoutes
-         * @static 
-         */ 
-        public static function setSerializedTranslatedRoutes($serializedRoutes)
-        {
-            return \Mcamara\LaravelLocalization\LaravelLocalization::setSerializedTranslatedRoutes($serializedRoutes);
-        }
          
     }
  
@@ -13728,10 +15194,6 @@ namespace Mcamara\LaravelLocalization\Facades {
 
 namespace Nwidart\Modules\Facades { 
 
-    /**
-     * 
-     *
-     */ 
     class Module {
         
         /**
@@ -14290,6 +15752,163 @@ namespace Nwidart\Modules\Facades {
  
 }
 
+namespace Yajra\DataTables\Facades { 
+
+    class DataTables {
+        
+        /**
+         * Make a DataTable instance from source.
+         * 
+         * Alias of make for backward compatibility.
+         *
+         * @param mixed $source
+         * @return mixed 
+         * @throws \Exception
+         * @static 
+         */ 
+        public static function of($source)
+        {
+            return \Yajra\DataTables\DataTables::of($source);
+        }
+        
+        /**
+         * Make a DataTable instance from source.
+         *
+         * @param mixed $source
+         * @return mixed 
+         * @throws \Exception
+         * @static 
+         */ 
+        public static function make($source)
+        {
+            return \Yajra\DataTables\DataTables::make($source);
+        }
+        
+        /**
+         * Get request object.
+         *
+         * @return \Yajra\DataTables\Utilities\Request 
+         * @static 
+         */ 
+        public static function getRequest()
+        {
+            return \Yajra\DataTables\DataTables::getRequest();
+        }
+        
+        /**
+         * Get config instance.
+         *
+         * @return \Yajra\DataTables\Utilities\Config 
+         * @static 
+         */ 
+        public static function getConfig()
+        {
+            return \Yajra\DataTables\DataTables::getConfig();
+        }
+        
+        /**
+         * 
+         *
+         * @deprecated Please use query() instead, this method will be removed in a next version.
+         * @param $builder
+         * @return \Yajra\DataTables\QueryDataTable 
+         * @static 
+         */ 
+        public static function queryBuilder($builder)
+        {
+            return \Yajra\DataTables\DataTables::queryBuilder($builder);
+        }
+        
+        /**
+         * DataTables using Query.
+         *
+         * @param \Illuminate\Database\Query\Builder|mixed $builder
+         * @return \Yajra\DataTables\DataTableAbstract|\Yajra\DataTables\QueryDataTable 
+         * @static 
+         */ 
+        public static function query($builder)
+        {
+            return \Yajra\DataTables\DataTables::query($builder);
+        }
+        
+        /**
+         * DataTables using Eloquent Builder.
+         *
+         * @param \Illuminate\Database\Eloquent\Builder|mixed $builder
+         * @return \Yajra\DataTables\DataTableAbstract|\Yajra\DataTables\EloquentDataTable 
+         * @static 
+         */ 
+        public static function eloquent($builder)
+        {
+            return \Yajra\DataTables\DataTables::eloquent($builder);
+        }
+        
+        /**
+         * DataTables using Collection.
+         *
+         * @param \Illuminate\Support\Collection|array $collection
+         * @return \Yajra\DataTables\DataTableAbstract|\Yajra\DataTables\CollectionDataTable 
+         * @static 
+         */ 
+        public static function collection($collection)
+        {
+            return \Yajra\DataTables\DataTables::collection($collection);
+        }
+        
+        /**
+         * Get html builder instance.
+         *
+         * @return \Yajra\DataTables\Html\Builder 
+         * @throws \Exception
+         * @static 
+         */ 
+        public static function getHtmlBuilder()
+        {
+            return \Yajra\DataTables\DataTables::getHtmlBuilder();
+        }
+        
+        /**
+         * Register a custom macro.
+         *
+         * @param string $name
+         * @param object|callable $macro
+         * @return void 
+         * @static 
+         */ 
+        public static function macro($name, $macro)
+        {
+            \Yajra\DataTables\DataTables::macro($name, $macro);
+        }
+        
+        /**
+         * Mix another object into the class.
+         *
+         * @param object $mixin
+         * @return void 
+         * @throws \ReflectionException
+         * @static 
+         */ 
+        public static function mixin($mixin)
+        {
+            \Yajra\DataTables\DataTables::mixin($mixin);
+        }
+        
+        /**
+         * Checks if macro is registered.
+         *
+         * @param string $name
+         * @return bool 
+         * @static 
+         */ 
+        public static function hasMacro($name)
+        {
+            return \Yajra\DataTables\DataTables::hasMacro($name);
+        }
+         
+    }
+ 
+}
+
 
 namespace  { 
 
@@ -14404,7 +16023,7 @@ namespace  {
              * Add a basic where clause to the query.
              *
              * @param string|array|\Closure $column
-             * @param mixed $operator
+             * @param string $operator
              * @param mixed $value
              * @param string $boolean
              * @return $this 
@@ -14419,7 +16038,7 @@ namespace  {
              * Add an "or where" clause to the query.
              *
              * @param \Closure|array|string $column
-             * @param mixed $operator
+             * @param string $operator
              * @param mixed $value
              * @return \Illuminate\Database\Eloquent\Builder|static 
              * @static 
@@ -14427,30 +16046,6 @@ namespace  {
             public static function orWhere($column, $operator = null, $value = null)
             {    
                 return \Illuminate\Database\Eloquent\Builder::orWhere($column, $operator, $value);
-            }
-         
-            /**
-             * Add an "order by" clause for a timestamp to the query.
-             *
-             * @param string $column
-             * @return $this 
-             * @static 
-             */ 
-            public static function latest($column = null)
-            {    
-                return \Illuminate\Database\Eloquent\Builder::latest($column);
-            }
-         
-            /**
-             * Add an "order by" clause for a timestamp to the query.
-             *
-             * @param string $column
-             * @return $this 
-             * @static 
-             */ 
-            public static function oldest($column = null)
-            {    
-                return \Illuminate\Database\Eloquent\Builder::oldest($column);
             }
          
             /**
@@ -14509,7 +16104,7 @@ namespace  {
              *
              * @param mixed $id
              * @param array $columns
-             * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|static|static[] 
+             * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection 
              * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
              * @static 
              */ 
@@ -14523,7 +16118,7 @@ namespace  {
              *
              * @param mixed $id
              * @param array $columns
-             * @return \Illuminate\Database\Eloquent\Model|static 
+             * @return \Illuminate\Database\Eloquent\Model 
              * @static 
              */ 
             public static function findOrNew($id, $columns = array())
@@ -14536,7 +16131,7 @@ namespace  {
              *
              * @param array $attributes
              * @param array $values
-             * @return \Illuminate\Database\Eloquent\Model|static 
+             * @return \Illuminate\Database\Eloquent\Model 
              * @static 
              */ 
             public static function firstOrNew($attributes, $values = array())
@@ -14549,7 +16144,7 @@ namespace  {
              *
              * @param array $attributes
              * @param array $values
-             * @return \Illuminate\Database\Eloquent\Model|static 
+             * @return \Illuminate\Database\Eloquent\Model 
              * @static 
              */ 
             public static function firstOrCreate($attributes, $values = array())
@@ -14562,7 +16157,7 @@ namespace  {
              *
              * @param array $attributes
              * @param array $values
-             * @return \Illuminate\Database\Eloquent\Model|static 
+             * @return \Illuminate\Database\Eloquent\Model 
              * @static 
              */ 
             public static function updateOrCreate($attributes, $values = array())
@@ -14624,7 +16219,7 @@ namespace  {
              * Get the hydrated models without eager loading.
              *
              * @param array $columns
-             * @return \Illuminate\Database\Eloquent\Model[]|static[] 
+             * @return \Illuminate\Database\Eloquent\Model[] 
              * @static 
              */ 
             public static function getModels($columns = array())
@@ -14660,7 +16255,7 @@ namespace  {
              *
              * @param int $count
              * @param callable $callback
-             * @param string|null $column
+             * @param string $column
              * @param string|null $alias
              * @return bool 
              * @static 
@@ -14789,7 +16384,7 @@ namespace  {
              * Create a new instance of the model being queried.
              *
              * @param array $attributes
-             * @return \Illuminate\Database\Eloquent\Model|static 
+             * @return \Illuminate\Database\Eloquent\Model 
              * @static 
              */ 
             public static function newModelInstance($attributes = array())
@@ -14857,7 +16452,7 @@ namespace  {
             /**
              * Get the model instance being queried.
              *
-             * @return \Illuminate\Database\Eloquent\Model|static 
+             * @return \Illuminate\Database\Eloquent\Model 
              * @static 
              */ 
             public static function getModel()
@@ -14933,7 +16528,7 @@ namespace  {
              * @param mixed $value
              * @param callable $callback
              * @param callable $default
-             * @return mixed|$this 
+             * @return mixed 
              * @static 
              */ 
             public static function when($value, $callback, $default = null)
@@ -14959,7 +16554,7 @@ namespace  {
              * @param mixed $value
              * @param callable $callback
              * @param callable $default
-             * @return mixed|$this 
+             * @return mixed 
              * @static 
              */ 
             public static function unless($value, $callback, $default = null)
@@ -15208,7 +16803,7 @@ namespace  {
              * Add a join clause to the query.
              *
              * @param string $table
-             * @param \Closure|string $first
+             * @param string $first
              * @param string|null $operator
              * @param string|null $second
              * @param string $type
@@ -15225,7 +16820,7 @@ namespace  {
              * Add a "join where" clause to the query.
              *
              * @param string $table
-             * @param \Closure|string $first
+             * @param string $first
              * @param string $operator
              * @param string $second
              * @param string $type
@@ -15242,7 +16837,7 @@ namespace  {
              *
              * @param \Closure|\Illuminate\Database\Query\Builder|string $query
              * @param string $as
-             * @param \Closure|string $first
+             * @param string $first
              * @param string|null $operator
              * @param string|null $second
              * @param string $type
@@ -15260,7 +16855,7 @@ namespace  {
              * Add a left join to the query.
              *
              * @param string $table
-             * @param \Closure|string $first
+             * @param string $first
              * @param string|null $operator
              * @param string|null $second
              * @return \Illuminate\Database\Query\Builder|static 
@@ -15306,7 +16901,7 @@ namespace  {
              * Add a right join to the query.
              *
              * @param string $table
-             * @param \Closure|string $first
+             * @param string $first
              * @param string|null $operator
              * @param string|null $second
              * @return \Illuminate\Database\Query\Builder|static 
@@ -15352,7 +16947,7 @@ namespace  {
              * Add a "cross join" clause to the query.
              *
              * @param string $table
-             * @param \Closure|string|null $first
+             * @param string|null $first
              * @param string|null $operator
              * @param string|null $second
              * @return \Illuminate\Database\Query\Builder|static 
@@ -15503,35 +17098,6 @@ namespace  {
             }
          
             /**
-             * Add a "where in raw" clause for integer values to the query.
-             *
-             * @param string $column
-             * @param \Illuminate\Contracts\Support\Arrayable|array $values
-             * @param string $boolean
-             * @param bool $not
-             * @return $this 
-             * @static 
-             */ 
-            public static function whereIntegerInRaw($column, $values, $boolean = 'and', $not = false)
-            {    
-                return \Illuminate\Database\Query\Builder::whereIntegerInRaw($column, $values, $boolean, $not);
-            }
-         
-            /**
-             * Add a "where not in raw" clause for integer values to the query.
-             *
-             * @param string $column
-             * @param \Illuminate\Contracts\Support\Arrayable|array $values
-             * @param string $boolean
-             * @return $this 
-             * @static 
-             */ 
-            public static function whereIntegerNotInRaw($column, $values, $boolean = 'and')
-            {    
-                return \Illuminate\Database\Query\Builder::whereIntegerNotInRaw($column, $values, $boolean);
-            }
-         
-            /**
              * Add a "where null" clause to the query.
              *
              * @param string $column
@@ -15642,7 +17208,7 @@ namespace  {
              *
              * @param string $column
              * @param string $operator
-             * @param \DateTimeInterface|string $value
+             * @param mixed $value
              * @param string $boolean
              * @return \Illuminate\Database\Query\Builder|static 
              * @static 
@@ -15657,11 +17223,11 @@ namespace  {
              *
              * @param string $column
              * @param string $operator
-             * @param \DateTimeInterface|string $value
+             * @param string $value
              * @return \Illuminate\Database\Query\Builder|static 
              * @static 
              */ 
-            public static function orWhereDate($column, $operator, $value = null)
+            public static function orWhereDate($column, $operator, $value)
             {    
                 return \Illuminate\Database\Query\Builder::orWhereDate($column, $operator, $value);
             }
@@ -15671,7 +17237,7 @@ namespace  {
              *
              * @param string $column
              * @param string $operator
-             * @param \DateTimeInterface|string $value
+             * @param mixed $value
              * @param string $boolean
              * @return \Illuminate\Database\Query\Builder|static 
              * @static 
@@ -15686,7 +17252,7 @@ namespace  {
              *
              * @param string $column
              * @param string $operator
-             * @param \DateTimeInterface|string $value
+             * @param mixed $value
              * @return \Illuminate\Database\Query\Builder|static 
              * @static 
              */ 
@@ -15700,7 +17266,7 @@ namespace  {
              *
              * @param string $column
              * @param string $operator
-             * @param \DateTimeInterface|string $value
+             * @param mixed $value
              * @param string $boolean
              * @return \Illuminate\Database\Query\Builder|static 
              * @static 
@@ -15715,7 +17281,7 @@ namespace  {
              *
              * @param string $column
              * @param string $operator
-             * @param \DateTimeInterface|string $value
+             * @param mixed $value
              * @return \Illuminate\Database\Query\Builder|static 
              * @static 
              */ 
@@ -15729,7 +17295,7 @@ namespace  {
              *
              * @param string $column
              * @param string $operator
-             * @param \DateTimeInterface|string $value
+             * @param mixed $value
              * @param string $boolean
              * @return \Illuminate\Database\Query\Builder|static 
              * @static 
@@ -15744,7 +17310,7 @@ namespace  {
              *
              * @param string $column
              * @param string $operator
-             * @param \DateTimeInterface|string $value
+             * @param mixed $value
              * @return \Illuminate\Database\Query\Builder|static 
              * @static 
              */ 
@@ -15758,7 +17324,7 @@ namespace  {
              *
              * @param string $column
              * @param string $operator
-             * @param \DateTimeInterface|string|int $value
+             * @param mixed $value
              * @param string $boolean
              * @return \Illuminate\Database\Query\Builder|static 
              * @static 
@@ -15773,7 +17339,7 @@ namespace  {
              *
              * @param string $column
              * @param string $operator
-             * @param \DateTimeInterface|string|int $value
+             * @param mixed $value
              * @return \Illuminate\Database\Query\Builder|static 
              * @static 
              */ 
@@ -15915,90 +17481,6 @@ namespace  {
             }
          
             /**
-             * Add a "where JSON contains" clause to the query.
-             *
-             * @param string $column
-             * @param mixed $value
-             * @param string $boolean
-             * @param bool $not
-             * @return $this 
-             * @static 
-             */ 
-            public static function whereJsonContains($column, $value, $boolean = 'and', $not = false)
-            {    
-                return \Illuminate\Database\Query\Builder::whereJsonContains($column, $value, $boolean, $not);
-            }
-         
-            /**
-             * Add a "or where JSON contains" clause to the query.
-             *
-             * @param string $column
-             * @param mixed $value
-             * @return $this 
-             * @static 
-             */ 
-            public static function orWhereJsonContains($column, $value)
-            {    
-                return \Illuminate\Database\Query\Builder::orWhereJsonContains($column, $value);
-            }
-         
-            /**
-             * Add a "where JSON not contains" clause to the query.
-             *
-             * @param string $column
-             * @param mixed $value
-             * @param string $boolean
-             * @return $this 
-             * @static 
-             */ 
-            public static function whereJsonDoesntContain($column, $value, $boolean = 'and')
-            {    
-                return \Illuminate\Database\Query\Builder::whereJsonDoesntContain($column, $value, $boolean);
-            }
-         
-            /**
-             * Add a "or where JSON not contains" clause to the query.
-             *
-             * @param string $column
-             * @param mixed $value
-             * @return $this 
-             * @static 
-             */ 
-            public static function orWhereJsonDoesntContain($column, $value)
-            {    
-                return \Illuminate\Database\Query\Builder::orWhereJsonDoesntContain($column, $value);
-            }
-         
-            /**
-             * Add a "where JSON length" clause to the query.
-             *
-             * @param string $column
-             * @param mixed $operator
-             * @param mixed $value
-             * @param string $boolean
-             * @return $this 
-             * @static 
-             */ 
-            public static function whereJsonLength($column, $operator, $value = null, $boolean = 'and')
-            {    
-                return \Illuminate\Database\Query\Builder::whereJsonLength($column, $operator, $value, $boolean);
-            }
-         
-            /**
-             * Add a "or where JSON length" clause to the query.
-             *
-             * @param string $column
-             * @param mixed $operator
-             * @param mixed $value
-             * @return $this 
-             * @static 
-             */ 
-            public static function orWhereJsonLength($column, $operator, $value = null)
-            {    
-                return \Illuminate\Database\Query\Builder::orWhereJsonLength($column, $operator, $value);
-            }
-         
-            /**
              * Handles dynamic "where" clauses to the query.
              *
              * @param string $method
@@ -16053,21 +17535,6 @@ namespace  {
             }
          
             /**
-             * Add a "having between " clause to the query.
-             *
-             * @param string $column
-             * @param array $values
-             * @param string $boolean
-             * @param bool $not
-             * @return \Illuminate\Database\Query\Builder|static 
-             * @static 
-             */ 
-            public static function havingBetween($column, $values, $boolean = 'and', $not = false)
-            {    
-                return \Illuminate\Database\Query\Builder::havingBetween($column, $values, $boolean, $not);
-            }
-         
-            /**
              * Add a raw having clause to the query.
              *
              * @param string $sql
@@ -16117,6 +17584,30 @@ namespace  {
             public static function orderByDesc($column)
             {    
                 return \Illuminate\Database\Query\Builder::orderByDesc($column);
+            }
+         
+            /**
+             * Add an "order by" clause for a timestamp to the query.
+             *
+             * @param string $column
+             * @return \Illuminate\Database\Query\Builder|static 
+             * @static 
+             */ 
+            public static function latest($column = 'created_at')
+            {    
+                return \Illuminate\Database\Query\Builder::latest($column);
+            }
+         
+            /**
+             * Add an "order by" clause for a timestamp to the query.
+             *
+             * @param string $column
+             * @return \Illuminate\Database\Query\Builder|static 
+             * @static 
+             */ 
+            public static function oldest($column = 'created_at')
+            {    
+                return \Illuminate\Database\Query\Builder::oldest($column);
             }
          
             /**
@@ -16209,7 +17700,7 @@ namespace  {
              * Constrain the query to the next "page" of results after a given ID.
              *
              * @param int $perPage
-             * @param int|null $lastId
+             * @param int $lastId
              * @param string $column
              * @return \Illuminate\Database\Query\Builder|static 
              * @static 
@@ -16460,19 +17951,6 @@ namespace  {
             }
          
             /**
-             * Insert new records into the table using a subquery.
-             *
-             * @param array $columns
-             * @param \Closure|\Illuminate\Database\Query\Builder|string $query
-             * @return bool 
-             * @static 
-             */ 
-            public static function insertUsing($columns, $query)
-            {    
-                return \Illuminate\Database\Query\Builder::insertUsing($columns, $query);
-            }
-         
-            /**
              * Insert or update a record matching the attributes, and fill it with values.
              *
              * @param array $attributes
@@ -16720,9 +18198,21 @@ namespace  {
 
     class View extends \Illuminate\Support\Facades\View {}
 
+    class Datatable extends \DataTable\DataTables\DataTableFacade {}
+
+    class Datatables extends \yajra\Datatables\Facades\DataTables {}
+
+    class Image extends \Intervention\Image\Facades\Image {}
+
+    class Form extends \Collective\Html\FormFacade {}
+
+    class Html extends \Collective\Html\HtmlFacade {}
+
     class LaravelLocalization extends \Mcamara\LaravelLocalization\Facades\LaravelLocalization {}
 
     class Module extends \Nwidart\Modules\Facades\Module {}
+
+    class DataTables extends \Yajra\DataTables\Facades\DataTables {}
  
 }
 
