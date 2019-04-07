@@ -18,7 +18,7 @@ Route::get('/exams', 'ExamsController@showAll')->name('exams');
 Route::get('/exam/{exam}', 'ExamsController@showAddExamQuestion')->name('exams.show');
 Route::post('/exams', 'ExamsController@add')->name('add-exam');
 
-Route::post('/', 'ExamsController@addQuestion')->name('add-question');
+Route::post('/exam-add-question', 'ExamsController@addQuestion')->name('add-question');
 
 
 Route::get('/', function () {

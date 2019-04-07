@@ -284,13 +284,25 @@
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label>Question Text <span class="text-danger">*</span></label>
-                                        <input type="text" name="questions.text" class="form-control">
+                                        <input type="text" name="text" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Question Time<span class="text-danger">*</span></label>
+                                        <input type="text" name="time" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Question Point <span class="text-danger">*</span></label>
+                                        <input type="text" name="point" class="form-control" required>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label>Question Type <span class="text-danger">*</span></label>
-                                        <select name="questions.question_type_id" class="form-control questions-type">
+                                        <select name="question_type_id" class="form-control questions-type">
                                             <option value=""></option>
                                             @foreach($questionTypes as $type)
                                                 <option value="{{$type->id}}"
@@ -304,7 +316,7 @@
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <label>Question Description</label>
-                                        <textarea name="questions.description" class="form-control"></textarea>
+                                        <textarea name="description" class="form-control"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -312,7 +324,7 @@
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label for="">Correct Answer <span class="text-danger">*</span></label>
-                                        <input type="text" name="valid_answer.text" class="form-control">
+                                        <input type="text" name="valid_answer_text" class="form-control" required>
                                     </div>
                                 </div>
                             </div>
@@ -321,7 +333,7 @@
                                     <div class="form-group">
                                         <label for="">Choice Text<span class="text-danger">*</span></label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control answer-text"
+                                            <input type="text" class="form-control choice-text"
                                                    aria-describedby="basic-addon1">
                                             <span class="input-group-addon add-answers" id="basic-addon1">+</span>
                                         </div>
@@ -331,7 +343,7 @@
                                     <div class="form-group">
                                         <label for="">Choices <span class="fa fa-info-circle" data-toggle="tooltip"
                                                                     title="Click on one choice to choose correct answer"></span></label>
-                                        <ol type="a" class="answers-list">
+                                        <ol type="a" class="choices-list">
                                         </ol>
                                     </div>
                                 </div>
@@ -340,9 +352,12 @@
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label for="">Answer </label>
-                                        <input type="text" name="answers.text" class="form-control">
+                                        <input type="text" name="choice_text" class="form-control">
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row">
+                                <button type="submit" class="btn btn-block btn-info">Submit</button>
                             </div>
                         </form>
                     </div>
@@ -371,6 +386,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <script>
     $(function () {
+        var $choices = '';
         var $last = '';
         var $count = 0;
         $('.questions-type').on('change', function () {
@@ -381,23 +397,32 @@
             $last = $class;
         });
         $('.add-answers').on('click', function () {
-            if ($count >= 3){
+            let input = $('.choice-text');
+            if ($count >= 3) {
                 toastr.info('You have entered 3 choices.');
                 return;
             }
-            let input = $('.answer-text');
             let value = input.val();
-            if (!value)
-                alert("Please fill out answer text");
-            else {
-                // $('.add-questions-form').append("<input name='answers.text[]' hidden value='" + value + "'/>");
-                $('.answers-list').append('<label class="radio">' + value + '' +
-                    '  <input type="radio" name="answers.text" value=' + value + '>\n' +
+            if (!value) {
+                toastr.error('Please fill out choice text.');
+                return;
+            } else {
+                $('.choices-list').append('<label class="radio">' + value + '' +
+                    '  <input type="radio" name="choices_text[]" value=' + value + '>\n' +
                     '  <span class="check-round"></span>\n' +
                     '</label>');
                 input.val('');
                 $count++;
+                $choices += $count >= 3 ? value : value + ',';
+                console.log($choices)
+                $("input[type='radio']").on('change', function () {
+                    let value = $(this).val();
+                    $("input[name='valid_answer_text']").val(value)
+                });
             }
+        });
+        $("input[name='choice_text']").on('input', function () {
+            $("input[name='valid_answer_text']").val($(this).val())
         });
         $('.add-questions-form').on('submit', function (e) {
             e.preventDefault();
@@ -406,20 +431,18 @@
             $.ajax({
                 type: 'POST',
                 url: url,
-                data: data,
+                data: data + '&choices=' + $choices,
                 success: function (data) {
-                    console.log(data)
+                    window.location=data.url
                 }
             })
         })
         $('a.show-more').click(function (e) {
             e.preventDefault();
-            // We break and store the result so we can use it to hide
-            // the row after the slideToggle is closed
-            var targetrow = $(this).closest('tr').next('.detail');
-            targetrow.show().find('div').slideToggle('slow', function () {
+            var target_row = $(this).closest('tr').next('.detail');
+            target_row.show().find('div').slideToggle('slow', function () {
                 if (!$(this).is(':visible')) {
-                    targetrow.hide();
+                    target_row.hide();
                 }
             });
         });

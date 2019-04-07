@@ -15,6 +15,6 @@ storage/*.key
 Homestead.yaml
 Homestead.json
 .rocketeer/
-
+storage
 vendor
 .idea/
