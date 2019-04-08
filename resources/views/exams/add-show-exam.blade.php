@@ -324,7 +324,7 @@
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label for="">Correct Answer <span class="text-danger">*</span></label>
-                                        <input type="text" name="valid_answer_text" class="form-control" required>
+                                        <input type="text" name="valid_answer_text" class="form-control" hidden>
                                     </div>
                                 </div>
                             </div>
@@ -389,6 +389,7 @@
         var $choices = '';
         var $last = '';
         var $count = 0;
+        var $checked = false;
         $('.questions-type').on('change', function () {
             if ($last)
                 $('.' + $last).toggleClass('hidden');
@@ -398,8 +399,8 @@
         });
         $('.add-answers').on('click', function () {
             let input = $('.choice-text');
-            if ($count >= 3) {
-                toastr.info('You have entered 3 choices.');
+            if ($count >= 5) {
+                toastr.info('You have entered 5 choices.');
                 return;
             }
             let value = input.val();
@@ -408,13 +409,12 @@
                 return;
             } else {
                 $('.choices-list').append('<label class="radio">' + value + '' +
-                    '  <input type="radio" name="choices_text[]" value=' + value + '>\n' +
+                    '  <input type="radio" required name="choices_text[]" value=' + value + '>\n' +
                     '  <span class="check-round"></span>\n' +
                     '</label>');
                 input.val('');
                 $count++;
-                $choices += $count >= 3 ? value : value + ',';
-                console.log($choices)
+                $choices += $count >= 5 ? value : value + ',';
                 $("input[type='radio']").on('change', function () {
                     let value = $(this).val();
                     $("input[name='valid_answer_text']").val(value)
@@ -433,7 +433,7 @@
                 url: url,
                 data: data + '&choices=' + $choices,
                 success: function (data) {
-                    window.location=data.url
+                    window.location = data.url
                 }
             })
         })
