@@ -25,8 +25,6 @@ Route::delete('/exams/{exam}', 'ExamsController@delete')->name('delete-exam');
 Route::post('/exam-add-question', 'ExamsController@addQuestion')->name('add-question');
 
 
-Route::get('/', function () {
-    return redirect()->route('exams');
-});
+Route::get('/', 'ExamsController@showAll');
 Auth::routes();
 

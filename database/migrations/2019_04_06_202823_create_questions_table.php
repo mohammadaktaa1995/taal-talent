@@ -18,6 +18,7 @@ class CreateQuestionsTable extends Migration
             $table->string('text');
             $table->text('description')->nullable();
             $table->char('time', 4);
+            $table->string('after_answer')->nullable();
             $table->integer("point");
             $table->unsignedInteger('created_by');
             $table->foreign('created_by')->references("id")->on("users")->onDelete('cascade');

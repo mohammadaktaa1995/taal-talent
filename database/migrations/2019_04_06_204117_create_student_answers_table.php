@@ -14,7 +14,15 @@ class CreateStudentAnswersTable extends Migration
     public function up()
     {
         Schema::create('student_answers', function (Blueprint $table) {
-            //
+            $table->increments('id');
+            $table->string('text');
+            $table->dateTime('date_of_answer');
+            $table->unsignedInteger('exam_id');
+            $table->foreign('exam_id')->references('id')->on('exams')->onDelete('cascade');
+            $table->unsignedInteger('question_id');
+            $table->foreign('question_id')->references('id')->on('questions')->onDelete('cascade');
+            $table->unsignedInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -25,8 +33,6 @@ class CreateStudentAnswersTable extends Migration
      */
     public function down()
     {
-        Schema::table('student_answers', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('student_answers');
     }
 }
