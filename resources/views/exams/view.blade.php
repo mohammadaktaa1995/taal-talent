@@ -1,51 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <title>Taal Talent School</title>
-
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,300i" rel="stylesheet">
-
-    <!-- Styles -->
-    <link href="https://taal-talent.nl/ona/temp/assets/css/core.min.css" rel="stylesheet">
-    <link href="https://taal-talent.nl/ona/temp/assets/css/app.min.css" rel="stylesheet">
-    <link href="https://taal-talent.nl/ona/temp/assets/css/style.min.css" rel="stylesheet">
-    <link href="http://taal-talent.nl/ona/temp/assets/vendor/datatables/css/dataTables.bootstrap4.min.css"
-          rel="stylesheet">
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-
-    <!-- Favicons -->
-    <link rel="shortcut icon" href="https://taal-talent.nl/wp-content/uploads/2018/07/LOGO2.png"/>
-    <link rel="apple-touch-icon" href="https://taal-talent.nl/wp-content/uploads/2018/07/LOGO2.png"/>
-    <script src="js/script.min.js"></script>
-    <style>
-        .correct-answer {
-            display: none;
-        }
-
-        .add-answers {
-            cursor: pointer;
-            font-size: 25px;
-        }
-
-        .hidden {
-            display: none;
-        }
-    </style>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-
-</head>
-
-<body>
-<!-- Topbar -->
-@include("layouts.header")
-<!-- END Topbar -->
-
-<!-- Main container -->
-<main class="main-container">
+@extends('layouts.master')
+@section('content')
 
     <div class="main-content container ">
         <div class="card  shadow-3">
@@ -74,20 +28,28 @@
                         <th><b>#</b></th>
                         <th><b>Text</b></th>
                         <th><b>Description</b></th>
-                        <th width="100px"><b>Date</b></th>
-                        <th width="100px"><b>Page Type</b></th>
-                        <th width="70px"><b>Questions</b></th>
+                        <th><b>Date</b></th>
+                        <th><b>Page Type</b></th>
+                        <th class="text-center"><b>Questions</b></th>
+                        <th class="text-center"><b>Actions</b></th>
                     </tr>
                     </thead>
                     <tbody>
                     @foreach($exams as $exam)
-                        <tr>
+                        <tr data-data="{{$exam}}">
                             <td>{{$loop->iteration}}</td>
                             <td>{{$exam->text}}</td>
                             <td>{{$exam->description}}</td>
                             <td>{{$exam->date}}</td>
                             <td>{{$pageType[$exam->page_type]}}</td>
-                            <td><a href="{{url('exam/'.$exam->id)}}"> <span class="fa fa-list"></span></a></td>
+                            <td class="text-center"><a href="{{route('exams.show',[$exam->id])}}"> <span class="fa fa-list"></span></a></td>
+                            <td class="text-center">
+                                <a class="delete-exam mr-2" data-toggle="tooltip" title="Delete" data-exam="{{$exam->id}}"
+                                   href="{{route('delete-exam',[$exam->id])}}"><span
+                                            class="fa fa-trash-o"></span></a>
+                                <a class="edit-exam mr-2" data-toggle="tooltip" title="Edit" href="javascript:void(0)"
+                                   data-href="{{route('edit-exam',[$exam->id])}}"><span class="fa fa-edit"></span></a>
+                            </td>
                         </tr>
                     @endforeach
                     </tbody>
@@ -147,48 +109,122 @@
             </div>
         </div>
     </div>
-    <!-- Footer -->
-    <footer class="site-footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <p class="text-center text-md-left">©2019 Taal Talent. Alle rechten voorbehouden</p>
-                </div>
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form action="" method="post" enctype="multipart/form-data" class="edit-exam-form">
+                    {{csrf_field()}}
+                    {{method_field('patch')}}
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editModalLabel">Edit Exam</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Exam Name <span class="text-danger">*</span></label>
+                            <input type="text" name="text" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Exam Description</label>
+                            <input type="text" name="description" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Exam Date <span class="text-danger">*</span></label>
+                            <input type="text" name="date" class="form-control date-picker" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Exam Page Type <span class="text-danger">*</span></label>
+                            <select name="page_type" class="form-control" required>
+                                <option value=""></option>
+                                @foreach($pageType as $key=>$type)
+                                    <option value="{{$key}}">{{$type}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Subject <span class="text-danger">*</span></label>
+                            <select name="subject_id" class="form-control" required>
+                                <option value=""></option>
+                                @foreach($subjects as $subject)
+                                    <option value="{{$subject->id}}">{{$subject->text}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
+                </form>
             </div>
         </div>
-    </footer>
-    <!-- END Footer -->
-</main>
-<!-- END Main container -->
-<!-- Scripts -->
-<script src="https://taal-talent.nl/ona/temp/assets/js/core.min.js"></script>
-<script src="http://taal-talent.nl/ona/temp/assets/vendor/datatables/js/dataTables.bootstrap4.min.js"></script>
-<script src="http://taal-talent.nl/ona/temp/assets/vendor/datatables/js/jquery.dataTables.min.js"></script>
-<script src="https://taal-talent.nl/ona/temp/assets/js/app.min.js"></script>
-<script src="https://taal-talent.nl/ona/temp/assets/js/script.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    </div>
+@endsection
+@push('scripts')
+    <script>
+        $(function () {
+            $(".date-picker").flatpickr({
+                dateFormat: "Y-m-d",
+                minDate: new Date()
+            });
 
-<script>
-    $(function () {
-        $(".date-picker").flatpickr({
-            dateFormat: "Y-m-d",
-            minDate:new Date()
-        });
-        $('.add-exam-form').on('submit',function (e) {
-            e.preventDefault();
-            let url=$(this).attr('action');
-            let data=$(this).serialize();
-            $.ajax({
-                type:'POST',
-                url:url,
-                data:data,
-                success:function (data) {
-                    window.location=data.url;
-                }
+            $('.add-exam-form').on('submit', function (e) {
+                e.preventDefault();
+                let url = $(this).attr('action');
+                let data = $(this).serialize();
+                $.ajax({
+                    type: 'POST',
+                    url: url,
+                    data: data,
+                    success: function (data) {
+                        window.location = data.url;
+                    }
+                })
+            });
+
+            $('.delete-exam').on('click', function (e) {
+                e.preventDefault();
+                let url = $(this).attr('href');
+                let exam_id = $(this).attr('data-exam');
+                swal({
+                    title: "Are you sure?",
+                    text: "Once deleted, you will not be able to recover it!",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            $.ajax({
+                                url: url,
+                                type: 'DELETE',
+                                data: {_token: token, exam: exam_id},
+                                success: function (data) {
+                                    window.location = data.url;
+                                }
+                            });
+                            swal("Poof! Your Question has been deleted!", {
+                                icon: "success",
+                            });
+                        } else {
+                            // swal("Your Question is safe!");
+                        }
+                    });
+
+            });
+
+            $('.edit-exam').on('click', function (e) {
+                e.preventDefault();
+                let $tr = $(this).closest('tr');
+                let url=$(this).attr('data-href');
+                $('.edit-exam-form').attr('action',url);
+                let data = JSON.parse($tr.attr('data-data'));
+                _fill('#editModal', data);
+                $('#editModal').modal('show');
             })
         })
-    })
-</script>
-
-</body>
-</html>
+    </script>
+@endpush

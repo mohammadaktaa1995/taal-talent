@@ -1,214 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <title>Taal Talent School</title>
-
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,300i" rel="stylesheet">
-
-    <!-- Styles -->
-    <link href="https://taal-talent.nl/ona/temp/assets/css/core.min.css" rel="stylesheet">
-    <link href="https://taal-talent.nl/ona/temp/assets/css/app.min.css" rel="stylesheet">
-    <link href="https://taal-talent.nl/ona/temp/assets/css/style.min.css" rel="stylesheet">
-
-    <!-- Favicons -->
-    <link rel="shortcut icon" href="https://taal-talent.nl/wp-content/uploads/2018/07/LOGO2.png"/>
-    <link rel="apple-touch-icon" href="https://taal-talent.nl/wp-content/uploads/2018/07/LOGO2.png"/>
-    <script src="js/script.min.js"></script>
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <style>
-        .correct-answer {
-            display: none;
-        }
-
-        .add-answers {
-            cursor: pointer;
-            font-size: 25px;
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        tr.detail {
-            display: none;
-            width: 100%;
-        }
-
-        tr.detail div {
-            display: none;
-        }
-
-        .show-more:hover {
-            cursor: pointer;
-        }
-
-        .radio {
-
-            display: block;
-            position: relative;
-            padding-left: 30px;
-            margin-bottom: 12px;
-            cursor: pointer;
-            font-size: 15px;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none
-        }
-
-        /* Hide the browser's default radio button */
-        .radio input {
-            position: absolute;
-            opacity: 0;
-            cursor: pointer;
-        }
-
-        /* Create a custom radio button */
-        .check-round {
-
-            position: absolute;
-            top: 6px;
-            left: 0;
-            height: 15px;
-            width: 15px;
-            background-color: #fff;
-            border-color: #735DA1;
-            border-style: solid;
-            border-width: 2px;
-            border-radius: 50%;
-        }
-
-
-        /* When the radio button is checked, add a blue background */
-        .radio input:checked ~ .check-round {
-            background-color: #fff;
-        }
-
-        /* Create the indicator (the dot/circle - hidden when not checked) */
-        .check-round:after {
-            content: "";
-            position: absolute;
-            display: none;
-        }
-
-        /* Show the indicator (dot/circle) when checked */
-        .radio input:checked ~ .check-round:after {
-            display: block;
-        }
-
-        /* Style the indicator (dot/circle) */
-        .radio .check-round:after {
-            left: 2px;
-            top: 2px;
-            width: 7px;
-            height: 7px;
-            border-radius: 50%;
-            background: #735DA1;
-
-
-        }
-
-        /* The check */
-        .check {
-            display: block;
-            position: relative;
-            padding-left: 25px;
-            margin-bottom: 12px;
-            padding-right: 15px;
-            cursor: pointer;
-            font-size: 18px;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
-
-        /* Hide the browser's default checkbox */
-        .check input {
-            position: absolute;
-            opacity: 0;
-            cursor: pointer;
-        }
-
-        /* Create a custom checkbox */
-        .checkmark {
-            position: absolute;
-            top: 3px;
-            left: 0;
-            height: 18px;
-            width: 18px;
-            background-color: #fff;
-            border-color: #735DA1;
-            border-style: solid;
-            border-width: 2px;
-        }
-
-
-        /* When the checkbox is checked, add a blue background */
-        .check input:checked ~ .checkmark {
-            background-color: #fff;
-        }
-
-        /* Create the checkmark/indicator (hidden when not checked) */
-        .checkmark:after {
-            content: "";
-            position: absolute;
-            display: none;
-        }
-
-        /* Show the checkmark when checked */
-        .check input:checked ~ .checkmark:after {
-            display: block;
-        }
-
-        /* Style the checkmark/indicator */
-        .check .checkmark:after {
-            left: 5px;
-            top: 1px;
-            width: 5px;
-            height: 10px;
-            border: solid;
-            border-color: #735DA1;
-            border-width: 0 3px 3px 0;
-            -webkit-transform: rotate(45deg);
-            -ms-transform: rotate(45deg);
-            transform: rotate(45deg);
-        }
-
-        .cust-btn {
-            margin-bottom: 10px;
-            background-color: #735DA1;
-            border-width: 2px;
-            border-color: #735DA1;
-            color: #fff;
-        }
-
-        .cust-btn:hover {
-
-            border-color: #735DA1;
-            background-color: #fff;
-            color: #735DA1;
-            border-radius: 20px;
-            transform-style: 2s;
-
-        }
-
-    </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
-</head>
-
-<body>
-<!-- Topbar -->
-@include("layouts.header")
-<!-- END Topbar -->
-
-<!-- Main container -->
-<main class="main-container">
-
+@extends('layouts.master')
+@section('content')
     <div class="main-content container ">
         <div class="card  shadow-3">
             <div class="card-title fs-18 fw-400">Add Questions</div>
@@ -225,10 +16,11 @@
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="nav-questions" role="tabpanel"
                          aria-labelledby="nav-questions-tab">
-                        <table class="table" cellspacing="0">
+                        <table class="table table-hover">
                             <thead>
                             <tr>
                                 <th>#</th>
+                                <th></th>
                                 <th>Text</th>
                                 <th>Time</th>
                                 <th>Point</th>
@@ -238,13 +30,21 @@
                             </thead>
                             <tbody>
                             @foreach($exam->questions()->get() as $question)
-                                <tr>
+                                <tr data-data="{{$question}}">
                                     <td>{{$loop->iteration}}</td>
+                                    <td><a href="javascript:void(0)" class="show-more"><span class="fa fa-list"></span></a>
+                                    </td>
                                     <td>{{$question->text}}</td>
                                     <td>{{$question->time}}s</td>
                                     <td>{{$question->point}}</td>
                                     <td>{{$question->type->name}}</td>
-                                    <td><a href="javascript:void(0)" class="show-more">Show More</a></td>
+                                    <td class="text-center">
+                                        <a class="delete-question mr-2" data-exam="{{$exam->id}}"
+                                           href="{{route('delete-question',[$question->id])}}"><span
+                                                    class="fa fa-trash-o"></span></a>
+                                        <a class="edit-question mr-2" href="javascript:void(0)"
+                                           data-href="{{route('edit-question',[$question->id])}}"><span class="fa fa-edit"></span></a>
+                                    </td>
                                 </tr>
                                 @if($question->choices()->get()->count()>0)
                                     <tr class="detail">
@@ -365,89 +165,265 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form action="" class="update-questions-form" method="post"
+                      enctype="multipart/form-data">
+                    {{csrf_field()}}
+                    {{method_field('patch')}}
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="updateModalLabel">Update Question</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <nav>
+                            <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                                <a class="nav-item nav-link active" id="nav-details-tab" data-toggle="tab"
+                                   href="#nav-details" role="tab" aria-controls="nav-details"
+                                   aria-selected="true">Question Details</a>
+                                <a class="nav-item nav-link" id="nav-answers-tab" data-toggle="tab" href="#nav-answers"
+                                   role="tab"
+                                   aria-controls="nav-answers" aria-selected="false">Question Choices and correct
+                                    answer</a>
+                            </div>
+                        </nav>
+                        <div class="tab-content" id="nav-tabContent1">
+                            <div class="tab-pane fade show active" id="nav-details" role="tabpanel"
+                                 aria-labelledby="nav-details-tab">
+                                <input type="hidden" name="exam_id">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>Question Text <span class="text-danger">*</span></label>
+                                            <input type="text" name="text" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>Question Time<span class="text-danger">*</span></label>
+                                            <input type="text" name="time" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>Question Point <span class="text-danger">*</span></label>
+                                            <input type="text" name="point" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>Question Type <span class="text-danger">*</span></label>
+                                            <select name="question_type_id" class="form-control questions-type">
+                                                <option value=""></option>
+                                                @foreach($questionTypes as $type)
+                                                    <option value="{{$type->id}}"
+                                                            data-value="{{strtolower(str_replace(" ","-",$type->name))}}">{{$type->name}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label>Question Description</label>
+                                            <textarea name="description" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row correct-answer">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label for="">Correct Answer <span class="text-danger">*</span></label>
+                                            <input type="text" name="valid_answer_text" class="form-control" hidden>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade show active" id="nav-answers" role="tabpanel"
+                                 aria-labelledby="nav-answers-tab">
 
-    <!-- Footer -->
-    <footer class="site-footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <p class="text-center text-md-left">©2019 Taal Talent. Alle rechten voorbehouden</p>
-                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
+
+                </form>
             </div>
         </div>
-    </footer>
-    <!-- END Footer -->
-</main>
-<!-- END Main container -->
-<!-- Scripts -->
-<script src="https://taal-talent.nl/ona/temp/assets/js/core.min.js"></script>
-<script src="https://taal-talent.nl/ona/temp/assets/js/app.min.js"></script>
-<script src="https://taal-talent.nl/ona/temp/assets/js/script.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-<script>
-    $(function () {
+    </div>
+@endsection
+@push('scripts')
+    <script>
+        var token = '{{csrf_token()}}';
         var $choices = '';
         var $last = '';
         var $count = 0;
         var $checked = false;
-        $('.questions-type').on('change', function () {
-            if ($last)
-                $('.' + $last).toggleClass('hidden');
-            let $class = $(this).find('option:selected').attr('data-value');
-            $('.' + $class).toggleClass('hidden');
-            $last = $class;
-        });
-        $('.add-answers').on('click', function () {
-            let input = $('.choice-text');
-            if ($count >= 5) {
-                toastr.info('You have entered 5 choices.');
-                return;
-            }
-            let value = input.val();
-            if (!value) {
-                toastr.error('Please fill out choice text.');
-                return;
-            } else {
-                $('.choices-list').append('<label class="radio">' + value + '' +
-                    '  <input type="radio" required name="choices_text[]" value=' + value + '>\n' +
-                    '  <span class="check-round"></span>\n' +
-                    '</label>');
-                input.val('');
-                $count++;
-                $choices += $count >= 5 ? value : value + ',';
-                $("input[type='radio']").on('change', function () {
-                    let value = $(this).val();
-                    $("input[name='valid_answer_text']").val(value)
+        $(function () {
+
+            $('.questions-type').on('change', function () {
+                if ($last)
+                    $('.' + $last).toggleClass('hidden');
+                let $class = $(this).find('option:selected').attr('data-value');
+                $('.' + $class).toggleClass('hidden');
+                $last = $class;
+            });
+
+            $("input[name='choice_text']").on('input', function () {
+                $("input[name='valid_answer_text']").val($(this).val())
+            });
+
+            $('.add-questions-form').on('submit', function (e) {
+                e.preventDefault();
+                let url = $(this).attr('action');
+                let data = $(this).serialize();
+                $.ajax({
+                    type: 'POST',
+                    url: url,
+                    data: data + '&choices=' + $choices,
+                    success: function (data) {
+                        window.location = data.url
+                    }
+                })
+            });
+
+            $('a.show-more').click(function (e) {
+                e.preventDefault();
+                var target_row = $(this).closest('tr').next('.detail');
+                target_row.show().find('div').slideToggle('slow', function () {
+                    if (!$(this).is(':visible')) {
+                        target_row.hide();
+                    }
                 });
-            }
-        });
-        $("input[name='choice_text']").on('input', function () {
-            $("input[name='valid_answer_text']").val($(this).val())
-        });
-        $('.add-questions-form').on('submit', function (e) {
-            e.preventDefault();
-            let url = $(this).attr('action');
-            let data = $(this).serialize();
-            $.ajax({
-                type: 'POST',
-                url: url,
-                data: data + '&choices=' + $choices,
-                success: function (data) {
-                    window.location = data.url
+            });
+
+            $('.delete-question').on('click', function (e) {
+                e.preventDefault();
+                let url = $(this).attr('href');
+                let exam_id = $(this).attr('data-exam');
+                swal({
+                    title: "Are you sure?",
+                    text: "Once deleted, you will not be able to recover it!",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            $.ajax({
+                                url: url,
+                                type: 'DELETE',
+                                data: {_token: token, exam: exam_id},
+                                success: function (data) {
+                                    window.location = data.url;
+                                }
+                            });
+                            swal("Poof! Your Question has been deleted!", {
+                                icon: "success",
+                            });
+                        } else {
+                            // swal("Your Question is safe!");
+                        }
+                    });
+
+            });
+
+            addAnswerEvent('.add-questions-form');
+
+            $('.edit-question').on('click', function (e) {
+                e.preventDefault();
+                let $tr = $(this).closest('tr');
+                let data = JSON.parse($tr.attr('data-data'));
+                let url=$(this).attr('data-href');
+                $('.update-questions-form').attr('action',url);
+                _fill('#updateModal', data);
+                // $('#nav-answers').html('');
+                console.log(data);
+                $('#updateModal').modal('show');
+                if (data.type.code === "MULT") {
+                    let $choices = data.choices;
+                    let $choices_html = '';
+                    for (let i = 0; i < $choices.length; i++) {
+                        let $checked = $choices[i].is_correct === 1 ? 'checked' : '';
+                        $choices_html += '<div style="display: flex;align-items: center;position: relative;"><label class="radio">' + $choices[i].text + '' +
+                            '  <input type="radio"' + $checked + ' required name="choices_text[]" value=' + $choices[i].text + '>\n' +
+                            '  <span class="check-round"></span>\n' +
+                            '</label>' +
+                            '  <span style="top: 10px;text-align: right;float: right;position: absolute;right: 40px;cursor: pointer;" class="fa fa-minus-circle text-danger delete-choice"></span>\n' +
+                            '</div>'
+                    }
+                    let $content = "       <div class=\"row multiple-choice\">\n" +
+                        "                                <div class=\"col-lg-6\">\n" +
+                        "                                    <div class=\"form-group\">\n" +
+                        "                                        <label for=\"\">Choice Text<span class=\"text-danger\">*</span></label>\n" +
+                        "                                        <div class=\"input-group\">\n" +
+                        "                                            <input type=\"text\" class=\"form-control choice-text\"\n" +
+                        "                                                   aria-describedby=\"basic-addon1\">\n" +
+                        "                                            <span class=\"input-group-addon add-answers\" id=\"basic-addon1\">+</span>\n" +
+                        "                                        </div>\n" +
+                        "                                    </div>\n" +
+                        "                                </div>\n" +
+                        "                                <div class=\"col-lg-6\">\n" +
+                        "                                    <div class=\"form-group\">\n" +
+                        "                                        <label for=\"\">Choices <span class=\"fa fa-info-circle\" data-toggle=\"tooltip\"\n" +
+                        "                                                                    title=\"Click on one choice to choose correct answer\"></span></label>\n" +
+                        "                                        <ol type=\"a\" class=\"choices-list\">\n" +
+                        "                                        " + $choices_html + "\n" +
+                        "                                        </ol>\n" +
+                        "                                    </div>\n" +
+                        "                                </div>\n" +
+                        "                            </div>";
+                    $('#nav-answers').html($content);
+                    addAnswerEvent('#nav-answers');
+
+                } else {
+                    let answer = data.choices[0]
                 }
             })
+
         })
-        $('a.show-more').click(function (e) {
-            e.preventDefault();
-            var target_row = $(this).closest('tr').next('.detail');
-            target_row.show().find('div').slideToggle('slow', function () {
-                if (!$(this).is(':visible')) {
-                    target_row.hide();
+
+        function addAnswerEvent($cont) {
+            $($cont +' .add-answers').on('click', function () {
+                let input = $($cont+' .choice-text');
+                if ($count >= 5) {
+                    toastr.info('You have entered 5 choices.');
+                    return;
+                }
+                let value = input.val();
+                if (!value) {
+                    toastr.error('Please fill out choice text.');
+                    return;
+                } else {
+                    $($cont+' .choices-list').append('<div style="display: flex;align-items: center;position: relative;"><label class="radio">' + value + '' +
+                        '  <input type="radio" required name="choices_text[]" value=' + value + '>\n' +
+                        '  <span class="check-round"></span>\n' +
+                        '</label>' +
+                        '  <span style="top: 10px;text-align: right;float: right;position: absolute;right: 40px;cursor: pointer;" class="fa fa-minus-circle text-danger delete-choice"></span>\n' +
+                        '</div>');
+                    input.val('');
+                    $count++;
+                    $choices += $count >= 5 ? value : value + ',';
+                    $($cont +" input[type='radio']").on('change', function () {
+                        let value = $(this).val();
+                        $($cont+" input[name='valid_answer_text']").val(value)
+                    });
+                    $($cont +' .delete-choice').on('click', function () {
+                        $(this).parent().remove();
+                        $count--;
+                    })
                 }
             });
-        });
-    })
-</script>
+        }
 
-</body>
-</html>
+    </script>
+@endpush
+

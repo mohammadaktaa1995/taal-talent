@@ -13,19 +13,20 @@
 
 
 Route::get('/add-questions', 'QuestionsController@showAddForm');
+Route::delete('delete-question/{question}', 'QuestionsController@deleteQuestion')->name('delete-question');
+Route::patch('edit-question/{question}', 'QuestionsController@updateQuestion')->name('edit-question');
 
 Route::get('/exams', 'ExamsController@showAll')->name('exams');
-Route::get('/exam/{exam}', 'ExamsController@showAddExamQuestion')->name('exams.show');
+Route::get('/exams/{exam}', 'ExamsController@showAddExamQuestion')->name('exams.show');
 Route::post('/exams', 'ExamsController@add')->name('add-exam');
+Route::patch('/exams/{exam}', 'ExamsController@update')->name('edit-exam');
+Route::delete('/exams/{exam}', 'ExamsController@delete')->name('delete-exam');
 
 Route::post('/exam-add-question', 'ExamsController@addQuestion')->name('add-question');
 
 
 Route::get('/', function () {
-    return view('layouts.app');
+    return redirect()->route('exams');
 });
-Route::get('/{view?}', function () {
-    return view('layouts.app');
-})->where('view', '(.*)');
 Auth::routes();
 

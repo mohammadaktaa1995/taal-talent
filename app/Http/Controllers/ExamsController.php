@@ -34,7 +34,25 @@ class ExamsController extends Controller
 
         Exam::create($request->input());
 
-        return response()->json(['success', 'url' => route('exams')], 200);
+        return response()->json(['success', 'url' => route('exams'), 'msg' => __('global.saved_successfully')], 200);
+    }
+
+    public function update(Exam $exam, Request $request)
+    {
+        $validator = \Validator::make($request->all(), [
+            'date' => 'required|date|date_format:Y-m-d|after:today',
+            'subject_id' => 'required|exists:subjects,id',
+            'text' => 'required|string'
+        ]);
+
+        $exam->update($request->input());
+
+        return redirect()->route('exams');
+    }
+    public function deleteExam(Exam $exam)
+    {
+        $exam->delete();
+        return response()->json(['success', 'url' =>route('exams')], 200);
     }
 
     public function addQuestion(Request $request)
