@@ -11,20 +11,25 @@
 |
 */
 
-
-Route::get('/add-questions', 'QuestionsController@showAddForm');
+// Questions
 Route::delete('delete-question/{question}', 'QuestionsController@deleteQuestion')->name('delete-question');
 Route::patch('edit-question/{question}', 'QuestionsController@updateQuestion')->name('edit-question');
+Route::post('add-question', 'QuestionsController@addQuestion')->name('add-question');
+//
 
+//Exams
+Route::get('/', 'ExamsController@showAll');
 Route::get('/exams', 'ExamsController@showAll')->name('exams');
 Route::get('/exams/{exam}', 'ExamsController@showAddExamQuestion')->name('exams.show');
 Route::post('/exams', 'ExamsController@add')->name('add-exam');
 Route::patch('/exams/{exam}', 'ExamsController@update')->name('edit-exam');
 Route::delete('/exams/{exam}', 'ExamsController@delete')->name('delete-exam');
+//
 
-Route::post('/exam-add-question', 'ExamsController@addQuestion')->name('add-question');
+Route::group(['prefix' => 'test'], function () {
+    Route::get('/', 'TestController@showExams')->name('test.exams');
+    Route::get('/exam-questions/{exam}', 'TestController@showExamQuestions')->name('test.exam-questions');
+});
 
-
-Route::get('/', 'ExamsController@showAll');
 Auth::routes();
 

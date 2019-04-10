@@ -51,7 +51,7 @@
                                 </tr>
                                 @if($question->choices()->get()->count() > 0)
                                     <tr class="detail">
-                                        <td colspan="6">
+                                        <td colspan="8">
                                             <div>
                                                 @if($question->type->code=="SING" ||$question->type->code=="BETW")
                                                     <h5>Answer</h5>
@@ -382,7 +382,7 @@
                     url: url,
                     data: data + '&choices=' + $update_choices,
                     success: function (data) {
-                        window.location = data.url
+                        // window.location = data.url
                     }
                 })
             });
@@ -541,7 +541,7 @@
                         '  <span style="top: 10px;text-align: right;float: right;position: absolute;right: 40px;cursor: pointer;" class="fa fa-minus-circle text-danger delete-choice"></span>\n' +
                         '</div>');
                     input.val('');
-                    if ($cont === "#nav-answers") {
+                    if ($cont === "#nav-answers" || $cont === "#nav-details") {
                         $update_count++;
                         $update_choices += $count >= 5 ? value : value + ',';
                     } else {

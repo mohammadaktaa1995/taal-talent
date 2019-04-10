@@ -56,32 +56,5 @@ class ExamsController extends Controller
         return response()->json(['success', 'url' => route('exams')], 200);
     }
 
-    public function addQuestion(Request $request)
-    {
-        $exam = Exam::find($request->get('exam_id'));
-        $question = Question::create($request->input());
-        $exam->questions()->attach($question->id);
 
-
-        if ($request->get('choice_text') != null) {
-            $choice = Choice::create(['text' => $request->get('choice_text')]);
-            $question->choices()->sync([$choice->id => ['is_correct' => 1]]);
-        }
-        if ($request->get('between_choice_text') != null) {
-            $choice = Choice::create(['text' => $request->get('between_choice_text')]);
-            $question->choices()->sync([$choice->id => ['is_correct' => 1]]);
-        } else {
-            $choices = explode(',', $request->get('choices'));
-            foreach ($choices as $choice) {
-                if ($request->get('valid_answer_text') == $choice && $choice) {
-                    $ch = Choice::create(['text' => $choice]);
-                    $question->choices()->attach([$ch->id => ['is_correct' => 1]]);
-                } elseif ($choice != null) {
-                    $ch = Choice::create(['text' => $choice]);
-                    $question->choices()->attach([$ch->id => ['is_correct' => 0]]);
-                }
-            }
-        }
-        return response()->json(['success', 'url' => route('exams.show', [$exam->id])], 201);
-    }
 }

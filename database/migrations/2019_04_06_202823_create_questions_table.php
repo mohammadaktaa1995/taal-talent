@@ -20,14 +20,11 @@ class CreateQuestionsTable extends Migration
             $table->char('time', 4);
             $table->string('after_answer')->nullable();
             $table->integer("point");
-            $table->unsignedInteger('created_by');
+            $table->unsignedInteger('created_by')->nullable();
             $table->foreign('created_by')->references("id")->on("users")->onDelete('cascade');
             $table->unsignedInteger('question_type_id');
             $table->foreign('question_type_id')->references("id")->on("question_types")->onDelete('cascade');
             $table->timestamps();
-        });
-        Schema::table("answers", function (Blueprint $table) {
-            $table->foreign('question_id')->references("id")->on("questions")->onDelete('cascade');
         });
     }
 
