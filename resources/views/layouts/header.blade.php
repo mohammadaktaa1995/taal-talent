@@ -35,6 +35,11 @@
                             <span class="title">Exams</span>
                         </a>
                     </li>
+                    <li class="menu-item">
+                        <a class="menu-link" href="/test">
+                            <span class="title">Tests</span>
+                        </a>
+                    </li>
                 </ul>
             </nav>
         </div>

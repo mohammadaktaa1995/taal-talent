@@ -15,10 +15,6 @@
                     </div>
 
                 @endforeach
-
-{{--                <div class="progress-container">--}}
-{{--                    <div class="step"></div>--}}
-{{--                </div>--}}
             </div>
         </div>
     </div>

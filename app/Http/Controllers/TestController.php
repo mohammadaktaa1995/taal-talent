@@ -13,7 +13,7 @@ class TestController extends Controller
 {
     public function showExams()
     {
-        $exams = Exam::all();
+        $exams = Exam::orderBy('id', 'desc')->get();
         return view('test.view', compact('exams'));
     }
 
@@ -63,8 +63,8 @@ class TestController extends Controller
         }
         $user = User::find(18);
         $mark = $user->getMarkByExamByUser($request->get('exam_id'), $user->id);
-        $exam=Exam::find($request->get('exam_id'));
-        $exam_mark=$exam->total_points;
-        return view('test.result', compact('student_answers','mark','exam_mark'));
+        $exam = Exam::find($request->get('exam_id'));
+        $exam_mark = $exam->total_points;
+        return view('test.result', compact('student_answers', 'mark', 'exam_mark'));
     }
 }

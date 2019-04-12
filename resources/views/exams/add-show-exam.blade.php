@@ -17,15 +17,7 @@
                 </div>
                </div>
             <div class="card-body">
-                <nav>
-                    <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
-                        <a class="nav-item nav-link active" id="nav-questions-tab" data-toggle="tab"
-                           href="#nav-questions" role="tab" aria-controls="nav-questions"
-                           aria-selected="true">Questions</a>
-                        <a class="nav-item nav-link" id="nav-add-tab" data-toggle="tab" href="#nav-add" role="tab"
-                           aria-controls="nav-add" aria-selected="false">Add Question</a>
-                    </div>
-                </nav>
+
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="nav-questions" role="tabpanel"
                          aria-labelledby="nav-questions-tab">
@@ -37,6 +29,7 @@
                                 <th>Text</th>
                                 <th>Time</th>
                                 <th>Point</th>
+                                <th>Average Success Rate</th>
                                 <th>Question Type</th>
                                 <th>Actions</th>
                             </tr>
@@ -50,6 +43,7 @@
                                     <td>{{$question->full_text}}</td>
                                     <td>{{$question->time}}s</td>
                                     <td>{{$question->point}}</td>
+                                    <td>{{$question->success_rate}}</td>
                                     <td>{{$question->type->name}}</td>
                                     <td class="text-center">
                                         <a class="delete-question mr-2" data-exam="{{$exam->id}}"

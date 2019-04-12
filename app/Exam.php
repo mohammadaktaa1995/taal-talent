@@ -46,5 +46,4 @@ class Exam extends Eloquent
         return sprintf("%02.2d:%02.2d", floor($seconds / 60), $seconds % 60);
     }
 
-
 }

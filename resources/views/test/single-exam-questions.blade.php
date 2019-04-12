@@ -10,15 +10,32 @@
                 </div>
                 <div class="col-lg-6 d-flex">
                     <h5 class="mr-2"><b>Total Mark:</b> {{$exam->total_points}} | </h5>
-                    <h5><b>Total Time:</b> <span class="countdown">{{$exam->converted_total_time}}</span></h5>
+                    <h5><b>Total Time:</b> <span class="countdown"
+                                                 data-time="{{$exam->converted_total_time}}">{{$exam->converted_total_time}}</span>
+                    </h5>
                 </div>
             </div>
+            <nav>
+                <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                    @foreach($questions as $question)
+                        <a class="nav-item nav-link {{$loop->first?'active':''}}" id="nav-{{$question->id}}-tab"
+                           data-toggle="tab"
+                           href="#nav-{{$question->id}}" role="tab" aria-controls="nav-{{$question->id}}"
+                           aria-selected="true">Q{{$loop->iteration}}</a>
+                    @endforeach
+                </div>
+            </nav>
             <form action="{{route('test.answer')}}" method="post" enctype="multipart/form-data">
                 {{csrf_field()}}
                 <input type="hidden" name="exam_id" value="{{$exam->id}}">
-                <div class="row">
+                <div class="tab-content" id="nav-tabContent">
                     @foreach($questions as $question)
-                        <div class="col-sm-6 mb-4">
+                        <div class="tab-pane fade {{$loop->first?'show active':''}}" id="nav-{{$question->id}}"
+                             role="tabpanel"
+                             aria-labelledby="nav-{{$question->id}}-tab">
+                            <div class="text-right">
+                               <b>Time:</b> <span class="countdown question-time" data-time="{{$question->converted_time}}"> {{$question->converted_time}}</span>
+                            </div>
                             <div class="question">
                                 <h5><span class="badge badge-warning" id="qid">{{$loop->iteration}}</span>
                                     <span id="question" class="text-white">{{$question->full_text}}</span>
@@ -47,17 +64,17 @@
 
                         </div>
                     @endforeach
-                    {{--                <div class="hint">--}}
-                    {{--                    <button id="show-hint-button" disabled>Show Hint</button><br><br>--}}
-                    {{--                    <span class="hidden show-hint">--}}
-                    {{--                        <p>Comment for single line //<br>--}}
-                    {{--                        comment for multi line !--ok--<p>--}}
-                    {{--                    </span>--}}
-                    {{--                </div>--}}
-                    {{--                <div class="text-muted">--}}
-                    {{--                    <span id="answer"></span>--}}
-                    {{--                </div>--}}
                 </div>
+                {{--                <div class="hint">--}}
+                {{--                    <button id="show-hint-button" disabled>Show Hint</button><br><br>--}}
+                {{--                    <span class="hidden show-hint">--}}
+                {{--                        <p>Comment for single line //<br>--}}
+                {{--                        comment for multi line !--ok--<p>--}}
+                {{--                    </span>--}}
+                {{--                </div>--}}
+                {{--                <div class="text-muted">--}}
+                {{--                    <span id="answer"></span>--}}
+                {{--                </div>--}}
                 <div class="row pull-right mb-4">
                     <button type="submit" class="btn btn-info">Submit</button>
                 </div>
@@ -397,23 +414,29 @@
                 $('form').submit()
             }, '{{$exam->total_time*1000}}');
 
-            var total_time = "{{$exam->converted_total_time}}";
+                    {{--            var total_time = "{{$exam->converted_total_time}}";--}}
+            var total_time = $('.countdown');
 
-            var interval = setInterval(function () {
+            total_time.each(function () {
 
-                var timer = total_time.split(':');
+                let convert_time = $(this).attr('data-time');
+                let $this=this;
+                var interval = setInterval(function () {
 
-                var minutes = parseInt(timer[0], 10);
-                var seconds = parseInt(timer[1], 10);
-                --seconds;
-                minutes = (seconds < 0) ? --minutes : minutes;
-                if (minutes < 0) clearInterval(interval);
-                seconds = (seconds < 0) ? 59 : seconds;
-                seconds = (seconds < 10) ? '0' + seconds : seconds;
-                //minutes = (minutes < 10) ?  minutes : minutes;
-                $('.countdown').html(minutes + ':' + seconds);
-                total_time = minutes + ':' + seconds;
-            }, 1000);
+                    var timer = convert_time.split(':');
+
+                    var minutes = parseInt(timer[0], 10);
+                    var seconds = parseInt(timer[1], 10);
+                    --seconds;
+                    minutes = (seconds < 0) ? --minutes : minutes;
+                    if (minutes < 0) clearInterval(interval);
+                    seconds = (seconds < 0) ? 59 : seconds;
+                    seconds = (seconds < 10) ? '0' + seconds : seconds;
+                    //minutes = (minutes < 10) ?  minutes : minutes;
+                    $($this).html(minutes + ':' + seconds);
+                    convert_time = minutes + ':' + seconds;
+                }, 1000);
+            })
         })($)
     </script>
 @endpush
