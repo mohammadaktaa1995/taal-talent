@@ -2,7 +2,7 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use Eloquent;
 
 /**
  * Class Exam
@@ -10,12 +10,11 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $total_points
  * @property string $total_time
  */
-
-class Exam extends \Eloquent
+class Exam extends Eloquent
 {
     protected $with = ['questions'];
     protected $fillable = ['text', 'description', 'date', 'page_type', 'subject_id'];
-    protected $appends = ['total_points','total_time'];
+    protected $appends = ['total_points', 'total_time','converted_total_time'];
 
     public function questions()
     {
@@ -35,6 +34,16 @@ class Exam extends \Eloquent
     public function getTotalTimeAttribute()
     {
         return $this->questions()->sum('time');
+    }
+
+    public function getConvertedTotalTimeAttribute()
+    {
+        return $this->minutes($this->total_time);
+    }
+
+    public function minutes($seconds)
+    {
+        return sprintf("%02.2d:%02.2d", floor($seconds / 60), $seconds % 60);
     }
 
 

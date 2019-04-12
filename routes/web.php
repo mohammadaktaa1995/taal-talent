@@ -28,6 +28,8 @@ Route::delete('/exams/{exam}', 'ExamsController@delete')->name('delete-exam');
 
 Route::group(['prefix' => 'test'], function () {
     Route::get('/', 'TestController@showExams')->name('test.exams');
+//    Route::get('/result', 'TestController@showResult')->name('test.result');
+    Route::post('/multi-answer', 'TestController@saveMultiAnswers')->name('test.answer');
     Route::get('/exam-questions/{exam}', 'TestController@showExamQuestions')->name('test.exam-questions');
 });
 

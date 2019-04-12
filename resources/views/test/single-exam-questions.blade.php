@@ -2,62 +2,72 @@
 
 @section('content')
     <div class="main-content container">
-        <div class="row"><br><br>
-            <div class="col-sm-6" style="margin: 0 auto;">
-                <div class="loader">
-                    <div class="col-xs-3 col-xs-offset-5">
-                        <div id="loadbar" style="display: none;">
-                            <img src="http://schoolsearch.co.ke/systems/img/loader.gif_large.gif" alt="Loading" class="center-block loanParamsLoader" style="">
-                        </div>
-                    </div>
-
-                    <br>
-                    <br>
-                    <div id="quiz">
-
-                        <div class="question">
-                            <h5><span class="badge badge-warning" id="qid">1</span>
-                                <span id="question" class="text-white"> </span>
-                            </h5>
-                        </div>
-                        <ul class="choices-list">
-                            <li>
-                                <input type="radio" class="inputoption" id="f-option" name="selector" value="1">
-                                <label for="f-option" class="element-animation"></label>
-                                <div class="check"></div>
-                            </li>
-
-                            <li>
-                                <input type="radio" class="inputoption" id="s-option" name="selector" value="2">
-                                <label for="s-option" class="element-animation"></label>
-                                <div class="check"><div class="inside"></div></div>
-                            </li>
-
-                            <li>
-                                <input type="radio" class="inputoption" id="t-option" name="selector" value="3">
-                                <label for="t-option" class="element-animation"></label>
-                                <div class="check"><div class="inside"></div></div>
-                            </li>
-                        </ul>
-                    </div>
+        <br><br>
+        <div class="col-sm-12" {{--style="margin: 0 auto;"--}}>
+            <div class="row mb-5">
+                <div class="col-lg-6">
+                    <h3><b>{{$exam->text}}</b></h3>
                 </div>
-                <div class="hint">
-                    <button id="show-hint-button" disabled>Show Hint</button><br><br>
-                    <span class="hidden show-hint">
-                        <p>Comment for single line //<br>
-                        comment for multi line !--ok--<p>
-                    </span>
-                </div>
-                <div class="text-muted">
-                    <span id="answer"></span>
+                <div class="col-lg-6 d-flex">
+                    <h5 class="mr-2"><b>Total Mark:</b> {{$exam->total_points}} | </h5>
+                    <h5><b>Total Time:</b> <span class="countdown">{{$exam->converted_total_time}}</span></h5>
                 </div>
             </div>
+            <form action="{{route('test.answer')}}" method="post" enctype="multipart/form-data">
+                {{csrf_field()}}
+                <input type="hidden" name="exam_id" value="{{$exam->id}}">
+                <div class="row">
+                    @foreach($questions as $question)
+                        <div class="col-sm-6 mb-4">
+                            <div class="question">
+                                <h5><span class="badge badge-warning" id="qid">{{$loop->iteration}}</span>
+                                    <span id="question" class="text-white">{{$question->full_text}}</span>
+                                </h5>
+                            </div>
+                            @if($question->type->code=="MULT")
+                                <ul class="choices-list">
+                                    @foreach($question->choices()->get() as $choice)
+                                        <li>
+                                            <label class="radio">
+                                                {{$choice->text}}
+                                                <input type="radio" name="question_answer[{{$question->id}}]"
+                                                       value="{{$choice->text}}">
+                                                <span class="check-round"></span>
+                                            </label>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            @else
+                                <div class="m-2">
+                                    <label>Enter your answer...</label>
+                                    <input type="text" class="form-control"
+                                           name="question_answer[{{$question->id}}]" value="">
+                                </div>
+                            @endif
+
+                        </div>
+                    @endforeach
+                    {{--                <div class="hint">--}}
+                    {{--                    <button id="show-hint-button" disabled>Show Hint</button><br><br>--}}
+                    {{--                    <span class="hidden show-hint">--}}
+                    {{--                        <p>Comment for single line //<br>--}}
+                    {{--                        comment for multi line !--ok--<p>--}}
+                    {{--                    </span>--}}
+                    {{--                </div>--}}
+                    {{--                <div class="text-muted">--}}
+                    {{--                    <span id="answer"></span>--}}
+                    {{--                </div>--}}
+                </div>
+                <div class="row pull-right mb-4">
+                    <button type="submit" class="btn btn-info">Submit</button>
+                </div>
+            </form>
         </div>
         <div class="row">
             <div class="col-sm-8 col-sm-offset-2">
                 <div id="result-of-question" style="display: none;">
                     <span id="totalCorrect" class="pull-right"></span>
-                    <table class="table table-hover table-responsive" >
+                    <table class="table table-hover table-responsive">
                         <thead>
                         <tr>
                             <th>Question No.</th>
@@ -72,39 +82,40 @@
             </div>
         </div>
     </div>
-    @stop
+@stop
 
 @push('styles')
     <style>
 
         #chartdiv {
-            width   : 100%;
-            min-height  : 405px;
+            width: 100%;
+            min-height: 405px;
             height: auto;
         }
-        .center-block{
+
+        .center-block {
             width: 100%;
         }
+
         h2 {
             color: #AAAAAA;
             font-weight: normal;
         }
-        .bg-for-submit-name
-        {
+
+        .bg-for-submit-name {
             background: url('https://lh4.ggpht.com/GLT1kYMvi4oiguL9FOc1eM5q7sW0AvVJNWyBZ26iMq-BSm3Kpi9CPDR2UGoVlYrVwA=h900') fixed;
             background-size: cover;
             padding: 0;
             margin: 0;
         }
-        .margin-top{
+
+        .margin-top {
             margin-top: 270px;
         }
 
 
-
-        p.form-title
-        {
-            font-family: 'Open Sans' , sans-serif;
+        p.form-title {
+            font-family: 'Open Sans', sans-serif;
             font-size: 20px;
             font-weight: 600;
             text-align: center;
@@ -128,14 +139,14 @@
             letter-spacing: 1px;
 
         }
+
         .btn-success:hover {
             color: #fff !important;
             background-color: #2FC0AE !important;
             border-color: #2FC0AE !important;
         }
 
-        .pr-wrap
-        {
+        .pr-wrap {
             width: 100%;
             height: 100%;
             min-height: 100%;
@@ -146,13 +157,11 @@
             display: none;
         }
 
-        .show-pass-reset
-        {
+        .show-pass-reset {
             display: block !important;
         }
 
-        .pass-reset
-        {
+        .pass-reset {
             margin: 0 auto;
             width: 250px;
             position: relative;
@@ -162,15 +171,13 @@
             padding: 20px 15px;
         }
 
-        .pass-reset label
-        {
+        .pass-reset label {
             font-size: 12px;
             font-weight: 400;
             margin-bottom: 15px;
         }
 
-        .pass-reset input[type="email"]
-        {
+        .pass-reset input[type="email"] {
             width: 100%;
             margin: 5px 0 0 0;
             padding: 5px 10px;
@@ -187,8 +194,7 @@
             outline: 0;
         }
 
-        .pass-reset input[type="submit"]
-        {
+        .pass-reset input[type="submit"] {
             width: 100%;
             border: 0;
             font-size: 14px;
@@ -201,7 +207,7 @@
         }
 
         /*----------quiz.css---------------*/
-        #show-hint-button{
+        #show-hint-button {
             background-color: #674D93;
             color: #fff;
             padding: 6px 15px;
@@ -211,11 +217,13 @@
             border-bottom-right-radius: 15px;
             margin-top: 20px;
         }
-        .show-hint p{
+
+        .show-hint p {
             color: #aaaaaa;
             font-size: 15px;
             padding-left: 80px;
         }
+
         .loanParamsLoader {
             top: 143px;
             margin: auto;
@@ -223,7 +231,8 @@
             right: 17%;
             width: 135%;
         }
-        .question{
+
+        .question {
             background: #674D93;
             padding: 10px;
             color: #fff;
@@ -231,19 +240,20 @@
             border-top-left-radius: 55px;
         }
 
-        #qid{
+        #qid {
             margin-left: 25px;
             background-color: #ffffff;
             color: #aaaaaa;
         }
-        .container ul{
+
+        .container ul {
             list-style: none;
             margin: 0;
             padding: 0;
         }
 
 
-        ul.choices-list li{
+        ul.choices-list li {
             color: #265397;
             display: block;
             position: relative;
@@ -252,12 +262,16 @@
             border-bottom: 1px solid #111111;
         }
 
-        ul.choices-list li input[type=radio]{
+        ul.choices-list li:last-child {
+            border-bottom: none;
+        }
+
+        ul.choices-list li input[type=radio] {
             position: absolute;
             visibility: hidden;
         }
 
-        ul.choices-list li label{
+        ul.choices-list li label {
             display: block;
             position: relative;
             font-weight: 400;
@@ -271,11 +285,11 @@
             color: #727272;
         }
 
-        ul.choices-list li:hover label{
+        ul.choices-list li:hover label {
             color: #265397;
         }
 
-        ul.choices-list li .check{
+        ul.choices-list li .check {
             display: block;
             position: absolute;
             border: 2px solid #265397;
@@ -312,25 +326,27 @@
             border: 2px solid #00FF00;
         }
 
-        input[type=radio]:checked ~ .check::before{
-            background: #00FF00;/*attr('data-background');*/
+        input[type=radio]:checked ~ .check::before {
+            background: #00FF00; /*attr('data-background');*/
         }
 
-        input[type=radio]:checked ~ label{
+        input[type=radio]:checked ~ label {
             color: #00FF00;
         }
 
         .cross:checked ~ .check {
             border: 2px solid #FF0000 !important;
         }
-        .cross:checked ~ .check::before{
+
+        .cross:checked ~ .check::before {
             background: #FF0000 !important;
         }
-        .cross:checked ~ label{
+
+        .cross:checked ~ label {
             color: #FF0000 !important;
         }
 
-        #result-of-question th{
+        #result-of-question th {
             text-align: center;
             background: #674D93;
             color: #fff;
@@ -338,7 +354,8 @@
             font-size: 18px;
             border: none;
         }
-        #result-of-question  td{
+
+        #result-of-question td {
             text-align: center;
             color: #222;
             background-color: #fff;
@@ -348,7 +365,7 @@
             border: 1px solid #674D93;
         }
 
-        #totalCorrect{
+        #totalCorrect {
             color: #fff;
             background: #674D93;
             padding: 22px 20px;
@@ -359,9 +376,10 @@
             border-top-right-radius: 25px;
             border-top-left-radius: 25px;
         }
-        #alert{
+
+        #alert {
             /* Position fixed */
-            position:fixed;
+            position: fixed;
             /* Center it! */
             top: 50%;
             left: 50%;
@@ -370,131 +388,32 @@
         }
 
     </style>
-    @endpush
+@endpush
 @push('scripts')
     <script>
-        var q = [
-            {'Q':'How do you write "Hello World" in an alert box?', 'A':2,'C':['msg("Hello World");','alert("Hello World");','alertBox("Hello World");'],'H':"Hint 1"},
-            {'Q':'How do you create a function in JavaScript?', 'A':3,'C':['function:myFunction()','function = myFunction()','function myFunction()'],'H':"Hint 1"},
-            {'Q':'How to write an IF statement in JavaScript?', 'A':1,'C':['if (i == 5)','if i = 5 then','if i == 5 then'],'H':"Hint 1"},
-            {'Q':'How does a FOR loop start?', 'A':2,'C':['for (i = 0; i <= 5)','for (i = 0; i <= 5; i++)','for i = 1 to 5'],'H':"Hint 1"},
-            {'Q':'What is the correct way to write a JavaScript array?', 'A':3,'C':['var colors = "red", "green", "blue"','var colors = (1:"red", 2:"green", 3:"blue")','var colors = ["red", "green", "blue"]'],'H':"Hint 1"}
-        ];
+        (function () {
 
+            setTimeout(() => {
+                $('form').submit()
+            }, '{{$exam->total_time*1000}}');
 
-        $(function(){
-            var loading = $('#loadbar').hide();
-            $(document)
-                .ajaxStart(function () {
-                    loading.show();
-                }).ajaxStop(function () {
-                loading.hide();
-            });
+            var total_time = "{{$exam->converted_total_time}}";
 
+            var interval = setInterval(function () {
 
-            var choicecount = 1;
-            var allowchoice  = true;
-            var questionNo = 0;
+                var timer = total_time.split(':');
 
-            $('#question').html(q[questionNo].Q);
-            $($('#f-option').parent().find('label')).html(q[questionNo].C[0]);
-            $($('#s-option').parent().find('label')).html(q[questionNo].C[1]);
-            $($('#t-option').parent().find('label')).html(q[questionNo].C[2]);
-
-
-            $(document.body).on('click',"#show-hint-button",function (e) {
-                $('.show-hint').removeClass('hidden');
-            });
-
-            $(document.body).on('click',"label.element-animation",function (e) {
-                var choice = $(this).parent().find('input:radio').val();
-                console.log(choice);
-                var anscheck =  $(this).checking(questionNo, choice);//$( "#answer" ).html(  );
-                var thisel = $(this);
-                // q[questionNo].UC = choice;
-                // console.log(anscheck);
-                if(anscheck){//answer correct
-                    // correctCount++;
-                    // q[questionNo].result = "Correct";
-                    allowchoice = false;
-                } else {//answer wrong
-                    // q[questionNo].result = "Incorrect";
-                    $(this).addClass('cross');
-                    $($(this).parent().find('.check')).addClass('cross');
-                    $($(this).parent().find('.inputoption')).addClass('cross');
-                }
-                choicecount++;
-                if(choicecount > 2){//crossed limit of choosing option
-                    console.log(choicecount+" greater than 2");
-                    allowchoice = false;
-                }
-                if(allowchoice){
-                    if(choicecount > 1){
-                        $('.show-hint').html(q[questionNo].H);
-                        $('#show-hint-button').prop('disabled', false);
-                    }
-                } else {
-                    setTimeout(function(){
-                        $('#loadbar').show();
-                        $('#quiz').fadeOut();
-
-                        $('.inputoption').removeClass('cross');
-                        $('.check').removeClass('cross');
-                        $('.inputoption').removeClass('cross');
-
-                        questionNo++;
-                        choicecount = 1;
-                        allowchoice = true;
-                        $('#show-hint-button').prop('disabled', true);
-                        $('.show-hint').addClass('hidden');
-
-
-                        //show answer and go to next question
-                        if((questionNo + 1) > q.length){
-                            alert("Quiz completed, Now click ok to get your answer");
-                            $('label.element-animation').unbind('click');
-                            setTimeout(function(){
-                                var toAppend = '';
-                                $.each(q, function(i, a){
-                                    toAppend += '<tr>'
-                                    toAppend += '<td>'+(i+1)+'</td>';
-                                    toAppend += '<td>'+a.A+'</td>';
-                                    toAppend += '<td>'+a.UC+'</td>';
-                                    toAppend += '<td>'+a.result+'</td>';
-                                    toAppend += '</tr>'
-                                });
-                                $('#quizResult').html(toAppend);
-                                $('#totalCorrect').html("Total correct: " + correctCount);
-                                $('#quizResult').show();
-                                $('#loadbar').fadeOut();
-                                $('#result-of-question').show();
-                            }, 1000);
-                        } else {
-                            $('#qid').html(questionNo + 1);
-                            $('input:radio').prop('checked', false);
-                            setTimeout(function(){
-                                $('#quiz').show();
-                                $('#loadbar').fadeOut();
-                            }, 1000);
-                            $('#question').html(q[questionNo].Q);
-                            $($('#f-option').parent().find('label')).html(q[questionNo].C[0]);
-                            $($('#s-option').parent().find('label')).html(q[questionNo].C[1]);
-                            $($('#t-option').parent().find('label')).html(q[questionNo].C[2]);
-                        }
-                    }, 1000);
-                }
-            });
-
-
-            $.fn.checking = function(qstn, ck) {
-                var ans = q[questionNo].A;
-                console.log(ans);
-                if (ck != ans)
-                    return false;
-                else
-                    return true;
-            };
-
-        });
+                var minutes = parseInt(timer[0], 10);
+                var seconds = parseInt(timer[1], 10);
+                --seconds;
+                minutes = (seconds < 0) ? --minutes : minutes;
+                if (minutes < 0) clearInterval(interval);
+                seconds = (seconds < 0) ? 59 : seconds;
+                seconds = (seconds < 10) ? '0' + seconds : seconds;
+                //minutes = (minutes < 10) ?  minutes : minutes;
+                $('.countdown').html(minutes + ':' + seconds);
+                total_time = minutes + ':' + seconds;
+            }, 1000);
+        })($)
     </script>
-    @endpush
+@endpush

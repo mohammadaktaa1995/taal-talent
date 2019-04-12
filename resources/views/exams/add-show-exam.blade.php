@@ -2,7 +2,20 @@
 @section('content')
     <div class="main-content container ">
         <div class="card  shadow-3">
-            <div class="card-title fs-18 fw-400">Add Questions</div>
+            <div class="card-title fs-18 fw-400">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="text-left">
+                            Add Questions
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="text-right">
+                            Mark of this exam is : {{$exam->total_points}}
+                        </div>
+                    </div>
+                </div>
+               </div>
             <div class="card-body">
                 <nav>
                     <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
@@ -25,7 +38,6 @@
                                 <th>Time</th>
                                 <th>Point</th>
                                 <th>Question Type</th>
-                                <th>After Answer</th>
                                 <th>Actions</th>
                             </tr>
                             </thead>
@@ -35,11 +47,10 @@
                                     <td>{{$loop->iteration}}</td>
                                     <td><a href="javascript:void(0)" class="show-more"><span class="fa fa-list"></span></a>
                                     </td>
-                                    <td>{{$question->text}}</td>
+                                    <td>{{$question->full_text}}</td>
                                     <td>{{$question->time}}s</td>
                                     <td>{{$question->point}}</td>
                                     <td>{{$question->type->name}}</td>
-                                    <td>{{$question->after_answer?$question->after_answer:'-'}}</td>
                                     <td class="text-center">
                                         <a class="delete-question mr-2" data-exam="{{$exam->id}}"
                                            href="{{route('delete-question',[$question->id])}}"><span
