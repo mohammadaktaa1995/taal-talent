@@ -7,6 +7,8 @@ use App\Exam;
 use App\Question;
 use App\QuestionType;
 use App\Subject;
+use App\User;
+use Auth;
 use Illuminate\Http\Request;
 
 class ExamsController extends Controller

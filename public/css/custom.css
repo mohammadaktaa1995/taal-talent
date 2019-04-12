@@ -174,3 +174,7 @@ tr.detail div {
     transform-style: 2s;
 
 }
+.btn{
+    -webkit-box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.17);
+    box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.17);
+}

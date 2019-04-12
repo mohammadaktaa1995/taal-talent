@@ -10,16 +10,16 @@
                 </div>
                 <div class="col-lg-6 d-flex">
                     <h5 class="mr-2"><b>Total Mark:</b> {{$exam->total_points}} | </h5>
-                    <h5><b>Total Time:</b> <span class="countdown"
+                    <h5><b>Total Time:</b> <span class="countdown main"
                                                  data-time="{{$exam->converted_total_time}}">{{$exam->converted_total_time}}</span>
                     </h5>
                 </div>
             </div>
             <nav>
                 <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
-                    @foreach($questions as $question)
+                    @foreach($questions as $key=>$question)
                         <a class="nav-item nav-link {{$loop->first?'active':''}}" id="nav-{{$question->id}}-tab"
-                           data-toggle="tab"
+                           data-toggle="tab" data-tab="#nav-{{$question->id}}" data-id="{{$key}}"
                            href="#nav-{{$question->id}}" role="tab" aria-controls="nav-{{$question->id}}"
                            aria-selected="true">Q{{$loop->iteration}}</a>
                     @endforeach
@@ -65,21 +65,29 @@
                         </div>
                     @endforeach
                 </div>
-                {{--                <div class="hint">--}}
-                {{--                    <button id="show-hint-button" disabled>Show Hint</button><br><br>--}}
-                {{--                    <span class="hidden show-hint">--}}
-                {{--                        <p>Comment for single line //<br>--}}
-                {{--                        comment for multi line !--ok--<p>--}}
-                {{--                    </span>--}}
-                {{--                </div>--}}
-                {{--                <div class="text-muted">--}}
-                {{--                    <span id="answer"></span>--}}
-                {{--                </div>--}}
-                <div class="row pull-right mb-4">
-                    <button type="submit" class="btn btn-info">Submit</button>
+                <div class="col-lg-12 mt-5 mb-5">
+                    <ul class="Footer" style="list-style: none">
+                        <li class="pull-left">
+                            <button id="btnMoveLeftTab" class="btn btn-danger" type="button"
+                                    value="Previous Tab">Previous Tab
+                            </button>
+                        </li>
+                        <li class="pull-right">
+                            <button id="btnMoveRightTab" class="btn btn-info" type="button"
+                                    value="Next Tab">Next Tab
+                            </button>
+                        </li>
+                        <li class="pull-right">
+                            <button id="car-submit" class="btn btn-success" type="submit"
+                                    style="display: none;">Submit
+                            </button>
+                        </li>
+                    </ul>
                 </div>
             </form>
+
         </div>
+
         <div class="row">
             <div class="col-sm-8 col-sm-offset-2">
                 <div id="result-of-question" style="display: none;">
@@ -140,27 +148,6 @@
             margin-top: 5%;
             text-transform: uppercase;
             letter-spacing: 4px;
-        }
-
-
-        .btn-success {
-            color: #fff;
-            background-color: #674D93;
-            border-color: #674D93;
-            width: 100%;
-            /* font-weight: 600 !important; */
-            padding: 7px 10px;
-            font-size: 15px !important;
-            border-radius: 0px;
-            word-spacing: 4px;
-            letter-spacing: 1px;
-
-        }
-
-        .btn-success:hover {
-            color: #fff !important;
-            background-color: #2FC0AE !important;
-            border-color: #2FC0AE !important;
         }
 
         .pr-wrap {
@@ -255,6 +242,8 @@
             color: #fff;
             border-bottom-right-radius: 55px;
             border-top-left-radius: 55px;
+            border-top-right-radius: 10px;
+            border-bottom-left-radius: 10px;
         }
 
         #qid {
@@ -407,6 +396,7 @@
     </style>
 @endpush
 @push('scripts')
+    <script src="{{asset('js/tabs.js')}}"></script>
     <script>
         (function () {
 
@@ -414,29 +404,23 @@
                 $('form').submit()
             }, '{{$exam->total_time*1000}}');
 
-                    {{--            var total_time = "{{$exam->converted_total_time}}";--}}
-            var total_time = $('.countdown');
+            var total_time = "{{$exam->converted_total_time}}";
 
-            total_time.each(function () {
+            var interval = setInterval(function () {
 
-                let convert_time = $(this).attr('data-time');
-                let $this=this;
-                var interval = setInterval(function () {
+                var timer = total_time.split(':');
 
-                    var timer = convert_time.split(':');
-
-                    var minutes = parseInt(timer[0], 10);
-                    var seconds = parseInt(timer[1], 10);
-                    --seconds;
-                    minutes = (seconds < 0) ? --minutes : minutes;
-                    if (minutes < 0) clearInterval(interval);
-                    seconds = (seconds < 0) ? 59 : seconds;
-                    seconds = (seconds < 10) ? '0' + seconds : seconds;
-                    //minutes = (minutes < 10) ?  minutes : minutes;
-                    $($this).html(minutes + ':' + seconds);
-                    convert_time = minutes + ':' + seconds;
-                }, 1000);
-            })
+                var minutes = parseInt(timer[0], 10);
+                var seconds = parseInt(timer[1], 10);
+                --seconds;
+                minutes = (seconds < 0) ? --minutes : minutes;
+                if (minutes < 0) clearInterval(interval);
+                seconds = (seconds < 0) ? 59 : seconds;
+                seconds = (seconds < 10) ? '0' + seconds : seconds;
+                //minutes = (minutes < 10) ?  minutes : minutes;
+                $('.countdown.main').html(minutes + ':' + seconds);
+                total_time = minutes + ':' + seconds;
+            }, 1000);
         })($)
     </script>
 @endpush
