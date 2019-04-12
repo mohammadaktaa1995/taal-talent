@@ -7,7 +7,7 @@
     $.each($tabsItems, function (i, v) {
         $data.push($(v).attr('data-tab'))
     });
-    changeTimeOut('#nav-2');
+    changeTimeOut('#nav-1');
     $data.push(null);
     let $activeTab = $tabUl.find('a.active');
     let $nextBtn = $('#btnMoveRightTab');
@@ -69,7 +69,6 @@
 
 function changeTimeOut($cont) {
     let $countdown = $($cont + ' .countdown.question-time');
-    console.log($countdown);
     let $convert_time = $countdown.attr('data-time');
     let $seconds = '';
     let interval = setInterval(function () {
@@ -94,3 +93,7 @@ function changeTimeOut($cont) {
     }, 1000);
 
 }
+$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+    let $cont=$(this).attr('data-tab');
+    changeTimeOut($cont)
+});
