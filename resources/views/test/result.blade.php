@@ -36,7 +36,7 @@
                             <td>
                                 <span class="fa fa-{{$student_answer->is_true?'check text-success':'close text-danger'}}"></span>
                             </td>
-                            <td>{{$student_answer->question->text}}</td>
+                            <td>{{$student_answer->question->full_text}}</td>
                             <td>{{$student_answer->text}}</td>
                             <td>{{date('Y-m-d',strtotime($student_answer->date_of_answer))}}</td>
                             <td>{{isset($student_answer->correct_answer_text)?$student_answer->correct_answer_text:'-'}}</td>

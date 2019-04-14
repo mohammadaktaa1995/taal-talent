@@ -22,7 +22,7 @@ class Question extends \Eloquent
 
     public function getFullTextAttribute()
     {
-        if ($this->type->S == "BETW")
+        if ($this->type->code == "BETW")
             return $this->text . ' ' . $this->after_answer;
 
         return $this->text;
