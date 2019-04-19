@@ -16,7 +16,7 @@ class ExamsController extends Controller
 {
     public function showAll()
     {
-        if (isset($_SESSION['id'])) {
+        if (isset($_SESSION['id']) && !Auth::check()) {
             $user = User::find($_SESSION['id']);
             Auth::login($user);
         }
@@ -53,7 +53,7 @@ class ExamsController extends Controller
             'text' => 'required|string'
         ]);
 
-        if (!$request->has('students')){
+        if (!$request->has('students')) {
             $request['students'] = [];
         }
         $exam->update($request->input());
