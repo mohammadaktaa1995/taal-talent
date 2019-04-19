@@ -10,9 +10,6 @@ function _fill($cont, obj) {
         var $this = $(this), name = $this.attr('name');
         if ($this.attr('multiple')) {
             var selectedValues = obj[$this.attr('name').replace('[', '').replace(']', '')];
-            // $this.select2('val',selectedValues);
-            console.log(selectedValues)
-            // var languages = langs.split(',');
             $this.val(selectedValues).trigger('change');
         }
         if (obj[$this.attr('name')] != null) {
