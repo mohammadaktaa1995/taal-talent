@@ -142,7 +142,7 @@
             transition: 0.3s;
         }
 
-        a:hover:before {
+        a:not(.menu-link):hover:before {
             width: 80%;
         }
 

@@ -19,7 +19,7 @@ class ExamPolicy
      */
     public function view(User $user, Exam $exam)
     {
-        if (count($exam->students) > 0) {
+        if ($exam->students) {
             return ($user->groups == $exam->groups || in_array($user->id, $exam->students));
         } else {
             return ($user->groups == $exam->groups);
