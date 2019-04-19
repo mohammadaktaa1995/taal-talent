@@ -12,13 +12,21 @@ use Eloquent;
  */
 class Exam extends Eloquent
 {
-    protected $with = ['questions'];
-    protected $fillable = ['text', 'description', 'date', 'page_type', 'subject_id'];
-    protected $appends = ['total_points', 'total_time','converted_total_time'];
+    protected $fillable = ['text', 'description', 'date', 'page_type', 'subject_id', 'groups', 'students'];
+    protected $appends = ['total_points', 'total_time', 'converted_total_time'];
+
+    protected $casts = [
+        'students' => 'array'
+    ];
 
     public function questions()
     {
         return self::belongsToMany(Question::class, 'exams_questions', 'exam_id', 'question_id');
+    }
+
+    public function group()
+    {
+        return self::belongsTo(Group::class, 'groups');
     }
 
     public function subject()
@@ -33,7 +41,7 @@ class Exam extends Eloquent
 
     public function getTotalTimeAttribute()
     {
-        return $this->questions()->sum('time');
+        return $this->questions()->sum('time') != 0 ? $this->questions()->sum('time') : 10;
     }
 
     public function getConvertedTotalTimeAttribute()

@@ -9,10 +9,11 @@ function _fill($cont, obj) {
     $($cont).find('.select2').each(function () {
         var $this = $(this), name = $this.attr('name');
         if ($this.attr('multiple')) {
-            var langs = obj[$this.attr('name').replace('[', '').replace(']', '')];
-            var languages = langs.split(',');
-            console.log(languages)
-            $this.val(languages).trigger('change');
+            var selectedValues = obj[$this.attr('name').replace('[', '').replace(']', '')];
+            // $this.select2('val',selectedValues);
+            console.log(selectedValues)
+            // var languages = langs.split(',');
+            $this.val(selectedValues).trigger('change');
         }
         if (obj[$this.attr('name')] != null) {
             $this.val(obj[$this.attr('name')]).trigger('change');

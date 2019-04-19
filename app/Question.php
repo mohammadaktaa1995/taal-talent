@@ -2,7 +2,6 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
 
 class Question extends \Eloquent
 {
@@ -22,7 +21,7 @@ class Question extends \Eloquent
 
     public function getFullTextAttribute()
     {
-        if ($this->type->code == "BETW")
+        if ($this->type->code == 'BETW')
             return $this->text . ' ' . $this->after_answer;
 
         return $this->text;

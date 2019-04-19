@@ -66,7 +66,7 @@
                                     <tr class="detail">
                                         <td colspan="8">
                                             <div>
-                                                @if($question->type->code=="SING" ||$question->type->code=="BETW")
+                                                @if($question->type->code=="SING" || $question->type->code=="BETW")
                                                     <h5>Answer</h5>
                                                     @foreach($question->choices()->get() as $choice)
                                                         <li>{{$choice->text}}

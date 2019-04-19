@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Choice;
 use App\Exam;
+use App\Group;
 use App\Question;
 use App\QuestionType;
 use App\Subject;
@@ -15,6 +16,11 @@ class ExamsController extends Controller
 {
     public function showAll()
     {
+        if (isset($_SESSION['id'])) {
+            $user = User::find($_SESSION['id']);
+            Auth::login($user);
+        }
+
         $exams = Exam::all();
         $subjects = Subject::all();
         return view('exams.view', compact('exams', 'subjects'));
@@ -47,6 +53,9 @@ class ExamsController extends Controller
             'text' => 'required|string'
         ]);
 
+        if (!$request->has('students')){
+            $request['students'] = [];
+        }
         $exam->update($request->input());
 
         return redirect()->route('exams');
@@ -57,6 +66,4 @@ class ExamsController extends Controller
         $exam->delete();
         return response()->json(['success', 'url' => route('exams')], 200);
     }
-
-
 }

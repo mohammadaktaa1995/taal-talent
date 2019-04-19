@@ -19,10 +19,10 @@
     <link rel="apple-touch-icon" href="https://taal-talent.nl/wp-content/uploads/2018/07/LOGO2.png"/>
     <script src="js/script.min.js"></script>
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{asset('css/custom.css')}}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     @stack('styles')
+    <link rel="stylesheet" href="{{asset('css/custom.css')}}">
 </head>
 
 <body>

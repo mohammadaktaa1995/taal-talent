@@ -100,6 +100,24 @@
                                 @endforeach
                             </select>
                         </div>
+                        <div class="form-group">
+                            <label>Group <span class="text-danger">*</span></label>
+                            <select name="groups" class="form-control" required style="width: 100%">
+                                <option value=""></option>
+                                @foreach(\App\Group::all() as $group)
+                                    <option value="{{$group->id}}">{{$group->text}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Students</label>
+                            <select name="students[]" class="form-control select2" multiple style="width: 100%">
+                                <option value=""></option>
+                                @foreach(\App\User::all() as $user)
+                                    <option value="{{$user->id}}">{{$user->firstname}}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -153,6 +171,24 @@
                                 @endforeach
                             </select>
                         </div>
+                        <div class="form-group">
+                            <label>Group <span class="text-danger">*</span></label>
+                            <select name="groups" class="form-control" required style="width: 100%">
+                                <option value=""></option>
+                                @foreach(\App\Group::all() as $group)
+                                    <option value="{{$group->id}}">{{$group->text}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Students </label>
+                            <select name="students[]" class="form-control select2" multiple style="width: 100%">
+                                <option value=""></option>
+                                @foreach(\App\User::all() as $user)
+                                    <option value="{{$user->id}}">{{$user->firstname}}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -163,9 +199,15 @@
         </div>
     </div>
 @endsection
+@push('styles')
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    @endpush
 @push('scripts')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+
     <script>
         $(function () {
+            $('.select2').select2();
             $(".date-picker").flatpickr({
                 dateFormat: "Y-m-d",
                 minDate: new Date()

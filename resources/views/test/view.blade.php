@@ -7,10 +7,10 @@
             <div class="card inactive-2"></div>
             <div class="card">
                 @foreach($exams as $exam)
-                    <div class="content {{$loop->first?'active':''}}">
+                    <div class="content {{$loop->first?'active':''}}" style="z-index: {{$loop->iteration}}">
                         <h1>Exam {{$loop->iteration}}</h1>
-                        <p><a href="{{route('test.exam-questions',[$exam->id])}}">{{$exam->text}}</a> {{--<i class="em em-coffee"></i>--}}
-                        </p>
+                        <a href="{{route('test.exam-questions',[$exam->id])}}">{{$exam->text}}</a> {{--<i class="em em-coffee"></i>--}}
+                        <br>
                         <a class="button next" href="#">Next &rarr;</a>
                     </div>
 
@@ -57,6 +57,9 @@
             left: 10%;
             width: 80%;
             margin: 0 auto;
+        }
+        .content:not(.active){
+            display: none;
         }
 
         .active {

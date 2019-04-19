@@ -6,6 +6,7 @@ use App\Exam;
 use App\Question;
 use App\StudentAnswer;
 use App\User;
+use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -13,12 +14,18 @@ class TestController extends Controller
 {
     public function showExams()
     {
-        $exams = Exam::orderBy('id', 'desc')->get();
+        if (isset($_SESSION['id']) && !Auth::check()) {
+            $user = User::find($_SESSION['id']);
+            Auth::login($user);
+        }
+        $exams = Exam::orderBy('id', 'asc')->get();
         return view('test.view', compact('exams'));
     }
 
     public function showExamQuestions(Exam $exam)
     {
+        $this->authorize('view', $exam);
+
         $questions = $exam->questions()->get();
 
         if ($exam->page_type == 'single')
